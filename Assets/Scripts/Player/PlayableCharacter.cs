@@ -7,6 +7,7 @@ public class PlayableCharacter : MonoBehaviour, ILevel, IUser
 {
     [field: Header("Name")]
     [field: SerializeField] public string Id { get; private set; }
+    [field: SerializeField] public EntityType EntityType { get; private set; }
 
     [field: Header("Level Specifics")]
     [field: SerializeField] public float PercentHealthIncreasePerLevel { get; }
@@ -15,8 +16,8 @@ public class PlayableCharacter : MonoBehaviour, ILevel, IUser
     [SerializeField] private float percentExperiencePerLevel = 0;
 
     [field: Header ("Attacks")]
-    [field: SerializeField] public Attack FightAttack { get; private set; }
-    [field: SerializeField] public List<Attack> Magic { get; private set; }
+    [field: SerializeField] public EntityAction FightAttack { get; private set; }
+    [field: SerializeField] public List<EntityAction> Magic { get; private set; }
 
     [field: SerializeField] public LevelSystem LevelSystem { get; private set; }
 
@@ -47,4 +48,5 @@ public interface ILevel//health exponentially increase while damage scale linear
 public interface IUser
 {
     string Id { get; }
+    EntityType EntityType { get; }
 }

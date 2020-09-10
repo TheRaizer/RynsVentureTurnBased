@@ -101,6 +101,7 @@ MonoBehaviour:
   percentHealthIncrease: 0
   damageScalingIncrease: 0
   <Id>k__BackingField: Goblin
+  <EntityType>k__BackingField: 1
   <ExpOnDeath>k__BackingField: 200
   <Attacks>k__BackingField:
   - {fileID: -7623231250017409417}
@@ -120,9 +121,9 @@ MonoBehaviour:
   <Speed>k__BackingField: 3
   <ClockTick>k__BackingField: 0
   baseMaxHp: 10
-  <MultiTurnTriggeredAilments>k__BackingField: []
-  <TurnReplaceAilment>k__BackingField: {fileID: 0}
-  <SingleTurnTriggeredAilments>k__BackingField: []
+  <HealthManager>k__BackingField:
+    <CurrentHealth>k__BackingField: 0
+    <MaxHealth>k__BackingField: 0
 --- !u!114 &-7623231250017409417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,10 +139,10 @@ MonoBehaviour:
   <Id>k__BackingField: Spear Throw
   <IsAOE>k__BackingField: 0
   <Damage>k__BackingField: 2
-  <Accuracy>k__BackingField: 86
+  <Accuracy>k__BackingField: 97
   <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 10249f38991cd1a418c69e19ef9d40a7,
     type: 3}
-  <StatusEffectChance>k__BackingField: 60
+  <StatusEffectChance>k__BackingField: 75
   <CritChance>k__BackingField: 7
   <CritMultiplier>k__BackingField: 2.5
   <AttackText>k__BackingField: throws spear

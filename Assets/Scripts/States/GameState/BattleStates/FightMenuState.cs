@@ -4,18 +4,18 @@ public class FightMenuState : StatusEffectCheckState
 {
     private readonly BattleLogic battleLogic;
     private readonly MenusHandler menusHandler;
-    private readonly StatusEffectsManager ailmentsManager;
+    private readonly BattleStatusEffectsManager statusManager;
     private readonly TextBoxHandler textBoxHandler;
 
     private int actionChoiceIndex = 0;
 
     public override bool CheckedStatusEffectThisTurn { get; set; }
 
-    public FightMenuState(StateMachine _stateMachine, BattleLogic _battleLogic, MenusHandler _menusHandler, StatusEffectsManager _ailmentsManager, TextBoxHandler _textBoxHandler) : base(_stateMachine)
+    public FightMenuState(StateMachine _stateMachine, BattleLogic _battleLogic, MenusHandler _menusHandler, BattleStatusEffectsManager _ailmentsManager, TextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
         battleLogic = _battleLogic;
         menusHandler = _menusHandler;
-        ailmentsManager = _ailmentsManager;
+        statusManager = _ailmentsManager;
         textBoxHandler = _textBoxHandler;
     }
 
@@ -31,21 +31,21 @@ public class FightMenuState : StatusEffectCheckState
     {
         base.OnFullRotationEnter();
 
-        if (CheckForStatusEffects(ailmentsManager, battleLogic, textBoxHandler, battleLogic.CurrentPlayer.Stats, this))
+        Debug.Log(battleLogic.CurrentPlayer.Id + " Turn");
+        if (CheckForStatusEffects(statusManager, battleLogic, textBoxHandler, battleLogic.CurrentPlayer.Stats, BattleStates.FightMenu))
         {
             Debug.Log("Checked status effects");
-            stateMachine.ChangeState(typeof(BattleTextBoxState));
+            stateMachine.ChangeState(BattleStates.BattleTextBox);
         }
-        if(ailmentsManager.CheckForReplacementStatusEffect(battleLogic.attackablePlayers, battleLogic.AttackableEnemies, battleLogic.CurrentPlayer.Stats))
+        if(statusManager.CheckForReplacementStatusEffect(battleLogic.AttackablesDic, battleLogic.CurrentPlayer.Stats))
         {
             return;
         }
-        Debug.Log("Player Turn");
 
         battleLogic.CheckForEnemiesRemaining();
         if (battleLogic.EnemiesRemaining == 0)
         {
-            stateMachine.ChangeState(typeof(VictoryState));
+            stateMachine.ChangeState(BattleStates.Victory);
         }
     }
 

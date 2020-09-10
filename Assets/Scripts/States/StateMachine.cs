@@ -7,9 +7,9 @@ public class StateMachine
 {
     public State CurrentState { get; private set; }
 
-    public Dictionary<Type, State> states = new Dictionary<Type, State>();
+    public Dictionary<Enum, State> states = new Dictionary<Enum, State>();
 
-    public void Initialize(Dictionary<Type, State> _states, Type startState)
+    public void Initialize(Dictionary<Enum, State> _states, Enum startState)
     {
         states = _states;
 
@@ -19,19 +19,19 @@ public class StateMachine
             Debug.Log("State of type " + startState + " is not available");
     }
 
-    public void ReturnBackToState(Type stateToReturnToo)
+    public void ReturnBackToState(Enum stateToReturnToo)
     {
         if (!states.ContainsKey(stateToReturnToo))
         {
             Debug.Log("StateMachine does not contain " + stateToReturnToo);
             return;
         }
-
+        CurrentState.OnExit();
         CurrentState = states[stateToReturnToo];
         CurrentState.OnEnterOrReturn();
     }
 
-    public void ChangeState(Type stateToChangeToo)
+    public void ChangeState(Enum stateToChangeToo)
     {
         if (!states.ContainsKey(stateToChangeToo))
         {

@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e51d2723cdec9994f91976181bb87a2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AilmentType>k__BackingField: 1
+  <Name>k__BackingField: Poison
   <EffectType>k__BackingField: 0
-  <MaxNumberOfTurnsToLast>k__BackingField: 5
-  currentNumberOfTurnsToLast: 5
+  <MaxNumberOfTurnsToLast>k__BackingField: 4
+  currentNumberOfTurnsToLast: 4

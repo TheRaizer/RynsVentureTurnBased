@@ -12,9 +12,10 @@ public class Enemy : MonoBehaviour, IUser
 
     [field: Header("Name")]
     [field: SerializeField] public string Id { get; set; }
+    [field: SerializeField] public EntityType EntityType { get; private set; }
 
     [field: SerializeField] public int ExpOnDeath { get; private set; }
-    [field: SerializeField] public List<Attack> Attacks { get; private set; }
+    [field: SerializeField] public List<EntityAction> Attacks { get; private set; }
 
 
     public StatsManager Stats { get; private set; }

@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dbc068ad48d63d4bb609dd9581fe05a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AilmentType>k__BackingField: 6
+  <Name>k__BackingField: Attack Up
   <EffectType>k__BackingField: 1
   <MaxNumberOfTurnsToLast>k__BackingField: 10
   currentNumberOfTurnsToLast: 10

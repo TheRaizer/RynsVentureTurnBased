@@ -6,14 +6,14 @@ public class EnemyTurnState : StatusEffectCheckState
 {
     private readonly BattleLogic battleLogic;
     private readonly TextModifications textMods;
-    private readonly StatusEffectsManager ailmentsManager;
+    private readonly BattleStatusEffectsManager statusManager;
     private readonly TextBoxHandler textBoxHandler;
 
-    public EnemyTurnState(StateMachine _stateMachine, BattleLogic _battleLogic, TextModifications _textMods, StatusEffectsManager _ailmentsManager, TextBoxHandler _textBoxHandler) : base(_stateMachine)
+    public EnemyTurnState(StateMachine _stateMachine, BattleLogic _battleLogic, TextModifications _textMods, BattleStatusEffectsManager _ailmentsManager, TextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
         battleLogic = _battleLogic;
         textMods = _textMods;
-        ailmentsManager = _ailmentsManager;
+        statusManager = _ailmentsManager;
         textBoxHandler = _textBoxHandler;
     }
 
@@ -23,28 +23,31 @@ public class EnemyTurnState : StatusEffectCheckState
     {
         base.OnFullRotationEnter();
 
-        if (CheckForStatusEffects(ailmentsManager, battleLogic, textBoxHandler, battleLogic.CurrentEnemy.Stats, this))
+        Debug.Log(battleLogic.CurrentEnemy.Id + " Turn");
+        if (CheckForStatusEffects(statusManager, battleLogic, textBoxHandler, battleLogic.CurrentEnemy.Stats, null))
         {
             Debug.Log("Checked status effects");
-            stateMachine.ChangeState(typeof(BattleTextBoxState));
+            stateMachine.ChangeState(BattleStates.BattleTextBox);
+        }
+        if (statusManager.CheckForReplacementStatusEffect(battleLogic.AttackablesDic, battleLogic.CurrentEnemy.Stats))
+        {
+            return;
         }
         battleLogic.CheckForAttackablePlayers();
-        Debug.Log("Enemy Turn");
 
-        int playerIndexToAttack = Random.Range(0, battleLogic.attackablePlayers.Count);
-        Attack attackToUse = battleLogic.CurrentEnemy.Attacks[Random.Range(0, battleLogic.CurrentEnemy.Attacks.Count)];
+        int playerIndexToAttack = Random.Range(0, battleLogic.AttackablesDic[EntityType.Player].Count);
+        EntityAction attackToUse = battleLogic.CurrentEnemy.Attacks[Random.Range(0, battleLogic.CurrentEnemy.Attacks.Count)];
 
-        List<AttackInfo> attackInfos = attackToUse.DetermineAttack(battleLogic.attackablePlayers, battleLogic.CurrentEnemy.Stats.DamageScale, playerIndexToAttack);
+        List<EntityActionInfo> attackInfos = attackToUse.DetermineAttack(battleLogic.AttackablesDic[EntityType.Player], battleLogic.CurrentEnemy.Stats.DamageScale, playerIndexToAttack);
         GenerateText(attackInfos, attackToUse);
 
         textMods.PrintPlayerHealth();
         textMods.ChangePlayerTextColour();
-
-        stateMachine.ChangeState(typeof(BattleTextBoxState));
+        stateMachine.ChangeState(BattleStates.BattleTextBox);
     }
 
     //probably move to battleLogic or smthn
-    private void GenerateText(List<AttackInfo> attackInfos, Attack attackToUse)
+    private void GenerateText(List<EntityActionInfo> attackInfos, EntityAction attackToUse)
     {
         for (int i = 0; i < attackInfos.Count; i++) 
         {

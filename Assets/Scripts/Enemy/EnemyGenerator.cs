@@ -29,7 +29,7 @@ public class EnemyGenerator
             chosenEnemy.GetComponent<Enemy>().Id = chosenEnemyId + " " + letters[CheckForDuplicateEnemies(chosenEnemyId)];
 
             battleLogic.Enemies[i] = chosenEnemy;
-            battleLogic.AttackableEnemies.Add(battleLogic.Enemies[i].GetComponent<Enemy>().Stats);
+            battleLogic.AttackablesDic[EntityType.Enemy].Add(battleLogic.Enemies[i].GetComponent<Enemy>().Stats);
             battleLogic.TotalExpFromBattle += battleLogic.Enemies[i].GetComponent<Enemy>().ExpOnDeath;
         }
 
@@ -62,8 +62,8 @@ public class EnemyGenerator
             }
         }
 
-        List<StatsManager> attackableEnemies = battleLogic.AttackableEnemies.OrderBy(x => x.user.Id).ToList();//order the attackable enemies
-        battleLogic.AttackableEnemies = attackableEnemies;
+        List<StatsManager> attackableEnemies = battleLogic.AttackablesDic[EntityType.Enemy].OrderBy(x => x.user.Id).ToList();//order the attackable enemies
+        battleLogic.AttackablesDic[EntityType.Enemy] = attackableEnemies;
     }
 
     private int CheckForDuplicateEnemies(string id)

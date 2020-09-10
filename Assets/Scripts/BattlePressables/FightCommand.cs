@@ -12,6 +12,6 @@ public class FightCommand : BattleCommands
     private void Fight(BattleLogic battleLogic)
     {
         battleLogic.CurrentPlayerAttack = battleLogic.CurrentPlayer.FightAttack;
-        battleLogic.battleStateMachine.ChangeState(typeof(EnemyChoiceState));
+        battleLogic.battleStateMachine.ChangeState(BattleStates.EnemyChoice);
     }
 }

@@ -1,4 +1,7 @@
-﻿public abstract class StatusEffectCheckState : State
+﻿using System;
+using UnityEngine;
+
+public abstract class StatusEffectCheckState : State
 {
     public abstract bool CheckedStatusEffectThisTurn { get; set; }
     public StatusEffectCheckState(StateMachine _stateMachine) : base(_stateMachine)
@@ -6,16 +9,16 @@
 
     }
 
-    protected bool CheckForStatusEffects(StatusEffectsManager ailmentsManager, BattleLogic battleLogic, TextBoxHandler textBoxHandler, StatsManager user, State currentState)
+    protected bool CheckForStatusEffects(BattleStatusEffectsManager statusManager, BattleLogic battleLogic, TextBoxHandler textBoxHandler, StatsManager inhibitor, Enum currentState)
     {
         if (!CheckedStatusEffectThisTurn)
         {
             CheckedStatusEffectThisTurn = true;
-            if (ailmentsManager.CheckForStatusEffect(battleLogic.attackablePlayers, battleLogic.AttackableEnemies, user))
+            if (statusManager.CheckForStatusEffect(battleLogic.AttackablesDic, inhibitor))
             {
-                if (!user.HealthManager.Dead)
+                if (!inhibitor.HealthManager.Dead)
                 {
-                    textBoxHandler.previousState = currentState;
+                    textBoxHandler.PreviousState = currentState;
                 }
                 return true;
             }

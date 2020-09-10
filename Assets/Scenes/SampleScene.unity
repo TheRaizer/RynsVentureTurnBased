@@ -1646,8 +1646,9 @@ MonoBehaviour:
   <IsAOE>k__BackingField: 0
   <Damage>k__BackingField: 4
   <Accuracy>k__BackingField: 95
-  <StatusEffectPrefab>k__BackingField: {fileID: 0}
-  <StatusEffectChance>k__BackingField: 0
+  <StatusEffectPrefab>k__BackingField: {fileID: 6422291583160218353, guid: a8273d23506d89c45b172dbb50f71405,
+    type: 3}
+  <StatusEffectChance>k__BackingField: 100
   <CritChance>k__BackingField: 10
   <CritMultiplier>k__BackingField: 2.5
   <AttackText>k__BackingField: casts fire upon
@@ -1664,6 +1665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Zable
+  <EntityType>k__BackingField: 0
   baseExperienceToNextLevel: 500
   percentExperiencePerLevel: 0.75
   <FightAttack>k__BackingField: {fileID: 615585379}
@@ -1689,9 +1691,9 @@ MonoBehaviour:
   <Speed>k__BackingField: 3
   <ClockTick>k__BackingField: 0
   baseMaxHp: 25
-  <MultiTurnTriggeredAilments>k__BackingField: []
-  <TurnReplaceAilment>k__BackingField: {fileID: 0}
-  <SingleTurnTriggeredAilments>k__BackingField: []
+  <HealthManager>k__BackingField:
+    <CurrentHealth>k__BackingField: 0
+    <MaxHealth>k__BackingField: 0
 --- !u!114 &615585382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2033,6 +2035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Reinhart
+  <EntityType>k__BackingField: 0
   baseExperienceToNextLevel: 500
   percentExperiencePerLevel: 0.75
   <FightAttack>k__BackingField: {fileID: 740601878}
@@ -2058,9 +2061,9 @@ MonoBehaviour:
   <Speed>k__BackingField: 2
   <ClockTick>k__BackingField: 0
   baseMaxHp: 35
-  <MultiTurnTriggeredAilments>k__BackingField: []
-  <TurnReplaceAilment>k__BackingField: {fileID: 0}
-  <SingleTurnTriggeredAilments>k__BackingField: []
+  <HealthManager>k__BackingField:
+    <CurrentHealth>k__BackingField: 0
+    <MaxHealth>k__BackingField: 0
 --- !u!114 &740601881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3815,7 +3818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Fight
   <IsAOE>k__BackingField: 0
-  <Damage>k__BackingField: 6
+  <Damage>k__BackingField: 4
   <Accuracy>k__BackingField: 95
   <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,
     type: 3}
@@ -3836,6 +3839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Pinhead
+  <EntityType>k__BackingField: 0
   baseExperienceToNextLevel: 500
   percentExperiencePerLevel: 0.75
   <FightAttack>k__BackingField: {fileID: 1552954258}
@@ -3861,9 +3865,9 @@ MonoBehaviour:
   <Speed>k__BackingField: 6
   <ClockTick>k__BackingField: 0
   baseMaxHp: 15
-  <MultiTurnTriggeredAilments>k__BackingField: []
-  <TurnReplaceAilment>k__BackingField: {fileID: 0}
-  <SingleTurnTriggeredAilments>k__BackingField: []
+  <HealthManager>k__BackingField:
+    <CurrentHealth>k__BackingField: 0
+    <MaxHealth>k__BackingField: 0
 --- !u!114 &1552954261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4645,9 +4649,9 @@ MonoBehaviour:
   <Speed>k__BackingField: 4
   <ClockTick>k__BackingField: 0
   baseMaxHp: 100
-  <MultiTurnTriggeredAilments>k__BackingField: []
-  <TurnReplaceAilment>k__BackingField: {fileID: 0}
-  <SingleTurnTriggeredAilments>k__BackingField: []
+  <HealthManager>k__BackingField:
+    <CurrentHealth>k__BackingField: 0
+    <MaxHealth>k__BackingField: 0
 --- !u!114 &1843531474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4661,6 +4665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Ryn
+  <EntityType>k__BackingField: 0
   baseExperienceToNextLevel: 500
   percentExperiencePerLevel: 0.75
   <FightAttack>k__BackingField: {fileID: 1843531475}

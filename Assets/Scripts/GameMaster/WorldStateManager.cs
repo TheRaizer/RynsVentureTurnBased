@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum WorldStates
+{
+    Roam,
+    Battle
+}
+
 public class WorldStateManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> characterObjectRoster = null;
@@ -28,14 +35,14 @@ public class WorldStateManager : MonoBehaviour
             battleState.BattleLogic.PlayableCharacterRoster.Add(characterObjectRoster[i].GetComponent<PlayableCharacter>());
         }
 
-        Dictionary<Type, State> states = new Dictionary<Type, State>()
+        Dictionary<Enum, State> states = new Dictionary<Enum, State>()
         {
-            { typeof(WorldRoamState), new WorldRoamState(stateMachine, characterObjectRoster[0].GetComponent<PlayerAnimations>(), characterObjectRoster[0].GetComponent<PlayerMovement>()) }
+            { WorldStates.Roam, new WorldRoamState(stateMachine, characterObjectRoster[0].GetComponent<PlayerAnimations>(), characterObjectRoster[0].GetComponent<PlayerMovement>()) }
         };
-        states.Add(typeof(BattleState), battleState);
+        states.Add(WorldStates.Battle, battleState);
 
 
-        stateMachine.Initialize(states, typeof(WorldRoamState));
+        stateMachine.Initialize(states, WorldStates.Roam);
     }
 
     private void Update()

@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92416554785bc974696a1c5c80a2a5f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AilmentType>k__BackingField: 4
+  <Name>k__BackingField: Stun
   <EffectType>k__BackingField: 2
-  <MaxNumberOfTurnsToLast>k__BackingField: 3
-  currentNumberOfTurnsToLast: 3
+  <MaxNumberOfTurnsToLast>k__BackingField: 2
+  currentNumberOfTurnsToLast: 2

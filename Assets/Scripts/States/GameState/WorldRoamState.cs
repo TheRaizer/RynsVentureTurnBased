@@ -32,7 +32,7 @@ public class WorldRoamState : State
 
         if(Input.GetKeyDown(KeyCode.B))
         {
-            stateMachine.ChangeState(typeof(BattleState));
+            stateMachine.ChangeState(WorldStates.Battle);
         }
     }
 }

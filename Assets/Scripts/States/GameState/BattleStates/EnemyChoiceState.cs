@@ -43,7 +43,7 @@ public class EnemyChoiceState : State
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            stateMachine.ReturnBackToState(typeof(FightMenuState));
+            stateMachine.ReturnBackToState(BattleStates.FightMenu);
         }
     }
 
@@ -52,7 +52,7 @@ public class EnemyChoiceState : State
         if (Input.GetKeyDown(KeyCode.Return))
         {
             Enemy enemyToAttack = battleLogic.Enemies[menuTraversal.currentIndex].GetComponent<Enemy>();
-            AttackInfo attackInfo = battleLogic.CurrentPlayerAttack.UseAttack(enemyToAttack.Stats, battleLogic.CurrentPlayer.Stats.DamageScale);
+            EntityActionInfo attackInfo = battleLogic.CurrentPlayerAttack.UseAttack(enemyToAttack.Stats, battleLogic.CurrentPlayer.Stats.DamageScale);
 
             textBoxHandler.AddTextAsAttack(battleLogic.CurrentPlayer.Id, battleLogic.CurrentPlayerAttack.AttackText, enemyToAttack.Id);
 
@@ -68,7 +68,7 @@ public class EnemyChoiceState : State
             battleLogic.CheckForEnemiesRemaining();
             textMods.ChangeEnemyNameColour();
 
-            stateMachine.ChangeState(typeof(BattleTextBoxState));
+            stateMachine.ChangeState(BattleStates.BattleTextBox);
         }
     }
 

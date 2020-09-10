@@ -10,4 +10,9 @@ public class Stun : StatusEffect
         Debug.Log("Calculate Next Turn");
         battleLogic.CalculateNextTurn();
     }
+
+    public override StatusEffect ShallowCopy()
+    {
+        return (Stun)MemberwiseClone();
+    }
 }

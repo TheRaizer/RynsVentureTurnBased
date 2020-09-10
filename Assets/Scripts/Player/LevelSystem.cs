@@ -19,7 +19,7 @@ public class LevelSystem
         ExperienceToNextLevel = baseExperienceToNextLevel;
         percentExperiencePerLevel = _percentExperiencePerLevel;
     }
-
+    
     public void CheckLevel()
     {
         if(Experience < ExperienceToNextLevel)

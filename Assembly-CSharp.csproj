@@ -57,16 +57,17 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\GameMaster\WorldStateManager.cs" />
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\StatusEffectCheckState.cs" />
-    <Compile Include="Assets\Scripts\RectTransformExtensions.cs" />
-    <Compile Include="Assets\Scripts\AttackInfo.cs" />
+    <Compile Include="Assets\Scripts\Extensions\RectTransformExtensions.cs" />
+    <Compile Include="Assets\Scripts\AttackActions\EntityActionInfo.cs" />
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\EnemyTurnState.cs" />
-    <Compile Include="Assets\Scripts\StatusEffects\Management\StatusEffectsManager.cs" />
-    <Compile Include="Assets\Scripts\StatusEffects\MultiTurnTriggeredEffects\PoisonEffect.cs" />
+    <Compile Include="Assets\Scripts\States\StateLogic\BattleStatusEffectsManager.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\MultiTurnTriggeredEffects\Poison.cs" />
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\BattleTextBoxState.cs" />
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\VictoryState.cs" />
     <Compile Include="Assets\Scripts\Text\TextManipulation.cs" />
     <Compile Include="Assets\Scripts\Text\TextModifications.cs" />
-    <Compile Include="Assets\Scripts\StatusEffects\Management\StatusEffect.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\TurnReplacement\Stun.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\StatusEffect.cs" />
     <Compile Include="Assets\Scripts\BattlePressables\FightCommand.cs" />
     <Compile Include="Assets\Scripts\MenuTraversal\MenusHandler.cs" />
     <Compile Include="Assets\Scripts\Player\ConstantNumbers.cs" />
@@ -76,8 +77,9 @@
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\BattleState.cs" />
     <Compile Include="Assets\Scripts\BattlePressables\BattleCommands.cs" />
     <Compile Include="Assets\Scripts\MenuTraversal\MatrixMenuTraversal.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\SingleTurnTriggeredEffects\AttackUp.cs" />
     <Compile Include="Assets\Scripts\Player\LevelSystem.cs" />
-    <Compile Include="Assets\Scripts\StatsManager.cs" />
+    <Compile Include="Assets\Scripts\GeneralEntity\StatsManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyGenerator.cs" />
     <Compile Include="Assets\Scripts\States\State.cs" />
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\EnemyChoiceState.cs" />
@@ -85,17 +87,17 @@
     <Compile Include="Assets\Scripts\Enemy\EnemyStorageForArea.cs" />
     <Compile Include="Assets\Scripts\Player\PlayableCharacter.cs" />
     <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
-    <Compile Include="Assets\Scripts\MathExtension.cs" />
-    <Compile Include="Assets\Scripts\Attack.cs" />
+    <Compile Include="Assets\Scripts\Extensions\MathExtension.cs" />
+    <Compile Include="Assets\Scripts\AttackActions\EntityAction.cs" />
     <Compile Include="Assets\Scripts\States\GameState\WorldRoamState.cs" />
-    <Compile Include="Assets\Scripts\Directions.cs" />
+    <Compile Include="Assets\Scripts\PointerControl\Directions.cs" />
     <Compile Include="Assets\Scripts\Text\TextBoxHandler.cs" />
-    <Compile Include="Assets\Scripts\BattleLogic.cs" />
-    <Compile Include="Assets\Scripts\HealthManager.cs" />
+    <Compile Include="Assets\Scripts\States\StateLogic\BattleLogic.cs" />
+    <Compile Include="Assets\Scripts\GeneralEntity\HealthManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\FightMenuState.cs" />
-    <Compile Include="Assets\Scripts\StatusEffects\SingleTurnTriggeredEffects\AttackUp.cs" />
-    <Compile Include="Assets\Scripts\StatusEffects\TurnReplacement\Stun.cs" />
+    <Compile Include="Assets\Scripts\GeneralEntity\StatusEffectsManager.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\MultiTurnTriggeredEffects\Burn.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

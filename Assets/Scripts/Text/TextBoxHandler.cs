@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TextBoxHandler
 {
-    public State previousState = null;
+    public Enum PreviousState { get; set; } = null;
 
     private readonly MenusHandler menusHandler;
     private readonly BattleLogic battleLogic;
@@ -39,7 +39,7 @@ public class TextBoxHandler
         {
             ResetTextBox();
             Finished = false;
-            if(previousState != null)
+            if(PreviousState != null)
             {
                 ReturnToPreviousState();
             }
@@ -110,20 +110,20 @@ public class TextBoxHandler
     {
         AddTextLines("It was a Critical Hit!");
     }
-    public void AddTextAsStatusEffect(string id, StatusEffects statusAilment)
+    public void AddTextAsStatusEffect(string id, string statusAilment)
     {
         AddTextLines(id + " was affected by " + statusAilment + ".");
     }
 
-    public void AddTextAsStatusEffectWornOff(string id, StatusEffects statusAilment)
+    public void AddTextAsStatusEffectWornOff(string id, string statusAilment)
     {
         AddTextLines(statusAilment + " has worn off " + id + ".");
     }
 
     private void ReturnToPreviousState()
     {
-        State s = previousState;
-        previousState = null;
-        battleStateMachine.ChangeState(s.GetType());
+        Enum s = PreviousState;
+        PreviousState = null;
+        battleStateMachine.ReturnBackToState(s);
     }
 }

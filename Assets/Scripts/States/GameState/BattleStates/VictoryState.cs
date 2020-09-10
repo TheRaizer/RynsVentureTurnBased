@@ -18,14 +18,14 @@ public class VictoryState : State
     public override void OnFullRotationEnter()
     {
         base.OnEnterOrReturn();
-        foreach(PlayableCharacter p in battleLogic.ActivePlayableCharacters)
+        foreach(PlayableCharacter p in battleLogic.PlayableCharacterRoster)
         {
             if (p != null)
             {
-                p.Stats.RemoveAllStatusEffects();
+                p.Stats.StatusEffectsManager.RemoveAllStatusEffects();
             }
         }
-        for(int i = 0; i < menusHandler.EnemyIdText.Length; i++)
+        for (int i = 0; i < menusHandler.EnemyIdText.Length; i++)
         {
             menusHandler.EnemyIdText[i].text = "";
         }
@@ -40,7 +40,7 @@ public class VictoryState : State
         //TEST CODE
         if(Input.GetKeyDown(KeyCode.C))
         {
-            gameStateMachine.ChangeState(typeof(WorldRoamState));
+            gameStateMachine.ChangeState(WorldStates.Roam);
         }
     }
 }
