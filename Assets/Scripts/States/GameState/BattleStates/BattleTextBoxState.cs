@@ -1,4 +1,5 @@
-﻿
+﻿using UnityEngine;
+
 public class BattleTextBoxState : State
 {
     private readonly TextBoxHandler textBoxHandler;
@@ -13,6 +14,7 @@ public class BattleTextBoxState : State
     public override void OnEnterOrReturn()
     {
         base.OnEnterOrReturn();
+
         menuHandler.OpenTextPanel();
         menuHandler.StartCoroutine(textBoxHandler.BuildMultiStringTextCo());
     }

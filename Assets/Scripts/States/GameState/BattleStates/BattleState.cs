@@ -20,7 +20,7 @@ public class BattleState : State
     public BattleLogic BattleLogic { get; private set; }
 
     private readonly TextModifications textMods;
-    private readonly BattleStatusEffectsManager ailmentsManager;
+    private readonly BattleStatusEffectsManager statusEffectsManager;
     private readonly TextBoxHandler textBoxHandler;
     private readonly EnemyChoiceState enemyChoice;
 
@@ -31,15 +31,15 @@ public class BattleState : State
 
         BattleLogic = new BattleLogic(menusHandler, BattleStateMachine);
         textBoxHandler = new TextBoxHandler(menusHandler, BattleLogic, BattleStateMachine);
-        ailmentsManager = new BattleStatusEffectsManager(textBoxHandler, BattleLogic);
+        statusEffectsManager = new BattleStatusEffectsManager(textBoxHandler, BattleStateMachine);
 
         textMods = new TextModifications(menusHandler, BattleLogic);
 
         Dictionary<Enum, State> battleStates = new Dictionary<Enum, State>()
         {
-            { BattleStates.EnemyTurn, new EnemyTurnState(BattleStateMachine, BattleLogic, textMods, ailmentsManager, textBoxHandler) },
+            { BattleStates.EnemyTurn, new EnemyTurnState(BattleStateMachine, BattleLogic, textMods, statusEffectsManager, textBoxHandler) },
             { BattleStates.Victory, new VictoryState(BattleStateMachine, stateMachine, menusHandler, BattleLogic) },
-            { BattleStates.FightMenu, new FightMenuState(BattleStateMachine, BattleLogic, menusHandler, ailmentsManager, textBoxHandler) },
+            { BattleStates.FightMenu, new FightMenuState(BattleStateMachine, BattleLogic, menusHandler, statusEffectsManager, textBoxHandler) },
             { BattleStates.BattleTextBox, new BattleTextBoxState(BattleStateMachine, textBoxHandler, menusHandler) }
         };
         enemyChoice = new EnemyChoiceState(BattleStateMachine, BattleLogic, menusHandler, textMods, textBoxHandler);
@@ -65,7 +65,7 @@ public class BattleState : State
     {
         base.LogicUpdate();
 
-        Debug.Log(BattleStateMachine.CurrentState);
+        //Debug.Log(BattleStateMachine.CurrentState);
         BattleStateMachine.CurrentState.LogicUpdate();
     }
 

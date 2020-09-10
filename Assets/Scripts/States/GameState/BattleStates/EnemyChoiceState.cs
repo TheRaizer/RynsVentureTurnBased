@@ -68,6 +68,7 @@ public class EnemyChoiceState : State
             battleLogic.CheckForEnemiesRemaining();
             textMods.ChangeEnemyNameColour();
 
+            Debug.Log("printing player attack");
             stateMachine.ChangeState(BattleStates.BattleTextBox);
         }
     }

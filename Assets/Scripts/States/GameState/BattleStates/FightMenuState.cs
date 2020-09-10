@@ -34,7 +34,7 @@ public class FightMenuState : StatusEffectCheckState
         Debug.Log(battleLogic.CurrentPlayer.Id + " Turn");
         if (CheckForStatusEffects(statusManager, battleLogic, textBoxHandler, battleLogic.CurrentPlayer.Stats, BattleStates.FightMenu))
         {
-            Debug.Log("Checked status effects");
+            Debug.Log("print status effects");
             stateMachine.ChangeState(BattleStates.BattleTextBox);
         }
         if(statusManager.CheckForReplacementStatusEffect(battleLogic.AttackablesDic, battleLogic.CurrentPlayer.Stats))

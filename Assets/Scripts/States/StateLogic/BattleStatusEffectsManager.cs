@@ -5,12 +5,12 @@ using UnityEngine;
 public class BattleStatusEffectsManager
 {
     private readonly TextBoxHandler textBoxHandler;
-    private readonly BattleLogic battleLogic;
+    private readonly StateMachine battleStatemachine;
 
-    public BattleStatusEffectsManager(TextBoxHandler _textBoxHandler, BattleLogic _battleLogic)
+    public BattleStatusEffectsManager(TextBoxHandler _textBoxHandler, StateMachine _battleStatemachine)
     {
         textBoxHandler = _textBoxHandler;
-        battleLogic = _battleLogic;
+        battleStatemachine = _battleStatemachine;
     }
 
     public bool CheckForStatusEffect(Dictionary<EntityType, List<StatsManager>> attackablesDic, StatsManager currentInfectee)
@@ -43,15 +43,15 @@ public class BattleStatusEffectsManager
             }
             else
             {
+                textBoxHandler.AddTextAsStatusEffect(currentInfectee.user.Id, statusEffect.Name);
                 if (currentInfectee.user.EntityType == EntityType.Enemy)
                 {
-                    statusEffect.OnTurn(attackablesDic[currentInfectee.user.EntityType], attackablesDic[EntityType.Player], currentInfectee, battleLogic);
+                    statusEffect.OnTurn(attackablesDic[currentInfectee.user.EntityType], attackablesDic[EntityType.Player], currentInfectee, battleStatemachine, textBoxHandler);
                 }
                 else
                 {
-                    statusEffect.OnTurn(attackablesDic[currentInfectee.user.EntityType], attackablesDic[EntityType.Enemy], currentInfectee, battleLogic);
+                    statusEffect.OnTurn(attackablesDic[currentInfectee.user.EntityType], attackablesDic[EntityType.Enemy], currentInfectee, battleStatemachine, textBoxHandler);
                 }
-                textBoxHandler.AddTextAsStatusEffect(currentInfectee.user.Id, statusEffect.Name);
             }
             return true;
         }
@@ -86,15 +86,15 @@ public class BattleStatusEffectsManager
                     }
                     else
                     {
+                        textBoxHandler.AddTextAsStatusEffect(attackablesDic[a][i].user.Id, currentStatusEffect.Name);
                         if (a == EntityType.Player)
                         {
-                            currentStatusEffect.OnTurn(attackablesDic[EntityType.Player], attackablesDic[EntityType.Enemy], attackablesDic[a][i], battleLogic);
+                            currentStatusEffect.OnTurn(attackablesDic[EntityType.Player], attackablesDic[EntityType.Enemy], attackablesDic[a][i], battleStatemachine, textBoxHandler);
                         }
                         else if (a == EntityType.Enemy)
                         {
-                            currentStatusEffect.OnTurn(attackablesDic[EntityType.Enemy], attackablesDic[EntityType.Player], attackablesDic[a][i], battleLogic);
+                            currentStatusEffect.OnTurn(attackablesDic[EntityType.Enemy], attackablesDic[EntityType.Player], attackablesDic[a][i], battleStatemachine, textBoxHandler);
                         }
-                        textBoxHandler.AddTextAsStatusEffect(attackablesDic[a][i].user.Id, currentStatusEffect.Name);
                         addedText = true;
                     }
                 }
@@ -120,15 +120,15 @@ public class BattleStatusEffectsManager
             }
             else
             {
+                textBoxHandler.AddTextAsStatusEffect(currentInfectee.user.Id, currentStatusEffect.Name);
                 if (currentInfectee.user.EntityType == EntityType.Enemy)
                 {
-                    currentStatusEffect.OnTurn(attackablesDic[currentInfectee.user.EntityType], attackablesDic[EntityType.Player], currentInfectee, battleLogic);
+                    currentStatusEffect.OnTurn(attackablesDic[currentInfectee.user.EntityType], attackablesDic[EntityType.Player], currentInfectee, battleStatemachine, textBoxHandler);
                 }
                 else
                 {
-                    currentStatusEffect.OnTurn(attackablesDic[currentInfectee.user.EntityType], attackablesDic[EntityType.Enemy], currentInfectee, battleLogic);
+                    currentStatusEffect.OnTurn(attackablesDic[currentInfectee.user.EntityType], attackablesDic[EntityType.Enemy], currentInfectee, battleStatemachine, textBoxHandler);
                 }
-                textBoxHandler.AddTextAsStatusEffect(currentInfectee.user.Id, currentStatusEffect.Name);
                 addedText = true;
             }
         }

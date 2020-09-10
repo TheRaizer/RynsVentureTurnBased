@@ -11,21 +11,19 @@ public abstract class StatusEffectCheckState : State
 
     protected bool CheckForStatusEffects(BattleStatusEffectsManager statusManager, BattleLogic battleLogic, TextBoxHandler textBoxHandler, StatsManager inhibitor, Enum currentState)
     {
-        if (!CheckedStatusEffectThisTurn)
+        if (statusManager.CheckForStatusEffect(battleLogic.AttackablesDic, inhibitor))
         {
-            CheckedStatusEffectThisTurn = true;
-            if (statusManager.CheckForStatusEffect(battleLogic.AttackablesDic, inhibitor))
+            if (!inhibitor.HealthManager.Dead)
             {
-                if (!inhibitor.HealthManager.Dead)
-                {
-                    textBoxHandler.PreviousState = currentState;
-                }
-                return true;
+                textBoxHandler.PreviousState = currentState;
             }
-            
+            return true;
         }
-        CheckedStatusEffectThisTurn = false;
+        else
+        {
+            Debug.Log("There were no status effects");
 
-        return false;
+            return false;
+        }
     }
 }

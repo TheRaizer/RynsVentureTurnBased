@@ -22,7 +22,7 @@ public class StatusEffect : MonoBehaviour
     }
 
     public virtual void OnEffectStart(StatsManager inhabitor) { }
-    public virtual void OnTurn(List<StatsManager> attackableTeam, List<StatsManager> opposingTeam, StatsManager currentUser, BattleLogic battleLogic) => DecrementTurns();
+    public virtual void OnTurn(List<StatsManager> attackableTeam, List<StatsManager> opposingTeam, StatsManager currentUser, StateMachine battleStateMachine, TextBoxHandler textBoxHandler) => DecrementTurns();
     public virtual void OnWornOff(StatsManager inhabitor) { }
 
     public void DecrementTurns() => currentNumberOfTurnsToLast--;

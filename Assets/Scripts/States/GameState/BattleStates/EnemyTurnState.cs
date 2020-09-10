@@ -26,7 +26,7 @@ public class EnemyTurnState : StatusEffectCheckState
         Debug.Log(battleLogic.CurrentEnemy.Id + " Turn");
         if (CheckForStatusEffects(statusManager, battleLogic, textBoxHandler, battleLogic.CurrentEnemy.Stats, null))
         {
-            Debug.Log("Checked status effects");
+            Debug.Log("printing status effects");
             stateMachine.ChangeState(BattleStates.BattleTextBox);
         }
         if (statusManager.CheckForReplacementStatusEffect(battleLogic.AttackablesDic, battleLogic.CurrentEnemy.Stats))
@@ -43,6 +43,7 @@ public class EnemyTurnState : StatusEffectCheckState
 
         textMods.PrintPlayerHealth();
         textMods.ChangePlayerTextColour();
+        Debug.Log("printing enemy attacks");
         stateMachine.ChangeState(BattleStates.BattleTextBox);
     }
 

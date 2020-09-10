@@ -18,6 +18,7 @@ public class VictoryState : State
     public override void OnFullRotationEnter()
     {
         base.OnEnterOrReturn();
+
         foreach(PlayableCharacter p in battleLogic.PlayableCharacterRoster)
         {
             if (p != null)

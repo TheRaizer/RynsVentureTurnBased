@@ -56,7 +56,7 @@ public class TextBoxHandler
             Finished = false;
             menusHandler.TextArea.text = "";
 
-            if (currentLine.Equals(textLines.Count))
+            if (currentLine >= textLines.Count)
             {
                 ResetTextBox();
                 Finished = true;
@@ -84,7 +84,7 @@ public class TextBoxHandler
 
     public void ResetTextBox()
     {
-        menusHandler.StopCoroutine(BuildMultiStringTextCo());
+        menusHandler.StopCoroutine("BuildMultiStringTextCo");
         running = false;
         skip = false;
         currentLine = 0;
