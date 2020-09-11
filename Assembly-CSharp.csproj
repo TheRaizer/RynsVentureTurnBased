@@ -92,12 +92,13 @@
     <Compile Include="Assets\Scripts\States\GameState\WorldRoamState.cs" />
     <Compile Include="Assets\Scripts\PointerControl\Directions.cs" />
     <Compile Include="Assets\Scripts\Text\TextBoxHandler.cs" />
+    <Compile Include="Assets\Scripts\GeneralEntity\StatusEffectsManager.cs" />
     <Compile Include="Assets\Scripts\States\StateLogic\BattleLogic.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\MultiTurnTriggeredEffects\Burn.cs" />
     <Compile Include="Assets\Scripts\GeneralEntity\HealthManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\FightMenuState.cs" />
-    <Compile Include="Assets\Scripts\GeneralEntity\StatusEffectsManager.cs" />
-    <Compile Include="Assets\Scripts\StatusEffects\MultiTurnTriggeredEffects\Burn.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\TurnReplacement\Confusion.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Stun : StatusEffect
 {
-    public override void OnTurn(List<StatsManager> attackableTeam, List<StatsManager> opposingTeam, StatsManager currentUser, StateMachine battleStateMachine, TextBoxHandler textBoxHandler)
+    public override void OnTurn(BattleLogic battleLogic, StatsManager currentUser, StateMachine battleStateMachine, TextBoxHandler textBoxHandler)
     {
-        base.OnTurn(attackableTeam, opposingTeam, currentUser, battleStateMachine, textBoxHandler);
+        base.OnTurn(battleLogic, currentUser, battleStateMachine, textBoxHandler);
         Debug.Log("Skip Turn");
-        textBoxHandler.PreviousState = null;
         battleStateMachine.ChangeState(BattleStates.BattleTextBox);
     }
 

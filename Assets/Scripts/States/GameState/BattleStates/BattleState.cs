@@ -42,7 +42,7 @@ public class BattleState : State
             { BattleStates.FightMenu, new FightMenuState(BattleStateMachine, BattleLogic, menusHandler, statusEffectsManager, textBoxHandler) },
             { BattleStates.BattleTextBox, new BattleTextBoxState(BattleStateMachine, textBoxHandler, menusHandler) }
         };
-        enemyChoice = new EnemyChoiceState(BattleStateMachine, BattleLogic, menusHandler, textMods, textBoxHandler);
+        enemyChoice = new EnemyChoiceState(BattleStateMachine, BattleLogic, menusHandler, textMods, textBoxHandler, statusEffectsManager);
         battleStates.Add(BattleStates.EnemyChoice, enemyChoice);
 
         BattleStateMachine.Initialize(battleStates, BattleStates.FightMenu);//probably start it off in the text box State EDDDIIIIIT THIIIIIIS

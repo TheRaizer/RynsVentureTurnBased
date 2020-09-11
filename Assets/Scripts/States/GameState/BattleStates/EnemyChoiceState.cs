@@ -7,13 +7,15 @@ public class EnemyChoiceState : State
     public readonly VectorMenuTraversal menuTraversal;
     private readonly TextModifications textMods;
     private readonly TextBoxHandler textBoxHandler;
+    private readonly BattleStatusEffectsManager battleStatusManager;
 
-    public EnemyChoiceState(StateMachine _stateMachine, BattleLogic _battleLogic, MenusHandler _menusHandler, TextModifications _textMods, TextBoxHandler _textBoxHandler) : base(_stateMachine)
+    public EnemyChoiceState(StateMachine _stateMachine, BattleLogic _battleLogic, MenusHandler _menusHandler, TextModifications _textMods, TextBoxHandler _textBoxHandler, BattleStatusEffectsManager _battleStatusManager) : base(_stateMachine)
     {
         battleLogic = _battleLogic;
         menusHandler = _menusHandler;
         textMods = _textMods;
         textBoxHandler = _textBoxHandler;
+        battleStatusManager = _battleStatusManager;
 
         menuTraversal = new VectorMenuTraversal(PositionPointer)
         {
@@ -22,6 +24,7 @@ public class EnemyChoiceState : State
         };
     }
 
+    
     public override void OnEnterOrReturn()
     {
         base.OnEnterOrReturn();
@@ -32,6 +35,16 @@ public class EnemyChoiceState : State
             menuTraversal.CheckIfIndexInRange();
         }
         PositionPointer();
+    }
+
+    public override void OnFullRotationEnter()
+    {
+        base.OnFullRotationEnter();
+
+        if (battleStatusManager.CheckForReplacementStatusEffect(battleLogic, battleLogic.CurrentPlayer.Stats, true))
+        {
+            return;
+        }
     }
 
     public override void InputUpdate()

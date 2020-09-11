@@ -37,7 +37,7 @@ public class FightMenuState : StatusEffectCheckState
             Debug.Log("print status effects");
             stateMachine.ChangeState(BattleStates.BattleTextBox);
         }
-        if(statusManager.CheckForReplacementStatusEffect(battleLogic.AttackablesDic, battleLogic.CurrentPlayer.Stats))
+        if(statusManager.CheckForReplacementStatusEffect(battleLogic, battleLogic.CurrentPlayer.Stats, false))
         {
             return;
         }

@@ -38,7 +38,6 @@ public class EntityAction : MonoBehaviour
     {
         StatusEffect s = StatusEffectPrefab.GetComponent<StatusEffect>();
 
-        s.OnEffectStart(statsToApplyToo);
         if(s.EffectType == EffectType.ReplaceTurn)
         {
             statsToApplyToo.StatusEffectsManager.AddToReplacementTurn(s.ShallowCopy());

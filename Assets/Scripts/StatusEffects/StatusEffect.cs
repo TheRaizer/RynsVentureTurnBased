@@ -6,7 +6,7 @@ public enum EffectType
 {
     MultiTurnTrigger,
     SingleTurnTrigger,
-    ReplaceTurn
+    ReplaceTurn,
 }
 
 public class StatusEffect : MonoBehaviour
@@ -15,6 +15,8 @@ public class StatusEffect : MonoBehaviour
     [field: SerializeField] public EffectType EffectType { get; private set; }
     [field: SerializeField] public int MaxNumberOfTurnsToLast { get; private set; }
     [SerializeField] private int currentNumberOfTurnsToLast;
+    [SerializeField] public bool outputTextOnTurns = true;
+    [SerializeField] public bool runAfterAttackChoice = false;
 
     private void Awake()
     {
@@ -22,7 +24,7 @@ public class StatusEffect : MonoBehaviour
     }
 
     public virtual void OnEffectStart(StatsManager inhabitor) { }
-    public virtual void OnTurn(List<StatsManager> attackableTeam, List<StatsManager> opposingTeam, StatsManager currentUser, StateMachine battleStateMachine, TextBoxHandler textBoxHandler) => DecrementTurns();
+    public virtual void OnTurn(BattleLogic battleLogic, StatsManager currentUser, StateMachine battleStateMachine, TextBoxHandler textBoxHandler) => DecrementTurns();
     public virtual void OnWornOff(StatsManager inhabitor) { }
 
     public void DecrementTurns() => currentNumberOfTurnsToLast--;

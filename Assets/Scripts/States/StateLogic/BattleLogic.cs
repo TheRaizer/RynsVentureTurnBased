@@ -131,14 +131,14 @@ public class BattleLogic
             StatsManager currentPlayer = ActivePlayableCharacters[i].Stats;
             if (!currentPlayer.HealthManager.Dead && !AttackablesDic[EntityType.Player].Contains(currentPlayer))
             {
-                if (!AttackablesDic.TryGetValue(EntityType.Player, out List<StatsManager> stats))
+                if (AttackablesDic.TryGetValue(EntityType.Player, out List<StatsManager> stats))
                 {
-                    stats.Add(currentPlayer);
-                    AttackablesDic.Add(EntityType.Player, stats);
+                    AttackablesDic[EntityType.Player].Add(currentPlayer);
                 }
                 else
                 {
-                    AttackablesDic[EntityType.Player].Add(currentPlayer);
+                    stats.Add(currentPlayer);
+                    AttackablesDic.Add(EntityType.Player, stats);
                 }
             }
             else if (AttackablesDic[EntityType.Player].Contains(currentPlayer) && currentPlayer.HealthManager.Dead)

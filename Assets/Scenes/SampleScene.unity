@@ -4691,7 +4691,8 @@ MonoBehaviour:
   <IsAOE>k__BackingField: 0
   <Damage>k__BackingField: 5
   <Accuracy>k__BackingField: 95
-  <StatusEffectPrefab>k__BackingField: {fileID: 0}
+  <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: dc1c2de5101271f4bb518ba70c469b2b,
+    type: 3}
   <StatusEffectChance>k__BackingField: 100
   <CritChance>k__BackingField: 10
   <CritMultiplier>k__BackingField: 2.5

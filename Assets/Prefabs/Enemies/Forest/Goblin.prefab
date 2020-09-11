@@ -120,7 +120,7 @@ MonoBehaviour:
   <DamageScale>k__BackingField: 1
   <Speed>k__BackingField: 3
   <ClockTick>k__BackingField: 0
-  baseMaxHp: 10
+  baseMaxHp: 15
   <HealthManager>k__BackingField:
     <CurrentHealth>k__BackingField: 0
     <MaxHealth>k__BackingField: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
   <Accuracy>k__BackingField: 97
   <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 10249f38991cd1a418c69e19ef9d40a7,
     type: 3}
-  <StatusEffectChance>k__BackingField: 60
+  <StatusEffectChance>k__BackingField: 45
   <CritChance>k__BackingField: 7
   <CritMultiplier>k__BackingField: 2.5
   <AttackText>k__BackingField: throws spear

@@ -47,3 +47,4 @@ MonoBehaviour:
   <EffectType>k__BackingField: 1
   <MaxNumberOfTurnsToLast>k__BackingField: 10
   currentNumberOfTurnsToLast: 10
+  outputTextOnTurns: 0

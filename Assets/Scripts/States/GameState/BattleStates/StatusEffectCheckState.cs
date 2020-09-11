@@ -11,7 +11,7 @@ public abstract class StatusEffectCheckState : State
 
     protected bool CheckForStatusEffects(BattleStatusEffectsManager statusManager, BattleLogic battleLogic, TextBoxHandler textBoxHandler, StatsManager inhibitor, Enum currentState)
     {
-        if (statusManager.CheckForStatusEffect(battleLogic.AttackablesDic, inhibitor))
+        if (statusManager.CheckForStatusEffect(battleLogic, inhibitor))
         {
             if (!inhibitor.HealthManager.Dead)
             {

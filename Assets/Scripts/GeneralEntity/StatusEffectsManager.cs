@@ -44,12 +44,21 @@ public class StatusEffectsManager
     {
         if (statusEffectsDic.TryGetValue(effectType, out List<StatusEffect> effects))
         {
-            statusEffectsDic[effectType].Add(statusObject);
+            if (statusEffectsDic[effectType].Contains(statusObject))
+            {
+                statusEffectsDic[effectType][statusEffectsDic[effectType].IndexOf(statusObject)].ResetNumberOfTurnsToLast();
+            }
+            else
+            {
+                statusEffectsDic[effectType].Add(statusObject);
+                statusObject.OnEffectStart(stats);
+            }
         }
         else
         {
             effects.Add(statusObject);
             statusEffectsDic.Add(effectType, effects);
+            statusObject.OnEffectStart(stats);
         }
     }
 
@@ -70,6 +79,7 @@ public class StatusEffectsManager
             effects.Add(statusObject);
             statusEffectsDic.Add(EffectType.ReplaceTurn, effects);
         }
+        statusObject.OnEffectStart(stats);
     }
 
     public void ClearStatusEffects(EffectType effectType)

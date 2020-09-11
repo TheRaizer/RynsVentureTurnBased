@@ -84,7 +84,7 @@ public class TextBoxHandler
 
     public void ResetTextBox()
     {
-        menusHandler.StopCoroutine("BuildMultiStringTextCo");
+        menusHandler.StopCoroutine(BuildMultiStringTextCo());
         running = false;
         skip = false;
         currentLine = 0;
@@ -125,5 +125,20 @@ public class TextBoxHandler
         Enum s = PreviousState;
         PreviousState = null;
         battleStateMachine.ReturnBackToState(s);
+    }
+    public void GenerateEnemyText(List<EntityActionInfo> attackInfos, EntityAction attackToUse)
+    {
+        for (int i = 0; i < attackInfos.Count; i++)
+        {
+            AddTextAsAttack(battleLogic.CurrentEnemy.Id, attackToUse.AttackText, attackInfos[i].targetId);
+            if (!attackInfos[i].hitTarget)
+            {
+                AddTextOnMiss(battleLogic.CurrentEnemy.Id, attackInfos[i].targetId);
+            }
+            else if (attackToUse.WasCriticalHit)
+            {
+                AddTextAsCriticalHit();
+            }
+        }
     }
 }
