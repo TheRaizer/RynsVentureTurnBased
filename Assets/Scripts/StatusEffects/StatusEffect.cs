@@ -23,7 +23,7 @@ public class StatusEffect : MonoBehaviour
         currentNumberOfTurnsToLast = MaxNumberOfTurnsToLast;
     }
 
-    public virtual void OnEffectStart(StatsManager inhabitor) { }
+    public virtual void OnEffectStart(StatsManager inhabitor, TextBoxHandler textBoxHandler) { }
     public virtual void OnTurn(BattleLogic battleLogic, StatsManager currentUser, StateMachine battleStateMachine, TextBoxHandler textBoxHandler) => DecrementTurns();
     public virtual void OnWornOff(StatsManager inhabitor) { }
 

@@ -9,12 +9,16 @@ public class StatsManager : MonoBehaviour
     [field: SerializeField] public int ClockTick { get; private set; }
 
     [SerializeField] private int baseMaxHp = 0;
+    [SerializeField] private int baseMaxMp = 0;
     [field: SerializeField] public HealthManager HealthManager { get; private set; }
+    [field: SerializeField] public ManaManager ManaManager { get; private set; }
+
     public StatusEffectsManager StatusEffectsManager { get; private set; }
 
     public void Initialize(IUser _user)
     {
         HealthManager = new HealthManager(baseMaxHp);
+        ManaManager = new ManaManager(baseMaxMp);
         StatusEffectsManager = new StatusEffectsManager(this);
         user = _user;
     }

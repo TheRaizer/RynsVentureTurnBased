@@ -56,6 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\GameMaster\WorldStateManager.cs" />
+    <Compile Include="Assets\Scripts\GeneralEntity\AmountManager.cs" />
+    <Compile Include="Assets\Scripts\GeneralEntity\ManaManager.cs" />
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\StatusEffectCheckState.cs" />
     <Compile Include="Assets\Scripts\Extensions\RectTransformExtensions.cs" />
     <Compile Include="Assets\Scripts\AttackActions\EntityActionInfo.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="Assets\Scripts\StatusEffects\MultiTurnTriggeredEffects\Poison.cs" />
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\BattleTextBoxState.cs" />
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\VictoryState.cs" />
+    <Compile Include="Assets\Scripts\BattlePressables\MagicCommand.cs" />
     <Compile Include="Assets\Scripts\Text\TextManipulation.cs" />
     <Compile Include="Assets\Scripts\Text\TextModifications.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\TurnReplacement\Stun.cs" />
@@ -77,6 +80,7 @@
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\BattleState.cs" />
     <Compile Include="Assets\Scripts\BattlePressables\BattleCommands.cs" />
     <Compile Include="Assets\Scripts\MenuTraversal\MatrixMenuTraversal.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\TurnReplacement\Confusion.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\SingleTurnTriggeredEffects\AttackUp.cs" />
     <Compile Include="Assets\Scripts\Player\LevelSystem.cs" />
     <Compile Include="Assets\Scripts\GeneralEntity\StatsManager.cs" />
@@ -95,10 +99,11 @@
     <Compile Include="Assets\Scripts\GeneralEntity\StatusEffectsManager.cs" />
     <Compile Include="Assets\Scripts\States\StateLogic\BattleLogic.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\MultiTurnTriggeredEffects\Burn.cs" />
+    <Compile Include="Assets\Scripts\States\GameState\BattleStates\MagicChoiceState.cs" />
     <Compile Include="Assets\Scripts\GeneralEntity\HealthManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\FightMenuState.cs" />
-    <Compile Include="Assets\Scripts\StatusEffects\TurnReplacement\Confusion.cs" />
+    <Compile Include="Assets\Scripts\Extensions\ArrayExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

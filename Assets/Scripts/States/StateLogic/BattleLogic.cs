@@ -18,7 +18,7 @@ public class BattleLogic
 
     public GameObject[] Enemies { get; private set; } = new GameObject[ConstantNumbers.MAX_NUMBER_OF_ENEMIES];
 
-    public Dictionary<EntityType, List<StatsManager>> AttackablesDic { get; set; } = new Dictionary<EntityType, List<StatsManager>>();
+    public Dictionary<EntityType, List<StatsManager>> AttackablesDic { get; set; } = new Dictionary<EntityType, List<StatsManager>>();//attackableEnemies is only used to track if player wins
 
     public Enemy CurrentEnemy { get; private set; }
     public PlayableCharacter CurrentPlayer { get; private set; }

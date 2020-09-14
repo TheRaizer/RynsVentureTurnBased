@@ -48,7 +48,7 @@ public class TextModifications
         {
             if (battleLogic.ActivePlayableCharacters[i] != null)
             {
-                menusHandler.PlayerHealthText[i].text = battleLogic.ActivePlayableCharacters[i].Stats.HealthManager.CurrentHealth + " / " + battleLogic.ActivePlayableCharacters[i].Stats.HealthManager.MaxHealth;
+                menusHandler.PlayerHealthText[i].text = battleLogic.ActivePlayableCharacters[i].Stats.HealthManager.CurrentAmount + " / " + battleLogic.ActivePlayableCharacters[i].Stats.HealthManager.MaxAmount;
             }
         }
     }
@@ -61,14 +61,14 @@ public class TextModifications
             {
                 StatsManager currentEnemy = battleLogic.Enemies[i].GetComponent<StatsManager>();
 
-                float yellowAmt = currentEnemy.HealthManager.MaxHealth * PERCENT_TILL_YELLOW;
-                float redAmt = currentEnemy.HealthManager.MaxHealth * PERCENT_TILL_RED;
+                float yellowAmt = currentEnemy.HealthManager.MaxAmount * PERCENT_TILL_YELLOW;
+                float redAmt = currentEnemy.HealthManager.MaxAmount * PERCENT_TILL_RED;
 
-                if (currentEnemy.HealthManager.CurrentHealth <= redAmt)
+                if (currentEnemy.HealthManager.CurrentAmount <= redAmt)
                 {
                     menusHandler.EnemyIdText[i].color = Color.red;
                 }
-                else if (currentEnemy.HealthManager.CurrentHealth <= yellowAmt)
+                else if (currentEnemy.HealthManager.CurrentAmount <= yellowAmt)
                 {
                     menusHandler.EnemyIdText[i].color = Color.yellow;
                 }
@@ -86,15 +86,15 @@ public class TextModifications
                 {
                     StatsManager currentPlayer = battleLogic.ActivePlayableCharacters[i].Stats;
 
-                    float yellowAmt = currentPlayer.HealthManager.MaxHealth * PERCENT_TILL_YELLOW;
-                    float redAmt = currentPlayer.HealthManager.MaxHealth * PERCENT_TILL_RED;
+                    float yellowAmt = currentPlayer.HealthManager.MaxAmount * PERCENT_TILL_YELLOW;
+                    float redAmt = currentPlayer.HealthManager.MaxAmount * PERCENT_TILL_RED;
 
-                    if (currentPlayer.HealthManager.CurrentHealth <= redAmt)
+                    if (currentPlayer.HealthManager.CurrentAmount <= redAmt)
                     {
                         menusHandler.PlayerHealthText[i].color = Color.red;
                         menusHandler.PlayerNameText[i].color = Color.red;
                     }
-                    else if (currentPlayer.HealthManager.CurrentHealth <= yellowAmt)
+                    else if (currentPlayer.HealthManager.CurrentAmount <= yellowAmt)
                     {
                         menusHandler.PlayerHealthText[i].color = Color.yellow;
                         menusHandler.PlayerNameText[i].color = Color.yellow;

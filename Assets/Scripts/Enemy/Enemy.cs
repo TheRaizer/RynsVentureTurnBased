@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour, IUser
         Stats = GetComponent<StatsManager>();
         Stats.Initialize(this);
 
-        Stats.HealthManager.IncreaseMaxHealth(percentHealthIncrease * level);
+        Stats.HealthManager.IncreaseMaxAmount(percentHealthIncrease * level);
         Stats.DamageScale += damageScalingIncrease * level;
     }
 }

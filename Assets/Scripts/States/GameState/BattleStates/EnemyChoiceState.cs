@@ -19,8 +19,7 @@ public class EnemyChoiceState : State
 
         menuTraversal = new VectorMenuTraversal(PositionPointer)
         {
-            Min = 0,
-            Max = battleLogic.Enemies.Length
+            MaxIndex = battleLogic.Enemies.Length - 1
         };
     }
 
@@ -65,7 +64,7 @@ public class EnemyChoiceState : State
         if (Input.GetKeyDown(KeyCode.Return))
         {
             Enemy enemyToAttack = battleLogic.Enemies[menuTraversal.currentIndex].GetComponent<Enemy>();
-            EntityActionInfo attackInfo = battleLogic.CurrentPlayerAttack.UseAttack(enemyToAttack.Stats, battleLogic.CurrentPlayer.Stats.DamageScale);
+            EntityActionInfo attackInfo = battleLogic.CurrentPlayerAttack.UseAttack(enemyToAttack.Stats, battleLogic.CurrentPlayer.Stats.DamageScale, textBoxHandler);
 
             textBoxHandler.AddTextAsAttack(battleLogic.CurrentPlayer.Id, battleLogic.CurrentPlayerAttack.AttackText, enemyToAttack.Id);
 

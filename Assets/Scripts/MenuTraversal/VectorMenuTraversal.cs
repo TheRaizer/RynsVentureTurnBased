@@ -6,21 +6,20 @@ public class VectorMenuTraversal
     public int currentIndex = 0;
     private readonly Action onTraversal;
 
-    public int Min { get; set; }
-    public int Max { get; set; }
+    public int MaxIndex { get; set; }
 
     public VectorMenuTraversal(Action _onTraversal)
     {
         onTraversal = _onTraversal;
     }
 
-    public void Traverse<T>(T[] arr)
+    public void Traverse<T>(T[] menu)
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             currentIndex--;
             CheckIfIndexInRange();
-            while (arr[currentIndex] == null)
+            while (menu[currentIndex] == null)
             {
                 currentIndex--;
                 CheckIfIndexInRange();
@@ -31,7 +30,7 @@ public class VectorMenuTraversal
             currentIndex++;
             CheckIfIndexInRange();
 
-            while (arr[currentIndex] == null)
+            while (menu[currentIndex] == null)
             {
                 currentIndex++;
                 CheckIfIndexInRange();
@@ -41,10 +40,10 @@ public class VectorMenuTraversal
 
     public void CheckIfIndexInRange()
     {
-        if (currentIndex >= Max)
+        if (currentIndex > MaxIndex)
             currentIndex = 0;
-        else if (currentIndex < Min)
-            currentIndex = Max - 1;
+        else if (currentIndex < 0)
+            currentIndex = MaxIndex;
 
         onTraversal?.Invoke();
     }

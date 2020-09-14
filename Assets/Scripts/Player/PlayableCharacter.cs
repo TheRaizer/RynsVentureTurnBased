@@ -17,7 +17,7 @@ public class PlayableCharacter : MonoBehaviour, ILevel, IUser
 
     [field: Header ("Attacks")]
     [field: SerializeField] public EntityAction FightAttack { get; private set; }
-    [field: SerializeField] public List<EntityAction> Magic { get; private set; }
+    [field: SerializeField] public List<EntityAction> Magic { get; private set; } = new List<EntityAction>();
 
     [field: SerializeField] public LevelSystem LevelSystem { get; private set; }
 
@@ -29,11 +29,15 @@ public class PlayableCharacter : MonoBehaviour, ILevel, IUser
         LevelSystem = new LevelSystem(this, baseExperienceToNextLevel, percentExperiencePerLevel);
         Stats = GetComponent<StatsManager>();
         Stats.Initialize(this);
+        if(Magic.Count > 12)
+        {
+            Debug.LogError("Magic actions exceeds limit");
+        }
     }
 
     public void OnLevelUp()
     {
-        Stats.HealthManager.IncreaseMaxHealth(PercentHealthIncreasePerLevel);
+        Stats.HealthManager.IncreaseMaxAmount(PercentHealthIncreasePerLevel);
         Stats.DamageScale += DamageScaleIncreasePerLevel;
     }
 }

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackUp : StatusEffect//status effects like this one somehow need to print the action they did only on effect start and not every turn
+public class AttackUp : StatusEffect
 {
-    public override void OnEffectStart(StatsManager inhabitor)
+    public override void OnEffectStart(StatsManager inhabitor, TextBoxHandler textBoxHandler)
     {
-        base.OnEffectStart(inhabitor);
-
+        base.OnEffectStart(inhabitor, textBoxHandler);
+        textBoxHandler.AddTextAsStatusEffect(inhabitor.user.Id, Name);
         inhabitor.DamageScale += 5;
     }
 

@@ -8,6 +8,7 @@ public class EntityAction : MonoBehaviour
     [field: SerializeField] public string Id { get; private set; }
     [field: SerializeField] public bool IsAOE { get; private set; }
     [field: SerializeField] public int Damage { get; private set; }
+    [field: SerializeField] public int ManaReduction { get; private set; }
     [field: SerializeField] public float Accuracy { get; private set; }
     [field: SerializeField] public GameObject StatusEffectPrefab { get; private set; }
     [field: SerializeField] public float StatusEffectChance { get; private set; }
@@ -17,7 +18,7 @@ public class EntityAction : MonoBehaviour
 
     public bool WasCriticalHit { get; private set; } = false;
 
-    private void ApplyStatusEffect(StatsManager statsToApplyToo, bool instantApply)
+    private void ApplyStatusEffect(StatsManager statsToApplyToo, bool instantApply, TextBoxHandler textBoxHandler)
     {
         if (!instantApply)
         {
@@ -25,48 +26,48 @@ public class EntityAction : MonoBehaviour
 
             if (chance <= StatusEffectChance)
             {
-                StatusEffectApplication(statsToApplyToo);
+                StatusEffectApplication(statsToApplyToo, textBoxHandler);
             }
         }
         else
         {
-            StatusEffectApplication(statsToApplyToo);
+            StatusEffectApplication(statsToApplyToo, textBoxHandler);
         }
     }
 
-    private void StatusEffectApplication(StatsManager statsToApplyToo)
+    private void StatusEffectApplication(StatsManager statsToApplyToo, TextBoxHandler textBoxHandler)
     {
         StatusEffect s = StatusEffectPrefab.GetComponent<StatusEffect>();
 
         if(s.EffectType == EffectType.ReplaceTurn)
         {
-            statsToApplyToo.StatusEffectsManager.AddToReplacementTurn(s.ShallowCopy());
+            statsToApplyToo.StatusEffectsManager.AddToReplacementTurn(s.ShallowCopy(), textBoxHandler);
         }
         else
         {
-            statsToApplyToo.StatusEffectsManager.AddToStatusEffectsDic(s.EffectType, s.ShallowCopy());
+            statsToApplyToo.StatusEffectsManager.AddToStatusEffectsDic(s.EffectType, s.ShallowCopy(), textBoxHandler);
         }
     }
 
-    public List<EntityActionInfo> DetermineAttack(List<StatsManager> statsTooAttack, float damageScale, int indexToAttack)
+    public List<EntityActionInfo> DetermineAttack(List<StatsManager> statsTooAttack, float damageScale, int indexToAttack, TextBoxHandler textBoxHandler)
     {
         List<EntityActionInfo> attackInfos = new List<EntityActionInfo>();
         if(!IsAOE)
         {
-            attackInfos.Add(UseAttack(statsTooAttack[indexToAttack], damageScale));
+            attackInfos.Add(UseAttack(statsTooAttack[indexToAttack], damageScale, textBoxHandler));
         }
         else
         {
             for(int i = 0; i < statsTooAttack.Count; i++)
             {
-                attackInfos.Add(UseAttack(statsTooAttack[i], damageScale));
+                attackInfos.Add(UseAttack(statsTooAttack[i], damageScale, textBoxHandler));
             }
         }
 
         return attackInfos;
     }
 
-    public EntityActionInfo UseAttack(StatsManager statsTooAttack, float damageScale)
+    public EntityActionInfo UseAttack(StatsManager statsTooAttack, float damageScale, TextBoxHandler textBoxHandler)
     {
         int chance = UnityEngine.Random.Range(0, 100);
         WasCriticalHit = false;
@@ -77,24 +78,33 @@ public class EntityAction : MonoBehaviour
 
             if (critChance < CritChance)
             {
-                statsTooAttack.HealthManager.Hit(MathExtension.RoundToNearestInteger(Damage * damageScale * CritMultiplier));
+                statsTooAttack.HealthManager.ReduceAmount(MathExtension.RoundToNearestInteger(Damage * damageScale * CritMultiplier));
                 if (StatusEffectPrefab != null)
                 {
-                    ApplyStatusEffect(statsTooAttack, true);
+                    ApplyStatusEffect(statsTooAttack, true, textBoxHandler);
                 }
                 WasCriticalHit = true;
                 Debug.Log("Critical hit");
                 return new EntityActionInfo(statsTooAttack.user.Id, true);
             }
 
-            statsTooAttack.HealthManager.Hit(MathExtension.RoundToNearestInteger(Damage * damageScale));
+            statsTooAttack.HealthManager.ReduceAmount(MathExtension.RoundToNearestInteger(Damage * damageScale));
             if(StatusEffectPrefab != null)
             {
-                ApplyStatusEffect(statsTooAttack, false);
+                ApplyStatusEffect(statsTooAttack, false, textBoxHandler);
             }
             return new EntityActionInfo(statsTooAttack.user.Id, true);
         }
         else
             return new EntityActionInfo(statsTooAttack.user.Id, false);
+    }
+
+    public bool ValidateAttack(StatsManager userStats)
+    {
+        if (userStats.ManaManager.CurrentAmount - ManaReduction <= 0)
+        {
+            return false;
+        }
+        else return true;
     }
 }

@@ -10,10 +10,10 @@ public class Burn : StatusEffect
     {
         base.OnTurn(battleLogic, infectee, battleStateMachine, textBoxHandler);
 
-        int amtToHit = MathExtension.RoundToNearestInteger(infectee.HealthManager.MaxHealth * PERCENT_DEMINISH);
+        int amtToHit = MathExtension.RoundToNearestInteger(infectee.HealthManager.MaxAmount * PERCENT_DEMINISH);
         if (amtToHit == 0) amtToHit = 1;
 
-        infectee.HealthManager.Hit(amtToHit);
+        infectee.HealthManager.ReduceAmount(amtToHit);
     }
 
     public override StatusEffect ShallowCopy()

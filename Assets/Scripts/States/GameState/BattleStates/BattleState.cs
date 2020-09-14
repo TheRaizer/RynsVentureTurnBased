@@ -9,7 +9,8 @@ public enum BattleStates
     EnemyChoice,
     BattleTextBox,
     Victory,
-    Loss
+    Loss,
+    MagicState,
 }
 
 public class BattleState : State
@@ -40,7 +41,8 @@ public class BattleState : State
             { BattleStates.EnemyTurn, new EnemyTurnState(BattleStateMachine, BattleLogic, textMods, statusEffectsManager, textBoxHandler) },
             { BattleStates.Victory, new VictoryState(BattleStateMachine, stateMachine, menusHandler, BattleLogic) },
             { BattleStates.FightMenu, new FightMenuState(BattleStateMachine, BattleLogic, menusHandler, statusEffectsManager, textBoxHandler) },
-            { BattleStates.BattleTextBox, new BattleTextBoxState(BattleStateMachine, textBoxHandler, menusHandler) }
+            { BattleStates.BattleTextBox, new BattleTextBoxState(BattleStateMachine, textBoxHandler, menusHandler) },
+            { BattleStates.MagicState, new MagicChoiceState(BattleStateMachine, BattleLogic, menusHandler) }
         };
         enemyChoice = new EnemyChoiceState(BattleStateMachine, BattleLogic, menusHandler, textMods, textBoxHandler, statusEffectsManager);
         battleStates.Add(BattleStates.EnemyChoice, enemyChoice);
