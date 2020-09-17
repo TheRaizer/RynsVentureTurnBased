@@ -20,7 +20,7 @@ public class MatrixMenuTraversal
 
     public void Traverse<T>(T[,] menu)
     {
-        if(Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             currentXIndex++;
             CheckIfIndexInRange();

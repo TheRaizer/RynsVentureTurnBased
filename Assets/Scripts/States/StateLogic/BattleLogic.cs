@@ -49,25 +49,24 @@ public class BattleLogic
 
         for (int i = 0; i < Enemies.Length; i++)
         {
-            if (Enemies[i] != null)
+            if (Enemies[i] == null) continue;
+
+            if (Enemies[i].GetComponent<Enemy>().Stats.HealthManager.Dead)
             {
-                if (!Enemies[i].GetComponent<Enemy>().Stats.HealthManager.Dead)
-                {
-                    EnemiesRemaining++;
-                }
-                else
-                {
-                    menusHandler.EnemyIdText[i].color = Color.white;
+                menusHandler.EnemyIdText[i].color = Color.white;
 
-                    GameObject e = Enemies[i];
-                    AttackablesDic[EntityType.Enemy].Remove(e.GetComponent<Enemy>().Stats);
-                    Enemies[i] = null;
+                GameObject e = Enemies[i];
+                AttackablesDic[EntityType.Enemy].Remove(e.GetComponent<Enemy>().Stats);
+                Enemies[i] = null;
 
-                    e.GetComponent<Enemy>().Stats.StatusEffectsManager.RemoveAllStatusEffects();
+                e.GetComponent<Enemy>().Stats.StatusEffectsManager.RemoveAllStatusEffects();
 
-                    UnityEngine.Object.Destroy(e);
-                    menusHandler.EnemyIdText[i].text = "Dead";
-                }
+                UnityEngine.Object.Destroy(e);
+                menusHandler.EnemyIdText[i].text = "Dead";
+            }
+            else
+            {
+                EnemiesRemaining++;
             }
         }
     }
@@ -86,38 +85,29 @@ public class BattleLogic
         {
             for (int i = 0; i < ActivePlayableCharacters.Length; i++)
             {
-                if (ActivePlayableCharacters[i] != null && !ActivePlayableCharacters[i].Stats.HealthManager.Dead)
-                {
-                    ActivePlayableCharacters[i].Stats.IncrementClockTick();
+                if (ActivePlayableCharacters[i] == null || ActivePlayableCharacters[i].Stats.HealthManager.Dead) continue;
+                ActivePlayableCharacters[i].Stats.IncrementClockTick();
+                if (ActivePlayableCharacters[i].Stats.ClockTick < CLOCK_TICK_MAX) continue;
 
-                    if (ActivePlayableCharacters[i].Stats.ClockTick >= CLOCK_TICK_MAX)
-                    {
-                        CurrentPlayer = ActivePlayableCharacters[i];
-                        CurrentPlayer.Stats.ResetClockTick();
-                        battleStateMachine.ChangeState(BattleStates.FightMenu);
-                        return;
-                    }
-                }
+                CurrentPlayer = ActivePlayableCharacters[i];
+                CurrentPlayer.Stats.ResetClockTick();
+                battleStateMachine.ChangeState(BattleStates.FightMenu);
+                return;
             }
 
             for (int j = 0; j < Enemies.Length; j++)
             {
-                if (Enemies[j] != null)
-                {
-                    StatsManager stats = Enemies[j].GetComponent<StatsManager>();
+                if (Enemies[j] == null) continue;
+                StatsManager stats = Enemies[j].GetComponent<StatsManager>();
+                if (stats.HealthManager.Dead) continue;
 
-                    if (stats.HealthManager.Dead) continue;
+                stats.IncrementClockTick();
+                if (stats.ClockTick < CLOCK_TICK_MAX) continue;
 
-                    stats.IncrementClockTick();
-
-                    if (stats.ClockTick >= CLOCK_TICK_MAX)
-                    {
-                        CurrentEnemy = Enemies[j].GetComponent<Enemy>();
-                        CurrentEnemy.Stats.ResetClockTick();
-                        battleStateMachine.ChangeState(BattleStates.EnemyTurn);
-                        return;
-                    }
-                }
+                CurrentEnemy = Enemies[j].GetComponent<Enemy>();
+                CurrentEnemy.Stats.ResetClockTick();
+                battleStateMachine.ChangeState(BattleStates.EnemyTurn);
+                return;
             }
         }
     }
@@ -129,7 +119,11 @@ public class BattleLogic
             if (ActivePlayableCharacters[i] == null) continue;
 
             StatsManager currentPlayer = ActivePlayableCharacters[i].Stats;
-            if (!currentPlayer.HealthManager.Dead && !AttackablesDic[EntityType.Player].Contains(currentPlayer))
+            if (currentPlayer.HealthManager.Dead && AttackablesDic[EntityType.Player].Contains(currentPlayer))
+            {
+                AttackablesDic[EntityType.Player].Remove(currentPlayer);
+            }
+            else
             {
                 if (AttackablesDic.TryGetValue(EntityType.Player, out List<StatsManager> stats))
                 {
@@ -140,10 +134,6 @@ public class BattleLogic
                     stats.Add(currentPlayer);
                     AttackablesDic.Add(EntityType.Player, stats);
                 }
-            }
-            else if (AttackablesDic[EntityType.Player].Contains(currentPlayer) && currentPlayer.HealthManager.Dead)
-            {
-                AttackablesDic[EntityType.Player].Remove(currentPlayer);
             }
         }
     }

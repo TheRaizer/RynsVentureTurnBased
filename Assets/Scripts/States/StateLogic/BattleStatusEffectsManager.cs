@@ -131,13 +131,14 @@ public class BattleStatusEffectsManager
                     textBoxHandler.AddTextAsStatusEffect(currentInfectee.user.Id, currentStatusEffect.Name);
                     addedText = true;
                 }
-                if (currentInfectee.user.EntityType == EntityType.Enemy)
+                switch (currentInfectee.user.EntityType)
                 {
-                    currentStatusEffect.OnTurn(battleLogic, currentInfectee, battleStatemachine, textBoxHandler);
-                }
-                else
-                {
-                    currentStatusEffect.OnTurn(battleLogic, currentInfectee, battleStatemachine, textBoxHandler);
+                    case EntityType.Enemy:
+                        currentStatusEffect.OnTurn(battleLogic, currentInfectee, battleStatemachine, textBoxHandler);
+                        break;
+                    default:
+                        currentStatusEffect.OnTurn(battleLogic, currentInfectee, battleStatemachine, textBoxHandler);
+                        break;
                 }
             }
         }

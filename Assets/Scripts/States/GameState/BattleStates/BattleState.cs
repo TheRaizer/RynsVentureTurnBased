@@ -67,7 +67,6 @@ public class BattleState : State
     {
         base.LogicUpdate();
 
-        //Debug.Log(BattleStateMachine.CurrentState);
         BattleStateMachine.CurrentState.LogicUpdate();
     }
 

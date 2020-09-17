@@ -48,3 +48,5 @@ MonoBehaviour:
   <MaxNumberOfTurnsToLast>k__BackingField: 10
   currentNumberOfTurnsToLast: 10
   outputTextOnTurns: 0
+  runAfterAttackChoice: 0
+  damageScaleIncrease: 2

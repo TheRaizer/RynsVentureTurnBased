@@ -120,6 +120,11 @@ public class TextBoxHandler
         AddTextLines(statusAilment + " has worn off " + id + ".");
     }
 
+    public void AddTextAsUseable(string id, string useableName)
+    {
+        AddTextLines(useableName + " has been used on " + id + ".");
+    }
+
     private void ReturnToPreviousState()
     {
         Enum s = PreviousState;
