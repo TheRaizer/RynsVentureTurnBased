@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour, IUser
 
     [field: SerializeField] public int ExpOnDeath { get; private set; }
     [field: SerializeField] public List<EntityAction> Attacks { get; private set; }
+    [field: SerializeField] public List<GameObject> PrefabItemsToDrop { get; private set; }
 
 
     public StatsManager Stats { get; private set; }

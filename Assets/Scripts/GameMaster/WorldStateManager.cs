@@ -14,15 +14,17 @@ public class WorldStateManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> characterObjectRoster = null;
 
-    public MenusHandler Menus { get; private set; }
+    public BattleMenusHandler Menus { get; private set; }
 
     private StateMachine stateMachine;
     private BattleState battleState;
     private EnemyGenerator enemyGenerator;
+    private Inventory inventory;
 
     private void Awake()
     {
-        Menus = GetComponent<MenusHandler>();
+        inventory = GetComponent<Inventory>();
+        Menus = GetComponent<BattleMenusHandler>();
         stateMachine = new StateMachine();
         battleState = new BattleState(stateMachine, Menus);
         enemyGenerator = new EnemyGenerator(FindObjectOfType<EnemyStorageForArea>(), battleState.BattleLogic);

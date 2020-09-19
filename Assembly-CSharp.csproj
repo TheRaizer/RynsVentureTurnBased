@@ -73,14 +73,17 @@
     <Compile Include="Assets\Scripts\StatusEffects\TurnReplacement\Stun.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\StatusEffect.cs" />
     <Compile Include="Assets\Scripts\BattlePressables\FightCommand.cs" />
-    <Compile Include="Assets\Scripts\MenuTraversal\MenusHandler.cs" />
+    <Compile Include="Assets\Scripts\MenuTraversal\BattleMenusHandler.cs" />
     <Compile Include="Assets\Scripts\Player\ConstantNumbers.cs" />
+    <Compile Include="Assets\Scripts\Items\Item.cs" />
     <Compile Include="Assets\Scripts\Enemy\Areas.cs" />
+    <Compile Include="Assets\Scripts\Items\SmallHpPotion.cs" />
     <Compile Include="Assets\Scripts\MenuTraversal\VectorMenuTraversal.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimations.cs" />
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\BattleState.cs" />
     <Compile Include="Assets\Scripts\BattlePressables\BattleCommands.cs" />
     <Compile Include="Assets\Scripts\MenuTraversal\MatrixMenuTraversal.cs" />
+    <Compile Include="Assets\Scripts\Items\SmallAttackUp.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\TurnReplacement\Confusion.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\SingleTurnTriggeredEffects\AttackUp.cs" />
     <Compile Include="Assets\Scripts\Player\LevelSystem.cs" />
@@ -92,9 +95,11 @@
     <Compile Include="Assets\Scripts\Enemy\EnemyStorageForArea.cs" />
     <Compile Include="Assets\Scripts\Player\PlayableCharacter.cs" />
     <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
     <Compile Include="Assets\Scripts\Extensions\MathExtension.cs" />
     <Compile Include="Assets\Scripts\AttackActions\EntityAction.cs" />
     <Compile Include="Assets\Scripts\States\GameState\WorldRoamState.cs" />
+    <Compile Include="Assets\Scripts\Items\Useable.cs" />
     <Compile Include="Assets\Scripts\PointerControl\Directions.cs" />
     <Compile Include="Assets\Scripts\Text\TextBoxHandler.cs" />
     <Compile Include="Assets\Scripts\GeneralEntity\StatusEffectsManager.cs" />
@@ -104,9 +109,6 @@
     <Compile Include="Assets\Scripts\GeneralEntity\HealthManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\States\GameState\BattleStates\FightMenuState.cs" />
-    <Compile Include="Assets\Scripts\Items\Useables.cs" />
-    <Compile Include="Assets\Scripts\Items\SmallHpPotion.cs" />
-    <Compile Include="Assets\Scripts\Items\SmallAttackUpPotion.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

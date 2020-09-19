@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b83afb7b1b56a14d9f3f329e4142640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: Small Hp Potion
-  amount: 1
+  dropChance: 50
+  <MaxHoldable>k__BackingField: 999
+  <Id>k__BackingField: Small Hp Potion
   amountToHeal: 5

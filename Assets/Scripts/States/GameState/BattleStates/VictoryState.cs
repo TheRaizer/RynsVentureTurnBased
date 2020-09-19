@@ -5,10 +5,10 @@ using UnityEngine;
 public class VictoryState : State
 {
     private readonly StateMachine gameStateMachine;
-    private readonly MenusHandler menusHandler;
+    private readonly BattleMenusHandler menusHandler;
     private readonly BattleLogic battleLogic;
 
-    public VictoryState(StateMachine _stateMachine, StateMachine _gameStateMachine, MenusHandler _menusHandler, BattleLogic _battleLogic) : base(_stateMachine)
+    public VictoryState(StateMachine _stateMachine, StateMachine _gameStateMachine, BattleMenusHandler _menusHandler, BattleLogic _battleLogic) : base(_stateMachine)
     {
         gameStateMachine = _gameStateMachine;
         menusHandler = _menusHandler;

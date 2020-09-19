@@ -7,7 +7,7 @@ public class TextBoxHandler
 {
     public Enum PreviousState { get; set; } = null;
 
-    private readonly MenusHandler menusHandler;
+    private readonly BattleMenusHandler menusHandler;
     private readonly BattleLogic battleLogic;
     private readonly StateMachine battleStateMachine;
 
@@ -18,7 +18,7 @@ public class TextBoxHandler
     private bool skip;
     private readonly List<string> textLines = new List<string>();
 
-    public TextBoxHandler(MenusHandler _menusHandler, BattleLogic _battleLogic, StateMachine _battleStateMachine)
+    public TextBoxHandler(BattleMenusHandler _menusHandler, BattleLogic _battleLogic, StateMachine _battleStateMachine)
     {
         menusHandler = _menusHandler;
         battleLogic = _battleLogic;

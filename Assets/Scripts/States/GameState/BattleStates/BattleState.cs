@@ -15,7 +15,7 @@ public enum BattleStates
 
 public class BattleState : State
 {
-    private readonly MenusHandler menusHandler;
+    private readonly BattleMenusHandler menusHandler;
     public EnemyGenerator EnemyGenerator { private get; set; }
     public StateMachine BattleStateMachine { get; private set; }
     public BattleLogic BattleLogic { get; private set; }
@@ -25,7 +25,7 @@ public class BattleState : State
     private readonly TextBoxHandler textBoxHandler;
     private readonly EnemyChoiceState enemyChoice;
 
-    public BattleState(StateMachine _stateMachine, MenusHandler _menusHandler) : base(_stateMachine)
+    public BattleState(StateMachine _stateMachine, BattleMenusHandler _menusHandler) : base(_stateMachine)
     {
         menusHandler = _menusHandler;
         BattleStateMachine = new StateMachine();

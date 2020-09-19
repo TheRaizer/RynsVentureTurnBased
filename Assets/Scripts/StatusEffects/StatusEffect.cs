@@ -40,8 +40,3 @@ public class StatusEffect : MonoBehaviour
         return currentNumberOfTurnsToLast <= 0;
     }
 }
-
-public interface ICloneable<T>
-{
-    T ShallowCopy();
-}

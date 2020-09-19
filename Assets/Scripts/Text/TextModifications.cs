@@ -11,10 +11,10 @@ public class TextModifications
 
     
 
-    private readonly MenusHandler menusHandler;
+    private readonly BattleMenusHandler menusHandler;
     private readonly BattleLogic battleLogic;
 
-    public TextModifications(MenusHandler _menusHandler, BattleLogic _battleLogic)
+    public TextModifications(BattleMenusHandler _menusHandler, BattleLogic _battleLogic)
     {
         menusHandler = _menusHandler;
         battleLogic = _battleLogic;

@@ -29,10 +29,10 @@ public class BattleLogic
     public List<PlayableCharacter> PlayableCharacterRoster { get; set; } = new List<PlayableCharacter>();//all playable characters
 
 
-    private readonly MenusHandler menusHandler;
+    private readonly BattleMenusHandler menusHandler;
     public readonly StateMachine battleStateMachine;
 
-    public BattleLogic(MenusHandler _menusHandler, StateMachine _battleStateMachine)
+    public BattleLogic(BattleMenusHandler _menusHandler, StateMachine _battleStateMachine)
     {
         menusHandler = _menusHandler;
         battleStateMachine = _battleStateMachine;

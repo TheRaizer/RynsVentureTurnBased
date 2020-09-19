@@ -3,7 +3,7 @@
 public class FightMenuState : StatusEffectCheckState
 {
     private readonly BattleLogic battleLogic;
-    private readonly MenusHandler menusHandler;
+    private readonly BattleMenusHandler menusHandler;
     private readonly BattleStatusEffectsManager statusManager;
     private readonly TextBoxHandler textBoxHandler;
 
@@ -11,7 +11,7 @@ public class FightMenuState : StatusEffectCheckState
 
     public override bool CheckedStatusEffectThisTurn { get; set; }
 
-    public FightMenuState(StateMachine _stateMachine, BattleLogic _battleLogic, MenusHandler _menusHandler, BattleStatusEffectsManager _ailmentsManager, TextBoxHandler _textBoxHandler) : base(_stateMachine)
+    public FightMenuState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleMenusHandler _menusHandler, BattleStatusEffectsManager _ailmentsManager, TextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
         battleLogic = _battleLogic;
         menusHandler = _menusHandler;
