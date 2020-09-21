@@ -30,12 +30,11 @@ public class BattleStatusEffectsManager
 
     public bool CheckForReplacementStatusEffect(BattleLogic battleLogic, StatsManager currentInfectee, bool isAfterAttackChoice)
     {
-        List<StatusEffect> currentStatusEffectsList = currentInfectee.StatusEffectsManager.GetEffectsList(EffectType.ReplaceTurn);
 
-        if (currentStatusEffectsList != null && currentStatusEffectsList.Count > 0)
+        if (currentInfectee.StatusEffectsManager.GetStatusEffectListCount(EffectType.ReplaceTurn) > 0)
         {
-            StatusEffect statusEffect = currentStatusEffectsList[0];
-            if (currentStatusEffectsList[0].HasEnded())
+            StatusEffect statusEffect = currentInfectee.StatusEffectsManager.GetStatusEffectFromList(EffectType.ReplaceTurn, 0);
+            if (statusEffect.HasEnded())
             {
                 textBoxHandler.AddTextAsStatusEffectWornOff(currentInfectee.user.Id, statusEffect.Name);
                 currentInfectee.StatusEffectsManager.ClearStatusEffects(EffectType.ReplaceTurn);
@@ -76,15 +75,13 @@ public class BattleStatusEffectsManager
             {
                 if (!battleLogic.AttackablesDic[a][i].StatusEffectsManager.StatusEffectDicContainsKey(EffectType.MultiTurnTrigger)) continue;//skip if there is not effect type on current attackable
 
-                List<StatusEffect> currentStatusEffectsList = battleLogic.AttackablesDic[a][i].StatusEffectsManager.GetEffectsList(EffectType.MultiTurnTrigger);
-                for (int j = 0; j < currentStatusEffectsList.Count; j++)//loop through all the status effects of the current attackable
+                for (int j = 0; j < battleLogic.AttackablesDic[a][i].StatusEffectsManager.GetStatusEffectListCount(EffectType.MultiTurnTrigger); j++)//loop through all the status effects of the current attackable
                 {
-
-                    StatusEffect currentStatusEffect = currentStatusEffectsList[j];
+                    StatusEffect currentStatusEffect = battleLogic.AttackablesDic[a][i].StatusEffectsManager.GetStatusEffectFromList(EffectType.MultiTurnTrigger, j);
                     if (currentStatusEffect.HasEnded())
                     {
                         textBoxHandler.AddTextAsStatusEffectWornOff(battleLogic.AttackablesDic[a][i].user.Id, currentStatusEffect.Name);
-                        currentStatusEffectsList.RemoveAt(j);
+                        battleLogic.AttackablesDic[a][i].StatusEffectsManager.RemoveFromStatusEffectsAtIndex(EffectType.MultiTurnTrigger, j);
                         addedText = true;
                     }
                     else
@@ -112,10 +109,9 @@ public class BattleStatusEffectsManager
     private bool CheckForSingleTurnStatusEffects(BattleLogic battleLogic, StatsManager currentInfectee)
     {
         bool addedText = false;
-        List<StatusEffect> singleTurnList = currentInfectee.StatusEffectsManager.GetEffectsList(EffectType.SingleTurnTrigger);
-        for (int i = 0; i < singleTurnList.Count; i++)
+        for (int i = 0; i < currentInfectee.StatusEffectsManager.GetStatusEffectListCount(EffectType.SingleTurnTrigger); i++)
         {
-            StatusEffect currentStatusEffect = singleTurnList[i].GetComponent<StatusEffect>();
+            StatusEffect currentStatusEffect = currentInfectee.StatusEffectsManager.GetStatusEffectFromList(EffectType.SingleTurnTrigger, i).GetComponent<StatusEffect>();
 
             if (currentStatusEffect.HasEnded())
             {

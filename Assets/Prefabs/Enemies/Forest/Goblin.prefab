@@ -105,6 +105,7 @@ MonoBehaviour:
   <ExpOnDeath>k__BackingField: 200
   <Attacks>k__BackingField:
   - {fileID: -7623231250017409417}
+  <PrefabItemsToDrop>k__BackingField: []
 --- !u!114 &-7334648606454433584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,10 +121,14 @@ MonoBehaviour:
   <DamageScale>k__BackingField: 1
   <Speed>k__BackingField: 3
   <ClockTick>k__BackingField: 0
-  baseMaxHp: 15
+  baseMaxHp: 30
+  baseMaxMp: 0
   <HealthManager>k__BackingField:
-    <CurrentHealth>k__BackingField: 0
-    <MaxHealth>k__BackingField: 0
+    <CurrentAmount>k__BackingField: 0
+    <MaxAmount>k__BackingField: 0
+  <ManaManager>k__BackingField:
+    <CurrentAmount>k__BackingField: 0
+    <MaxAmount>k__BackingField: 0
 --- !u!114 &-7623231250017409417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,10 +144,11 @@ MonoBehaviour:
   <Id>k__BackingField: Spear Throw
   <IsAOE>k__BackingField: 0
   <Damage>k__BackingField: 2
+  <ManaReduction>k__BackingField: 0
   <Accuracy>k__BackingField: 97
-  <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 10249f38991cd1a418c69e19ef9d40a7,
+  <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,
     type: 3}
-  <StatusEffectChance>k__BackingField: 45
+  <StatusEffectChance>k__BackingField: 100
   <CritChance>k__BackingField: 7
   <CritMultiplier>k__BackingField: 2.5
   <AttackText>k__BackingField: throws spear

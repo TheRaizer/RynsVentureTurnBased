@@ -38,7 +38,7 @@ public class EntityAction : MonoBehaviour
     private void StatusEffectApplication(StatsManager statsToApplyToo, TextBoxHandler textBoxHandler)
     {
         StatusEffect s = StatusEffectPrefab.GetComponent<StatusEffect>();
-
+        Debug.Log("Apply " + s.Name + " too " + statsToApplyToo.user.Id);
         if(s.EffectType == EffectType.ReplaceTurn)
         {
             statsToApplyToo.StatusEffectsManager.AddToReplacementTurn(s.ShallowCopy(), textBoxHandler);

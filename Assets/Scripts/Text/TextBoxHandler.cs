@@ -27,15 +27,17 @@ public class TextBoxHandler
 
     public void InputUpdate()
     {
-        if (running && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
+        bool next = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E);
+
+        if (running && next)
         {
             skip = true;
         }
-        if (!running && !Finished && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
+        if (!running && !Finished && next)
         {
             menusHandler.StartCoroutine(BuildMultiStringTextCo());
         }
-        if (Finished && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
+        if (Finished && next)
         {
             ResetTextBox();
             Finished = false;
@@ -94,6 +96,11 @@ public class TextBoxHandler
     public void AddTextLines(string value)
     {
         textLines.Add(value);
+    }
+
+    public void AddTextAsTurn(string userId)
+    {
+        AddTextLines("It is " + userId + "'s Turn.");
     }
 
     public void AddTextAsAttack(string userId, string attackText, string foeId)

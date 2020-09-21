@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class BattleMenusHandler : MonoBehaviour
 {
+    [field: SerializeField] public GameObject BattleMenus { get; private set; }
     [Header("Panels")]
     [SerializeField] private List<GameObject> objectsToDisableOnTextOpen = null;
     [SerializeField] private GameObject textPanel = null;

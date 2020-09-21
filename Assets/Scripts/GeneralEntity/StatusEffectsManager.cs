@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class StatusEffectsManager
 {
-    private readonly Dictionary<EffectType, List<StatusEffect>> statusEffectsDic = new Dictionary<EffectType, List<StatusEffect>>();
+    private Dictionary<EffectType, List<StatusEffect>> statusEffectsDic { get; set; } = new Dictionary<EffectType, List<StatusEffect>>();
     private readonly StatsManager stats;
 
     public StatusEffectsManager(StatsManager _stats)
@@ -15,17 +15,6 @@ public class StatusEffectsManager
             statusEffectsDic.Add(e, new List<StatusEffect>());
         }
         stats = _stats;
-    }
-
-    public void PrintStatusEffects()
-    {
-        foreach (EffectType e in Enum.GetValues(typeof(EffectType)))
-        {
-            foreach (StatusEffect s in statusEffectsDic[e])
-            {
-                Debug.Log(s.Name);
-            }
-        }
     }
 
     public void RemoveAllStatusEffects()
@@ -40,26 +29,38 @@ public class StatusEffectsManager
         }
     }
 
-    public void AddToStatusEffectsDic(EffectType effectType, StatusEffect statusObject, TextBoxHandler textBoxHandler)
+    public void PrintAllStatusEffects()
+    {
+        foreach (EffectType a in Enum.GetValues(typeof(EffectType)))
+        {
+            for(int i = 0; i < statusEffectsDic[a].Count; i++)
+            {
+                Debug.Log(stats.user.Id + " has status effect: " + statusEffectsDic[a][i] + " " + a);
+            }
+        }
+    }
+
+    public void AddToStatusEffectsDic(EffectType effectType, StatusEffect statusEffect, TextBoxHandler textBoxHandler)
     {
         if (statusEffectsDic.TryGetValue(effectType, out List<StatusEffect> effects))
         {
-            if (statusEffectsDic[effectType].Contains(statusObject))
+            if (statusEffectsDic[effectType].Contains(statusEffect))
             {
-                statusEffectsDic[effectType][statusEffectsDic[effectType].IndexOf(statusObject)].ResetNumberOfTurnsToLast();
+                statusEffectsDic[effectType][statusEffectsDic[effectType].IndexOf(statusEffect)].ResetNumberOfTurnsToLast();
             }
             else
             {
-                statusEffectsDic[effectType].Add(statusObject);
-                statusObject.OnEffectStart(stats, textBoxHandler);
+                statusEffectsDic[effectType].Add(statusEffect);
+                statusEffect.OnEffectStart(stats, textBoxHandler);
             }
         }
         else
         {
-            effects.Add(statusObject);
+            effects.Add(statusEffect);
             statusEffectsDic.Add(effectType, effects);
-            statusObject.OnEffectStart(stats, textBoxHandler);
+            statusEffect.OnEffectStart(stats, textBoxHandler);
         }
+        PrintAllStatusEffects();
     }
 
     public void RemoveFromStatusEffectsDic(EffectType effectType, StatusEffect statusObject)
@@ -87,13 +88,23 @@ public class StatusEffectsManager
         statusEffectsDic[effectType].Clear();
     }
 
-    public List<StatusEffect> GetEffectsList(EffectType effectType)
+    public void RemoveFromStatusEffectsAtIndex(EffectType effectType, int index)
     {
-        return statusEffectsDic[effectType];
+        statusEffectsDic[effectType].RemoveAt(index);
+    }
+
+    public StatusEffect GetStatusEffectFromList(EffectType effectType, int index)
+    {
+        return statusEffectsDic[effectType][index];
     }
 
     public bool StatusEffectDicContainsKey(EffectType effectType)
     {
         return statusEffectsDic.ContainsKey(effectType);
+    }
+
+    public int GetStatusEffectListCount(EffectType effectType)
+    {
+        return statusEffectsDic[effectType].Count;
     }
 }

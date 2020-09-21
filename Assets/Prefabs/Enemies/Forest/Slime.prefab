@@ -105,6 +105,7 @@ MonoBehaviour:
   <ExpOnDeath>k__BackingField: 100
   <Attacks>k__BackingField:
   - {fileID: -7623231250017409417}
+  <PrefabItemsToDrop>k__BackingField: []
 --- !u!114 &-7334648606454433584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,9 +122,13 @@ MonoBehaviour:
   <Speed>k__BackingField: 2
   <ClockTick>k__BackingField: 0
   baseMaxHp: 10
+  baseMaxMp: 0
   <HealthManager>k__BackingField:
-    <CurrentHealth>k__BackingField: 0
-    <MaxHealth>k__BackingField: 0
+    <CurrentAmount>k__BackingField: 0
+    <MaxAmount>k__BackingField: 0
+  <ManaManager>k__BackingField:
+    <CurrentAmount>k__BackingField: 0
+    <MaxAmount>k__BackingField: 0
 --- !u!114 &-7623231250017409417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,9 +144,9 @@ MonoBehaviour:
   <Id>k__BackingField: Leap
   <IsAOE>k__BackingField: 0
   <Damage>k__BackingField: 1
+  <ManaReduction>k__BackingField: 0
   <Accuracy>k__BackingField: 100
-  <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,
-    type: 3}
+  <StatusEffectPrefab>k__BackingField: {fileID: 0}
   <StatusEffectChance>k__BackingField: 100
   <CritChance>k__BackingField: 5
   <CritMultiplier>k__BackingField: 2.5

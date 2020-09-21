@@ -8,6 +8,7 @@ public class StateMachine
     public State CurrentState { get; private set; }
 
     public Dictionary<Enum, State> states = new Dictionary<Enum, State>();
+    public Action ConstantOnStateChange { get; set; }
 
     public void Initialize(Dictionary<Enum, State> _states, Enum startState)
     {
@@ -29,6 +30,8 @@ public class StateMachine
         CurrentState.OnExit();
         CurrentState = states[stateToReturnToo];
         CurrentState.OnEnterOrReturn();
+
+        ConstantOnStateChange?.Invoke();
     }
 
     public void ChangeState(Enum stateToChangeToo)
@@ -43,5 +46,7 @@ public class StateMachine
         CurrentState = states[stateToChangeToo];
         CurrentState.OnEnterOrReturn();
         CurrentState.OnFullRotationEnter();
+
+        ConstantOnStateChange?.Invoke();
     }
 }

@@ -13,9 +13,23 @@ public class VectorMenuTraversal
         onTraversal = _onTraversal;
     }
 
-    public void Traverse<T>(T[] menu)
+    public void Traverse()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        {
+            currentIndex--;
+            CheckIfIndexInRange();
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        {
+            currentIndex++;
+            CheckIfIndexInRange();
+        }
+    }
+
+    public void TraverseWithNulls<T>(T[] menu)
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             currentIndex--;
             CheckIfIndexInRange();
@@ -25,7 +39,7 @@ public class VectorMenuTraversal
                 CheckIfIndexInRange();
             }
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             currentIndex++;
             CheckIfIndexInRange();

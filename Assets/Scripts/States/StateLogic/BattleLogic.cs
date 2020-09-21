@@ -127,7 +127,10 @@ public class BattleLogic
             {
                 if (AttackablesDic.TryGetValue(EntityType.Player, out List<StatsManager> stats))
                 {
-                    AttackablesDic[EntityType.Player].Add(currentPlayer);
+                    if (!AttackablesDic[EntityType.Player].Contains(currentPlayer))
+                    {
+                        AttackablesDic[EntityType.Player].Add(currentPlayer);
+                    }
                 }
                 else
                 {

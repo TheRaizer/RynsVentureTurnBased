@@ -18,9 +18,9 @@ public class MatrixMenuTraversal
         onTraversal = _onTraversal;
     }
 
-    public void Traverse<T>(T[,] menu)
+    public void TraverseWithNulls<T>(T[,] menu)
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
             currentXIndex++;
             CheckIfIndexInRange();
@@ -30,7 +30,7 @@ public class MatrixMenuTraversal
                 CheckIfIndexInRange();
             }
         }
-        else if(Input.GetKeyDown(KeyCode.LeftArrow))
+        else if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
             currentXIndex--;
             CheckIfIndexInRange();
@@ -40,7 +40,7 @@ public class MatrixMenuTraversal
                 CheckIfIndexInRange();
             }
         }
-        else if(Input.GetKeyDown(KeyCode.UpArrow))
+        else if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             currentYIndex--;
             CheckIfIndexInRange();
@@ -50,7 +50,7 @@ public class MatrixMenuTraversal
                 CheckIfIndexInRange();
             }
         }
-        else if(Input.GetKeyDown(KeyCode.DownArrow))
+        else if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             currentYIndex++;
             CheckIfIndexInRange();
@@ -59,6 +59,30 @@ public class MatrixMenuTraversal
                 currentYIndex++;
                 CheckIfIndexInRange();
             }
+        }
+    }
+
+    public void Traverse()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        {
+            currentXIndex++;
+            CheckIfIndexInRange();
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        {
+            currentXIndex--;
+            CheckIfIndexInRange();
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        {
+            currentYIndex--;
+            CheckIfIndexInRange();
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        {
+            currentYIndex++;
+            CheckIfIndexInRange();
         }
     }
 
