@@ -148,7 +148,7 @@ MonoBehaviour:
   <Accuracy>k__BackingField: 100
   <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,
     type: 3}
-  <StatusEffectChance>k__BackingField: 65
+  <StatusEffectChance>k__BackingField: 40
   <CritChance>k__BackingField: 5
   <CritMultiplier>k__BackingField: 2.5
   <AttackText>k__BackingField: leaps onto

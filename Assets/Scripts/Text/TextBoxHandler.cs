@@ -103,6 +103,10 @@ public class BattleTextBoxHandler
         AddTextLines("It is " + userId + "'s Turn.");
     }
 
+    public void AddTextAsStatusInfliction(string userId, string foeId, string statusEffectName)
+    {
+        AddTextLines(userId + " has inflicted " + statusEffectName + " on " + foeId);
+    }
     public void AddTextAsAttack(string userId, string attackText, string foeId)
     {
         AddTextLines(userId + " " + attackText + " " + foeId + ".");
@@ -143,6 +147,7 @@ public class BattleTextBoxHandler
         for (int i = 0; i < attackInfos.Count; i++)
         {
             AddTextAsAttack(battleLogic.CurrentEnemy.Id, attackToUse.AttackText, attackInfos[i].targetId);
+
             if (!attackInfos[i].hitTarget)
             {
                 AddTextOnMiss(battleLogic.CurrentEnemy.Id, attackInfos[i].targetId);
@@ -151,6 +156,9 @@ public class BattleTextBoxHandler
             {
                 AddTextAsCriticalHit();
             }
+
+            if(attackInfos[i].inflictedStatusEffect)
+                AddTextAsStatusInfliction(battleLogic.CurrentEnemy.Id, attackInfos[i].targetId, attackToUse.StatusEffectPrefab.GetComponent<StatusEffect>().Name);
         }
     }
 }

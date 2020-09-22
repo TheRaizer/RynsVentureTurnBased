@@ -18,7 +18,7 @@ public class EntityAction : MonoBehaviour
 
     public bool WasCriticalHit { get; private set; } = false;
 
-    private void ApplyStatusEffect(StatsManager statsToApplyToo, bool instantApply, BattleTextBoxHandler textBoxHandler)
+    private bool ApplyStatusEffect(StatsManager statsToApplyToo, bool instantApply, BattleTextBoxHandler textBoxHandler)
     {
         if (!instantApply)
         {
@@ -27,12 +27,17 @@ public class EntityAction : MonoBehaviour
             if (chance <= StatusEffectChance)
             {
                 StatusEffectApplication(statsToApplyToo, textBoxHandler);
+                return true;
             }
+
+            return false;
         }
         else
         {
             StatusEffectApplication(statsToApplyToo, textBoxHandler);
+            return true;
         }
+
     }
 
     private void StatusEffectApplication(StatsManager statsToApplyToo, BattleTextBoxHandler textBoxHandler)
@@ -71,6 +76,7 @@ public class EntityAction : MonoBehaviour
     {
         int chance = UnityEngine.Random.Range(0, 100);
         WasCriticalHit = false;
+        bool hasInflicted = false;
 
         if (chance < Accuracy)
         {
@@ -81,22 +87,22 @@ public class EntityAction : MonoBehaviour
                 statsTooAttack.HealthManager.ReduceAmount(MathExtension.RoundToNearestInteger(Damage * damageScale * CritMultiplier));
                 if (StatusEffectPrefab != null)
                 {
-                    ApplyStatusEffect(statsTooAttack, true, textBoxHandler);
+                    hasInflicted = ApplyStatusEffect(statsTooAttack, true, textBoxHandler);
                 }
                 WasCriticalHit = true;
                 Debug.Log("Critical hit");
-                return new EntityActionInfo(statsTooAttack.user.Id, true);
+                return new EntityActionInfo(statsTooAttack.user.Id, true, hasInflicted);
             }
 
             statsTooAttack.HealthManager.ReduceAmount(MathExtension.RoundToNearestInteger(Damage * damageScale));
             if(StatusEffectPrefab != null)
             {
-                ApplyStatusEffect(statsTooAttack, false, textBoxHandler);
+                hasInflicted = ApplyStatusEffect(statsTooAttack, false, textBoxHandler);
             }
-            return new EntityActionInfo(statsTooAttack.user.Id, true);
+            return new EntityActionInfo(statsTooAttack.user.Id, true, hasInflicted);
         }
         else
-            return new EntityActionInfo(statsTooAttack.user.Id, false);
+            return new EntityActionInfo(statsTooAttack.user.Id, false, false);
     }
 
     public bool ValidateAttack(StatsManager userStats)

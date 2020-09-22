@@ -65,8 +65,8 @@ public class EnemyChoiceState : State
         {
             Enemy enemyToAttack = battleLogic.Enemies[menuTraversal.currentIndex].GetComponent<Enemy>();
             EntityActionInfo attackInfo = battleLogic.CurrentPlayerAttack.UseAttack(enemyToAttack.Stats, battleLogic.CurrentPlayer.Stats.DamageScale, textBoxHandler);
-
-            textBoxHandler.AddTextAsAttack(battleLogic.CurrentPlayer.Id, battleLogic.CurrentPlayerAttack.AttackText, enemyToAttack.Id);
+            Debug.Log(attackInfo.inflictedStatusEffect);
+            textBoxHandler.AddTextAsAttack(battleLogic.CurrentPlayer.Id, battleLogic.CurrentPlayerAttack.AttackText, attackInfo.targetId);
 
             if (!attackInfo.hitTarget)
             {
@@ -75,6 +75,10 @@ public class EnemyChoiceState : State
             else if(battleLogic.CurrentPlayerAttack.WasCriticalHit)
             {
                 textBoxHandler.AddTextAsCriticalHit();
+            }
+            if (attackInfo.inflictedStatusEffect)
+            {
+                textBoxHandler.AddTextAsStatusInfliction(battleLogic.CurrentPlayer.Id, attackInfo.targetId, battleLogic.CurrentPlayerAttack.StatusEffectPrefab.GetComponent<StatusEffect>().Name);
             }
 
             battleLogic.CheckForEnemiesRemaining();

@@ -148,7 +148,7 @@ MonoBehaviour:
   <Accuracy>k__BackingField: 97
   <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 10249f38991cd1a418c69e19ef9d40a7,
     type: 3}
-  <StatusEffectChance>k__BackingField: 65
+  <StatusEffectChance>k__BackingField: 25
   <CritChance>k__BackingField: 7
   <CritMultiplier>k__BackingField: 2.5
   <AttackText>k__BackingField: throws spear

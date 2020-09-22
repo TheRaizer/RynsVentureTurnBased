@@ -40,6 +40,7 @@ public class EnemyTurnState : StatusEffectCheckState
         EntityAction attackToUse = battleLogic.CurrentEnemy.Attacks[Random.Range(0, battleLogic.CurrentEnemy.Attacks.Count)];
 
         List<EntityActionInfo> attackInfos = attackToUse.DetermineAttack(battleLogic.AttackablesDic[EntityType.Player], battleLogic.CurrentEnemy.Stats.DamageScale, playerIndexToAttack, textBoxHandler);
+        
         textBoxHandler.GenerateEnemyText(attackInfos, attackToUse);
 
         textMods.PrintPlayerHealth();
