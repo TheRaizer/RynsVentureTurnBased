@@ -6,7 +6,7 @@ public class Burn : StatusEffect
 {
     [SerializeField] private float percentDiminish = 0.12f;
 
-    public override void OnTurn(BattleLogic battleLogic, StatsManager infectee, StateMachine battleStateMachine, TextBoxHandler textBoxHandler)
+    public override void OnTurn(BattleLogic battleLogic, StatsManager infectee, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
     {
         base.OnTurn(battleLogic, infectee, battleStateMachine, textBoxHandler);
 

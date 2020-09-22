@@ -7,9 +7,9 @@ public class EnemyTurnState : StatusEffectCheckState
     private readonly BattleLogic battleLogic;
     private readonly TextModifications textMods;
     private readonly BattleStatusEffectsManager battleStatusManager;
-    private readonly TextBoxHandler textBoxHandler;
+    private readonly BattleTextBoxHandler textBoxHandler;
 
-    public EnemyTurnState(StateMachine _stateMachine, BattleLogic _battleLogic, TextModifications _textMods, BattleStatusEffectsManager _battleStatusManager, TextBoxHandler _textBoxHandler) : base(_stateMachine)
+    public EnemyTurnState(StateMachine _stateMachine, BattleLogic _battleLogic, TextModifications _textMods, BattleStatusEffectsManager _battleStatusManager, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
         battleLogic = _battleLogic;
         textMods = _textMods;
@@ -23,6 +23,8 @@ public class EnemyTurnState : StatusEffectCheckState
 
         Debug.Log(battleLogic.CurrentEnemy.Id + " Turn");
         textBoxHandler.AddTextAsTurn(battleLogic.CurrentEnemy.Id);
+        stateMachine.ChangeState(BattleStates.BattleTextBox);
+
         if (CheckForStatusEffects(battleStatusManager, battleLogic, textBoxHandler, battleLogic.CurrentEnemy.Stats, null))
         {
             Debug.Log("printing status effects");

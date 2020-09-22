@@ -35,7 +35,6 @@ public class WorldRoamingState : State
             { WorldRoamingStates.InventoryState, new InventoryState(worldRoamingStateMachine, gameStateManager.WorldMenus, inventory) },
             { WorldRoamingStates.SettingsState, new SettingsState(worldRoamingStateMachine, gameStateManager.WorldMenus) }
         };
-        worldRoamingStateMachine.ConstantOnStateChange = gameStateManager.WorldMenus.ResetPointerPosition;
         worldRoamingStateMachine.Initialize(worldRoamStates, WorldRoamingStates.RoamState);
     }
 

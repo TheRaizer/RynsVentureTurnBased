@@ -2,10 +2,10 @@
 
 public class BattleTextBoxState : State
 {
-    private readonly TextBoxHandler textBoxHandler;
+    private readonly BattleTextBoxHandler textBoxHandler;
     private readonly BattleMenusHandler menuHandler;
 
-    public BattleTextBoxState(StateMachine _stateMachine, TextBoxHandler _textBoxHandler, BattleMenusHandler _menuHandler) : base(_stateMachine)
+    public BattleTextBoxState(StateMachine _stateMachine, BattleTextBoxHandler _textBoxHandler, BattleMenusHandler _menuHandler) : base(_stateMachine)
     {
         textBoxHandler = _textBoxHandler;
         menuHandler = _menuHandler;

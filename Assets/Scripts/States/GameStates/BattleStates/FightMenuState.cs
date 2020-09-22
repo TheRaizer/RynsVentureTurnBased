@@ -5,10 +5,10 @@ public class FightMenuState : StatusEffectCheckState
     private readonly BattleLogic battleLogic;
     private readonly BattleMenusHandler menusHandler;
     private readonly BattleStatusEffectsManager statusManager;
-    private readonly TextBoxHandler textBoxHandler;
+    private readonly BattleTextBoxHandler textBoxHandler;
     private readonly VectorMenuTraversal menuTraversal;
 
-    public FightMenuState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleMenusHandler _menusHandler, BattleStatusEffectsManager _ailmentsManager, TextBoxHandler _textBoxHandler) : base(_stateMachine)
+    public FightMenuState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleMenusHandler _menusHandler, BattleStatusEffectsManager _ailmentsManager, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
         battleLogic = _battleLogic;
         menusHandler = _menusHandler;
@@ -35,6 +35,9 @@ public class FightMenuState : StatusEffectCheckState
 
         Debug.Log(battleLogic.CurrentPlayer.Id + " Turn");
         textBoxHandler.AddTextAsTurn(battleLogic.CurrentPlayer.Id);
+        textBoxHandler.PreviousState = BattleStates.FightMenu;
+        stateMachine.ChangeState(BattleStates.BattleTextBox);
+
         if (CheckForStatusEffects(statusManager, battleLogic, textBoxHandler, battleLogic.CurrentPlayer.Stats, BattleStates.FightMenu))
         {
             stateMachine.ChangeState(BattleStates.BattleTextBox);

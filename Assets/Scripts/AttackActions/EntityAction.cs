@@ -18,7 +18,7 @@ public class EntityAction : MonoBehaviour
 
     public bool WasCriticalHit { get; private set; } = false;
 
-    private void ApplyStatusEffect(StatsManager statsToApplyToo, bool instantApply, TextBoxHandler textBoxHandler)
+    private void ApplyStatusEffect(StatsManager statsToApplyToo, bool instantApply, BattleTextBoxHandler textBoxHandler)
     {
         if (!instantApply)
         {
@@ -35,7 +35,7 @@ public class EntityAction : MonoBehaviour
         }
     }
 
-    private void StatusEffectApplication(StatsManager statsToApplyToo, TextBoxHandler textBoxHandler)
+    private void StatusEffectApplication(StatsManager statsToApplyToo, BattleTextBoxHandler textBoxHandler)
     {
         StatusEffect s = StatusEffectPrefab.GetComponent<StatusEffect>();
         Debug.Log("Apply " + s.Name + " too " + statsToApplyToo.user.Id);
@@ -49,7 +49,7 @@ public class EntityAction : MonoBehaviour
         }
     }
 
-    public List<EntityActionInfo> DetermineAttack(List<StatsManager> statsTooAttack, float damageScale, int indexToAttack, TextBoxHandler textBoxHandler)
+    public List<EntityActionInfo> DetermineAttack(List<StatsManager> statsTooAttack, float damageScale, int indexToAttack, BattleTextBoxHandler textBoxHandler)
     {
         List<EntityActionInfo> attackInfos = new List<EntityActionInfo>();
         if(!IsAOE)
@@ -67,7 +67,7 @@ public class EntityAction : MonoBehaviour
         return attackInfos;
     }
 
-    public EntityActionInfo UseAttack(StatsManager statsTooAttack, float damageScale, TextBoxHandler textBoxHandler)
+    public EntityActionInfo UseAttack(StatsManager statsTooAttack, float damageScale, BattleTextBoxHandler textBoxHandler)
     {
         int chance = UnityEngine.Random.Range(0, 100);
         WasCriticalHit = false;

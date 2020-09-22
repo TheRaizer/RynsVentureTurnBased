@@ -90,8 +90,11 @@
     <Compile Include="Assets\Scripts\MenuTraversal\MatrixMenuTraversal.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\RoamState.cs" />
     <Compile Include="Assets\Scripts\Items\SmallAttackUp.cs" />
+    <Compile Include="Assets\Scripts\WorldMenuOptions\MoveToSettingsOption.cs" />
+    <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\SettingsState.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\TurnReplacement\Confusion.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\SingleTurnTriggeredEffects\AttackUp.cs" />
+    <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\WorldMenuState.cs" />
     <Compile Include="Assets\Scripts\Player\LevelSystem.cs" />
     <Compile Include="Assets\Scripts\MenuTraversal\WorldMenusHandler.cs" />
     <Compile Include="Assets\Scripts\GeneralEntity\StatsManager.cs" />
@@ -117,9 +120,6 @@
     <Compile Include="Assets\Scripts\WorldMenuOptions\InventoryTypeChoiceOption.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\FightMenuState.cs" />
-    <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\WorldMenuState.cs" />
-    <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\SettingsState.cs" />
-    <Compile Include="Assets\Scripts\WorldMenuOptions\MoveToSettingsOption.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

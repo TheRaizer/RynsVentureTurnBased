@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TextBoxHandler
+public class BattleTextBoxHandler
 {
     public Enum PreviousState { get; set; } = null;
 
@@ -18,7 +18,7 @@ public class TextBoxHandler
     private bool skip;
     private readonly List<string> textLines = new List<string>();
 
-    public TextBoxHandler(BattleMenusHandler _menusHandler, BattleLogic _battleLogic, StateMachine _battleStateMachine)
+    public BattleTextBoxHandler(BattleMenusHandler _menusHandler, BattleLogic _battleLogic, StateMachine _battleStateMachine)
     {
         menusHandler = _menusHandler;
         battleLogic = _battleLogic;

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BattleStatusEffectsManager
 {
-    private readonly TextBoxHandler textBoxHandler;
+    private readonly BattleTextBoxHandler textBoxHandler;
     private readonly StateMachine battleStatemachine;
 
-    public BattleStatusEffectsManager(TextBoxHandler _textBoxHandler, StateMachine _battleStatemachine)
+    public BattleStatusEffectsManager(BattleTextBoxHandler _textBoxHandler, StateMachine _battleStatemachine)
     {
         textBoxHandler = _textBoxHandler;
         battleStatemachine = _battleStatemachine;
@@ -71,11 +71,11 @@ public class BattleStatusEffectsManager
         bool addedText = false;
         foreach (EntityType a in Enum.GetValues(typeof(EntityType)))//loop through both players and enemies
         {
-            for (int i = 0; i < battleLogic.AttackablesDic[a].Count; i++)//loop through the list of players or enemies
+            for (int i = 0; i < battleLogic.AttackablesDic[a].Count; i++)//loop through the list of attackable entities
             {
                 if (!battleLogic.AttackablesDic[a][i].StatusEffectsManager.StatusEffectDicContainsKey(EffectType.MultiTurnTrigger)) continue;//skip if there is not effect type on current attackable
 
-                for (int j = 0; j < battleLogic.AttackablesDic[a][i].StatusEffectsManager.GetStatusEffectListCount(EffectType.MultiTurnTrigger); j++)//loop through all the status effects of the current attackable
+                for (int j = 0; j < battleLogic.AttackablesDic[a][i].StatusEffectsManager.GetStatusEffectListCount(EffectType.MultiTurnTrigger); j++)//loop through all the status effects of the current attackable entity
                 {
                     StatusEffect currentStatusEffect = battleLogic.AttackablesDic[a][i].StatusEffectsManager.GetStatusEffectFromList(EffectType.MultiTurnTrigger, j);
                     if (currentStatusEffect.HasEnded())

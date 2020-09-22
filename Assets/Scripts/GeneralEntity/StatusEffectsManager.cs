@@ -40,7 +40,7 @@ public class StatusEffectsManager
         }
     }
 
-    public void AddToStatusEffectsDic(EffectType effectType, StatusEffect statusEffect, TextBoxHandler textBoxHandler)
+    public void AddToStatusEffectsDic(EffectType effectType, StatusEffect statusEffect, BattleTextBoxHandler textBoxHandler)
     {
         if (statusEffectsDic.TryGetValue(effectType, out List<StatusEffect> effects))
         {
@@ -68,7 +68,7 @@ public class StatusEffectsManager
         statusEffectsDic[effectType].Remove(statusObject);
     }
 
-    public void AddToReplacementTurn(StatusEffect statusObject, TextBoxHandler textBoxHandler)
+    public void AddToReplacementTurn(StatusEffect statusObject, BattleTextBoxHandler textBoxHandler)
     {
         if (statusEffectsDic.TryGetValue(EffectType.ReplaceTurn, out List<StatusEffect> effects))
         {

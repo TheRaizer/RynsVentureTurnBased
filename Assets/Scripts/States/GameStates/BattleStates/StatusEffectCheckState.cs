@@ -8,7 +8,7 @@ public abstract class StatusEffectCheckState : State
 
     }
 
-    protected bool CheckForStatusEffects(BattleStatusEffectsManager statusManager, BattleLogic battleLogic, TextBoxHandler textBoxHandler, StatsManager inhibitor, Enum currentState)
+    protected bool CheckForStatusEffects(BattleStatusEffectsManager statusManager, BattleLogic battleLogic, BattleTextBoxHandler textBoxHandler, StatsManager inhibitor, Enum currentState)
     {
         Debug.Log("StatusCheck");
         if (statusManager.CheckForStatusEffect(battleLogic, inhibitor))

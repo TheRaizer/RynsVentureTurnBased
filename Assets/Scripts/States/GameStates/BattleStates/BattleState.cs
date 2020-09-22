@@ -23,7 +23,7 @@ public class BattleState : State
 
     private readonly TextModifications textMods;
     private readonly BattleStatusEffectsManager statusEffectsManager;
-    private readonly TextBoxHandler textBoxHandler;
+    private readonly BattleTextBoxHandler textBoxHandler;
     private readonly EnemyChoiceState enemyChoice;
 
     public BattleState(StateMachine _stateMachine, BattleMenusHandler _menusHandler) : base(_stateMachine)
@@ -32,7 +32,7 @@ public class BattleState : State
         BattleStateMachine = new StateMachine();
 
         BattleLogic = new BattleLogic(menusHandler, BattleStateMachine);
-        textBoxHandler = new TextBoxHandler(menusHandler, BattleLogic, BattleStateMachine);
+        textBoxHandler = new BattleTextBoxHandler(menusHandler, BattleLogic, BattleStateMachine);
         statusEffectsManager = new BattleStatusEffectsManager(textBoxHandler, BattleStateMachine);
 
         textMods = new TextModifications(menusHandler, BattleLogic);

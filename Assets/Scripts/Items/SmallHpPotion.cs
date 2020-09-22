@@ -6,7 +6,7 @@ public class SmallHpPotion : Useable
 {
     [SerializeField] private int amountToHeal = 5;
 
-    public override void OnUseInBattle(StatsManager statsManager, StateMachine battleStateMachine, TextBoxHandler textBoxHandler)
+    public override void OnUseInBattle(StatsManager statsManager, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
     {
         base.OnUseInBattle(statsManager, battleStateMachine, textBoxHandler);
 

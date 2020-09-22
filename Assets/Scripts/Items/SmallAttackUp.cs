@@ -6,7 +6,7 @@ public class SmallAttackUp : Useable
 {
     [SerializeField] private AttackUp attackUpEffect = null;
 
-    public override void OnUseInBattle(StatsManager statsManager, StateMachine battleStateMachine, TextBoxHandler textBoxHandler)
+    public override void OnUseInBattle(StatsManager statsManager, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
     {
         base.OnUseInBattle(statsManager, battleStateMachine, textBoxHandler);
 

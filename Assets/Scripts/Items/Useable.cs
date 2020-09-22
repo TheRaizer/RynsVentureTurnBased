@@ -6,7 +6,7 @@ public class Useable : Item
 {
     public bool IsEmpty => Amount > 0;
 
-    public virtual void OnUseInBattle(StatsManager statsManager, StateMachine battleStateMachine, TextBoxHandler textBoxHandler)
+    public virtual void OnUseInBattle(StatsManager statsManager, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
     {
         Amount--;
     }
