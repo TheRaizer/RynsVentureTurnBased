@@ -15,8 +15,8 @@ public class StatusEffect : MonoBehaviour
     [field: SerializeField] public EffectType EffectType { get; private set; }
     [field: SerializeField] public int MaxNumberOfTurnsToLast { get; private set; }
     [SerializeField] private int currentNumberOfTurnsToLast;
-    [SerializeField] public bool outputTextOnTurns = true;
-    [SerializeField] public bool runAfterAttackChoice = false;
+    public bool outputTextOnTurns = true;
+    public bool runAfterAttackChoice = false;
 
     private void Awake()
     {

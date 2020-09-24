@@ -28,7 +28,7 @@ public class GameStateManager : MonoBehaviour
         BattleMenus = GetComponent<BattleMenusHandler>();
         WorldMenus = GetComponent<WorldMenusHandler>();
         stateMachine = new StateMachine();
-        battleState = new BattleState(stateMachine, BattleMenus);
+        battleState = new BattleState(stateMachine, BattleMenus, inventory);
         enemyGenerator = new EnemyGenerator(FindObjectOfType<EnemyStorageForArea>(), battleState.BattleLogic);
         battleState.EnemyGenerator = enemyGenerator;
 

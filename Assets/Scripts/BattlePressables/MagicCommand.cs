@@ -13,7 +13,7 @@ public class MagicCommand : BattleCommands
     {
         if (battleLogic.CurrentPlayer.Magic.Count > 0)
         {
-            battleLogic.battleStateMachine.ChangeState(BattleStates.MagicChoice);
+            battleLogic.BattleStateMachine.ChangeState(BattleStates.MagicChoice);
         }
     }
 }

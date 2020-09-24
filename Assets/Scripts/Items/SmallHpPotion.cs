@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class SmallHpPotion : Useable
 {
-    [SerializeField] private int amountToHeal = 5;
+    [SerializeField] private int amountToHeal = 7;
 
-    public override void OnUseInBattle(StatsManager statsManager, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
+    public override void OnUseInBattle(StatsManager user, List<StatsManager> friendlyStats, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
     {
-        base.OnUseInBattle(statsManager, battleStateMachine, textBoxHandler);
+        base.OnUseInBattle(user, friendlyStats, battleStateMachine, textBoxHandler);
 
-        statsManager.HealthManager.RegenAmount(amountToHeal);
-        textBoxHandler.AddTextAsUseable(statsManager.user.Id, Id);
+        user.HealthManager.RegenAmount(amountToHeal);
+        textBoxHandler.AddTextAsUseable(user.user.Id, Id);
         battleStateMachine.ChangeState(BattleStates.BattleTextBox);
     }
 

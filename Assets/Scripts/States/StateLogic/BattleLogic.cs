@@ -30,12 +30,14 @@ public class BattleLogic
 
 
     private readonly BattleMenusHandler menusHandler;
-    public readonly StateMachine battleStateMachine;
+    public StateMachine BattleStateMachine { get; }
+
+    public int ItemToUse { get; set; }
 
     public BattleLogic(BattleMenusHandler _menusHandler, StateMachine _battleStateMachine)
     {
         menusHandler = _menusHandler;
-        battleStateMachine = _battleStateMachine;
+        BattleStateMachine = _battleStateMachine;
 
         foreach (EntityType a in Enum.GetValues(typeof(EntityType)))
         {
@@ -91,7 +93,7 @@ public class BattleLogic
 
                 CurrentPlayer = ActivePlayableCharacters[i];
                 CurrentPlayer.Stats.ResetClockTick();
-                battleStateMachine.ChangeState(BattleStates.FightMenu);
+                BattleStateMachine.ChangeState(BattleStates.FightMenu);
                 return;
             }
 
@@ -106,7 +108,7 @@ public class BattleLogic
 
                 CurrentEnemy = Enemies[j].GetComponent<Enemy>();
                 CurrentEnemy.Stats.ResetClockTick();
-                battleStateMachine.ChangeState(BattleStates.EnemyTurn);
+                BattleStateMachine.ChangeState(BattleStates.EnemyTurn);
                 return;
             }
         }

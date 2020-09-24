@@ -31,11 +31,11 @@ public class Inventory : MonoBehaviour
         RemoveFromInventory(1, 1, hpPotion_1.GetType().BaseType);
     }
 
-    public void PrintCurrentInventoryWorldText()
+    public void PrintCurrentInventoryText(GameObject[] textBoxes)
     {
         for (int i = 0; i < InventoryDic[CurrentInventoryOpen].Count; i++)
         {
-            TextMeshProUGUI textMesh = worldMenusHandler.TextBoxes[i].GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI textMesh = textBoxes[i].GetComponent<TextMeshProUGUI>();
 
             Item item = (Item)InventoryDic[CurrentInventoryOpen][i];
 
@@ -67,21 +67,26 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void UseItemInventoryInWorld(int indexToRemove, StatsManager entityToUseOn)
+    public void UseItemInventoryInRoam(int indexToUse, StatsManager statsToHeal, List<StatsManager> friendlyStats)
     {
-        Useable itemToUse = (Useable)InventoryDic[typeof(Useable)][indexToRemove];
-        if (InventoryDic[typeof(Useable)].Contains(itemToUse))
-        {
-            itemToUse.OnUseInWorld(entityToUseOn);
+        Useable itemToUse = (Useable)InventoryDic[typeof(Useable)][indexToUse];
+        itemToUse.OnUseInRoam(statsToHeal, friendlyStats);
 
-            if(itemToUse.IsEmpty)
-            {
-                InventoryDic[typeof(Useable)].Remove(itemToUse);
-            }
-        }
-        else
+        if(itemToUse.IsEmpty)
         {
-            Debug.Log("NO item in inventory");
+            InventoryDic[typeof(Useable)].Remove(itemToUse);
+        }
+    }
+
+    public void UseItemInventoryInBattle(int indexToUse, StatsManager statsToHeal, List<StatsManager> friendlyStats, StateMachine battleStateMachine, BattleTextBoxHandler battleTexBoxHandler)
+    {
+        Useable itemToUse = (Useable)InventoryDic[typeof(Useable)][indexToUse];
+
+        itemToUse.OnUseInBattle(statsToHeal, friendlyStats, battleStateMachine, battleTexBoxHandler);
+
+        if (itemToUse.IsEmpty)
+        {
+            InventoryDic[typeof(Useable)].Remove(itemToUse);
         }
     }
 

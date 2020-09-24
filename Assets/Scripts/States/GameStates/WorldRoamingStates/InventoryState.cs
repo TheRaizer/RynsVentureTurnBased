@@ -16,7 +16,7 @@ public class InventoryState : WorldMenuState
         worldMenusHandler.EmptyTextBoxes();
         worldMenusHandler.SetMenuTraversalMaxIndex(inventory.InventoryDic[inventory.CurrentInventoryOpen].Count - 1);
 
-        inventory.PrintCurrentInventoryWorldText();
+        inventory.PrintCurrentInventoryText(worldMenusHandler.TextBoxes);
     }
 
     public override void InputUpdate()

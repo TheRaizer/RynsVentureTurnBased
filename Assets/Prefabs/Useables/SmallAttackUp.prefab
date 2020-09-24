@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d51dca69afc72a24586951a31805eb34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropChance: 50
+  <Id>k__BackingField: S Attack Up
   <MaxHoldable>k__BackingField: 999
-  <Id>k__BackingField: Small Attack Up
+  dropChance: 50
   attackUpEffect: {fileID: 4725586636452052341, guid: 214007f310c97f740b2f2a8cbf3bad32,
     type: 3}

@@ -6,11 +6,11 @@ public class SmallAttackUp : Useable
 {
     [SerializeField] private AttackUp attackUpEffect = null;
 
-    public override void OnUseInBattle(StatsManager statsManager, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
+    public override void OnUseInBattle(StatsManager StatsToHeal, List<StatsManager> friendlyStats, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
     {
-        base.OnUseInBattle(statsManager, battleStateMachine, textBoxHandler);
+        base.OnUseInBattle(StatsToHeal, friendlyStats, battleStateMachine, textBoxHandler);
 
-        statsManager.StatusEffectsManager.AddToStatusEffectsDic(EffectType.SingleTurnTrigger, attackUpEffect, textBoxHandler);
+        StatsToHeal.StatusEffectsManager.AddToStatusEffectsDic(EffectType.SingleTurnTrigger, attackUpEffect, textBoxHandler);
         battleStateMachine.ChangeState(BattleStates.BattleTextBox);
     }
 

@@ -11,6 +11,7 @@ public enum BattleStates
     Victory,
     Loss,
     MagicChoice,
+    ItemChoice,
 }
 
 public class BattleState : State
@@ -26,7 +27,7 @@ public class BattleState : State
     private readonly BattleTextBoxHandler textBoxHandler;
     private readonly EnemyChoiceState enemyChoice;
 
-    public BattleState(StateMachine _stateMachine, BattleMenusHandler _menusHandler) : base(_stateMachine)
+    public BattleState(StateMachine _stateMachine, BattleMenusHandler _menusHandler, Inventory inventory) : base(_stateMachine)
     {
         menusHandler = _menusHandler;
         BattleStateMachine = new StateMachine();
@@ -43,12 +44,13 @@ public class BattleState : State
             { BattleStates.Victory, new VictoryState(BattleStateMachine, this, menusHandler, BattleLogic) },
             { BattleStates.FightMenu, new FightMenuState(BattleStateMachine, BattleLogic, menusHandler, statusEffectsManager, textBoxHandler) },
             { BattleStates.BattleTextBox, new BattleTextBoxState(BattleStateMachine, textBoxHandler, menusHandler) },
-            { BattleStates.MagicChoice, new MagicChoiceState(BattleStateMachine, BattleLogic, menusHandler) }
+            { BattleStates.MagicChoice, new MagicChoiceState(BattleStateMachine, BattleLogic, menusHandler) },
+            { BattleStates.ItemChoice, new ItemChoiceState(BattleStateMachine, menusHandler, inventory, BattleLogic) }
         };
         enemyChoice = new EnemyChoiceState(BattleStateMachine, BattleLogic, menusHandler, textMods, textBoxHandler, statusEffectsManager);
         battleStates.Add(BattleStates.EnemyChoice, enemyChoice);
 
-        BattleStateMachine.Initialize(battleStates, BattleStates.FightMenu);//probably start it off in the text box State EDDDIIIIIT THIIIIIIS
+        BattleStateMachine.Initialize(battleStates, BattleStates.FightMenu);
     }
 
     public override void OnEnterOrReturn()
