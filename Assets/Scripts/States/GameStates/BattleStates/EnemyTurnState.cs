@@ -5,14 +5,12 @@ using UnityEngine;
 public class EnemyTurnState : StatusEffectCheckState
 {
     private readonly BattleLogic battleLogic;
-    private readonly TextModifications textMods;
     private readonly BattleStatusEffectsManager battleStatusManager;
     private readonly BattleTextBoxHandler textBoxHandler;
 
-    public EnemyTurnState(StateMachine _stateMachine, BattleLogic _battleLogic, TextModifications _textMods, BattleStatusEffectsManager _battleStatusManager, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
+    public EnemyTurnState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleStatusEffectsManager _battleStatusManager, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
         battleLogic = _battleLogic;
-        textMods = _textMods;
         battleStatusManager = _battleStatusManager;
         textBoxHandler = _textBoxHandler;
     }
@@ -43,8 +41,8 @@ public class EnemyTurnState : StatusEffectCheckState
         
         textBoxHandler.GenerateEnemyText(attackInfos, attackToUse);
 
-        textMods.PrintPlayerHealth();
-        textMods.ChangePlayerTextColour();
+        battleLogic.textMods.PrintPlayerHealth();
+        battleLogic.textMods.ChangePlayerTextColour();
         Debug.Log("printing enemy attacks");
         stateMachine.ChangeState(BattleStates.BattleTextBox);
     }

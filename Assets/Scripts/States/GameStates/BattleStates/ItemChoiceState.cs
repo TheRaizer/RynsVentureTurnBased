@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
+using UnityEngine;
 
 public class ItemChoiceState : State
 {
@@ -6,12 +8,14 @@ public class ItemChoiceState : State
     private readonly Inventory inventory;
     private readonly BattleLogic battleLogic;
     private readonly VectorMenuTraversal itemTraversal;
+    private readonly BattleTextBoxHandler textBoxHandler;
 
-    public ItemChoiceState(StateMachine _stateMachine, BattleMenusHandler _battleMenuHandler, Inventory _inventory, BattleLogic _battleLogic) : base(_stateMachine)
+    public ItemChoiceState(StateMachine _stateMachine, BattleMenusHandler _battleMenuHandler, Inventory _inventory, BattleLogic _battleLogic, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
         battleMenuHandler = _battleMenuHandler;
         inventory = _inventory;
         battleLogic = _battleLogic;
+        textBoxHandler = _textBoxHandler;
         itemTraversal = new VectorMenuTraversal(PositionPointerForItemUse);
     }
 
@@ -41,16 +45,28 @@ public class ItemChoiceState : State
 
         if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return))
         {
-            battleLogic.ItemToUse = itemTraversal.currentIndex;
-            Useable useable = (Useable)inventory.InventoryDic[inventory.CurrentInventoryOpen][battleLogic.ItemToUse];
+            battleLogic.ItemIndex = itemTraversal.currentIndex;
+            Useable useable = (Useable)inventory.InventoryDic[inventory.CurrentInventoryOpen][battleLogic.ItemIndex];
+            battleLogic.ItemToUse = useable;
+
             if (useable.UseOnAll())
             {
-                //use on all
+                List<StatsManager> friendlyStats = new List<StatsManager>();
+                foreach(PlayableCharacter p in battleLogic.ActivePlayableCharacters)
+                {
+                    friendlyStats.Add(p.Stats);
+                }
+                useable.OnUseInBattle(battleLogic.CurrentPlayer.Stats, friendlyStats, stateMachine, textBoxHandler);
             }
             else if (!useable.UseOnAll())
             {
-                //change state to pick a player to use item on
+                stateMachine.ChangeState(BattleStates.ItemPlayerChoice);
             }
+        }
+
+        if(Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Escape))
+        {
+            stateMachine.ReturnBackToState(BattleStates.FightMenu);
         }
     }
 

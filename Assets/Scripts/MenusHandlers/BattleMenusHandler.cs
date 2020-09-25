@@ -26,7 +26,7 @@ public class BattleMenusHandler : MonoBehaviour
     [field: Header("Pointer Locations")]
     [field: SerializeField] public Directions[] EnemyChoicePointerLocations { get; private set; } = new Directions[ConstantNumbers.MAX_NUMBER_OF_ENEMIES];
     [field: SerializeField] public Directions[] MagicChoicePointerLocations { get; private set; } = new Directions[ConstantNumbers.MAX_MAGIC_X_LENGTH * ConstantNumbers.MAX_MAGIC_Y_LENGTH];
-
+    [field: SerializeField] public Directions[] ActivePlayerPointerLocation { get; private set; } = new Directions[ConstantNumbers.MAX_NUMBER_OF_FIELD_CHARACTERS];
 
     [field: Header("Panel Texts")]
     [field: SerializeField] public TextMeshProUGUI[] EnemyIdText { get; private set; } = new TextMeshProUGUI[ConstantNumbers.MAX_NUMBER_OF_ENEMIES];
@@ -40,6 +40,8 @@ public class BattleMenusHandler : MonoBehaviour
 
     public GameObject[] ItemTextBoxes { get; private set; }
     public List<Directions> ItemUsePointerLocations { get; private set; }
+
+    public VectorMenuTraversal VectorMenuNoNulls { get; private set; }
 
     private void Awake()
     {

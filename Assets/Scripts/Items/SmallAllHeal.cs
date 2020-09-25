@@ -18,6 +18,7 @@ public class SmallAllHeal : Useable
     {
         foreach (StatsManager s in friendlyStats)
         {
+            if (s.HealthManager.Dead) continue;
             s.HealthManager.RegenAmount(amtToHeal);
             textBoxHandler.AddTextAsUseable(s.user.Id, Id);
         }
@@ -29,6 +30,10 @@ public class SmallAllHeal : Useable
     }
 
     public override bool UseOnAll()
+    {
+        return true;
+    }
+    public override bool OnlyHeal()
     {
         return true;
     }

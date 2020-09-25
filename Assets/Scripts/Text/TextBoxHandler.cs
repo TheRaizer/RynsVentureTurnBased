@@ -136,6 +136,16 @@ public class BattleTextBoxHandler
         AddTextLines(useableName + " has been used on " + id + ".");
     }
 
+    public void AddTextAsNonRevive(string itemName, string userToHealId)
+    {
+        AddTextLines(itemName + " cannot revive " + userToHealId + ".");
+    }
+
+    public void AddTextAsAlreadyMaxHealth(string userToHealId)
+    {
+        AddTextLines(userToHealId + " is already at max health.");
+    }
+
     private void ReturnToPreviousState()
     {
         Enum s = PreviousState;

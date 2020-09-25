@@ -30,15 +30,17 @@ public class BattleLogic
 
 
     private readonly BattleMenusHandler menusHandler;
+    public readonly TextModifications textMods;
     public StateMachine BattleStateMachine { get; }
 
-    public int ItemToUse { get; set; }
+    public Useable ItemToUse { get; set; }
+    public int ItemIndex { get; set; }
 
     public BattleLogic(BattleMenusHandler _menusHandler, StateMachine _battleStateMachine)
     {
         menusHandler = _menusHandler;
         BattleStateMachine = _battleStateMachine;
-
+        textMods = new TextModifications(menusHandler, this);
         foreach (EntityType a in Enum.GetValues(typeof(EntityType)))
         {
             AttackablesDic.Add(a, new List<StatsManager>());

@@ -5,15 +5,13 @@ public class EnemyChoiceState : State
     private readonly BattleLogic battleLogic;
     private readonly BattleMenusHandler menusHandler;
     public readonly VectorMenuTraversal menuTraversal;
-    private readonly TextModifications textMods;
     private readonly BattleTextBoxHandler textBoxHandler;
     private readonly BattleStatusEffectsManager battleStatusManager;
 
-    public EnemyChoiceState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleMenusHandler _menusHandler, TextModifications _textMods, BattleTextBoxHandler _textBoxHandler, BattleStatusEffectsManager _battleStatusManager) : base(_stateMachine)
+    public EnemyChoiceState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleMenusHandler _menusHandler, BattleTextBoxHandler _textBoxHandler, BattleStatusEffectsManager _battleStatusManager) : base(_stateMachine)
     {
         battleLogic = _battleLogic;
         menusHandler = _menusHandler;
-        textMods = _textMods;
         textBoxHandler = _textBoxHandler;
         battleStatusManager = _battleStatusManager;
 
@@ -82,7 +80,7 @@ public class EnemyChoiceState : State
             }
 
             battleLogic.CheckForEnemiesRemaining();
-            textMods.ChangeEnemyNameColour();
+            battleLogic.textMods.ChangeEnemyNameColour();
             stateMachine.ChangeState(BattleStates.BattleTextBox);
         }
     }

@@ -15,6 +15,11 @@ public class SmallHpPotion : Useable
         battleStateMachine.ChangeState(BattleStates.BattleTextBox);
     }
 
+    public override bool OnlyHeal()
+    {
+        return true;
+    }
+
     public override Useable ShallowClone()
     {
         return (SmallHpPotion)MemberwiseClone();

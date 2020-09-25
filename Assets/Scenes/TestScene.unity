@@ -2371,7 +2371,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -101.9, y: -195.7}
+  m_AnchoredPosition: {x: 107.5, y: -194.7}
   m_SizeDelta: {x: -700, y: -324.6}
   m_Pivot: {x: 0.5, y: 0.49999994}
 --- !u!114 &539798552
@@ -2515,10 +2515,10 @@ MonoBehaviour:
   menuInit:
     spaceBetweenTexts: 19
     startingPointerLocation:
-      top: 97.09995
-      bottom: 227.5001
-      left: 276.6
-      right: 423.4
+      top: 96.31002
+      bottom: 228.29
+      left: 248.1
+      right: 451.9
     numOfTextBoxes: 40
     textPrefab: {fileID: 5298416465222676334, guid: 1cec1b2d13fa339449eaba1a611e2e80,
       type: 3}
@@ -2612,6 +2612,23 @@ MonoBehaviour:
     bottom: -31.80002
     left: 281.3
     right: 418.7
+  <ActivePlayerPointerLocation>k__BackingField:
+  - top: 262.4
+    bottom: 62.19999
+    left: 457.5
+    right: 242.5
+  - top: 294
+    bottom: 30.59999
+    left: 457.5
+    right: 242.5
+  - top: 325.5
+    bottom: -0.9000092
+    left: 457.5
+    right: 242.5
+  - top: 357
+    bottom: -32.40001
+    left: 457.5
+    right: 242.5
   <EnemyIdText>k__BackingField:
   - {fileID: 433470715}
   - {fileID: 279853003}

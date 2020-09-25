@@ -17,6 +17,8 @@ public class Useable : Item
     }
 
     public virtual bool UseOnAll() { return false; }
+    public virtual bool CanRevive() { return false; }
+    public virtual bool OnlyHeal() { return false; }
 
     public virtual Useable ShallowClone()
     {
