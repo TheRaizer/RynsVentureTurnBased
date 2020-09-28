@@ -23,7 +23,6 @@ public class BattleLogic
     public Enemy CurrentEnemy { get; private set; }
     public PlayableCharacter CurrentPlayer { get; private set; }
     public EntityAction CurrentPlayerAttack { get; set; }
-
     public PlayableCharacter[] ActivePlayableCharacters { get; set; } = new PlayableCharacter[ConstantNumbers.MAX_NUMBER_OF_FIELD_CHARACTERS];//playable characters on field
     public List<PlayableCharacter> InactivePlayableCharacters { get; set; } = new List<PlayableCharacter>();//playable characters off field
     public List<PlayableCharacter> PlayableCharacterRoster { get; set; } = new List<PlayableCharacter>();//all playable characters

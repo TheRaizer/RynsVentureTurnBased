@@ -18,7 +18,14 @@ public class SupportPlayerChoiceState : PlayerChoiceState
 
         if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
-           EntityActionInfo actionInfo =  battleLogic.CurrentPlayerAttack.UseAction
+            StatsManager playerToSupport = battleLogic.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats;
+
+            if (battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Revive && !playerToSupport.HealthManager.Dead)
+            {
+                textBoxHandler.AddTextAsNonRevive(battleLogic.CurrentPlayer.Id, playerToSupport.user.Id);
+                return;
+            }
+            EntityActionInfo actionInfo =  battleLogic.CurrentPlayerAttack.UseAction
                 (
                     battleLogic.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats, battleLogic.CurrentPlayer.Stats.DamageScale, textBoxHandler
                 );

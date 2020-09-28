@@ -3,28 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityAction : MonoBehaviour
+public abstract class EntityAction : MonoBehaviour
 {
+    public enum ActionTypes
+    {
+        Support,
+        Attack,
+        Revive
+    }
+    public abstract ActionTypes ActionType { get; protected set; }
     [field: SerializeField] public string Id { get; private set; }
     [field: SerializeField] public bool IsAOE { get; private set; }
-    [field: SerializeField] public bool IsSupport { get; private set; }
-    [field: SerializeField] public int Amount { get; private set; }
-    [field: SerializeField] public int ManaReduction { get; private set; }
-    [field: SerializeField] public float Accuracy { get; private set; }
-    [field: SerializeField] public GameObject StatusEffectPrefab { get; private set; }
-    [field: SerializeField] public float StatusEffectChance { get; private set; }
-    [field: SerializeField] public float CritChance { get; private set; }
-    [field: SerializeField] public float CritMultiplier { get; private set; }
-    [field: SerializeField] public string AttackText { get; private set; }
 
-    [SerializeField] private StatsManager userStats;
+    [SerializeField] protected string ActionText;
+    [SerializeField] protected int ManaReduction;
+    [SerializeField] protected int Amount;
+    [SerializeField] protected float Accuracy;
+    [SerializeField] protected float CritChance;
+    [SerializeField] protected float CritMultiplier;
+    [SerializeField] protected GameObject StatusEffectPrefab;
+    [SerializeField] private float StatusEffectChance;
 
-    public void Awake()
+    [SerializeField] protected StatsManager userStats;
+
+    public virtual void Awake()
     {
         userStats = GetComponent<StatsManager>();
     }
 
-    private bool ApplyStatusEffect(StatsManager statsToApplyToo, bool instantApply, BattleTextBoxHandler textBoxHandler)
+    protected bool ApplyStatusEffect(StatsManager statsToApplyToo, bool instantApply, BattleTextBoxHandler textBoxHandler)
     {
         if (!instantApply)
         {
@@ -46,7 +53,7 @@ public class EntityAction : MonoBehaviour
 
     }
 
-    private void StatusEffectApplication(StatsManager statsToApplyToo, BattleTextBoxHandler textBoxHandler)
+    protected void StatusEffectApplication(StatsManager statsToApplyToo, BattleTextBoxHandler textBoxHandler)
     {
         StatusEffect s = StatusEffectPrefab.GetComponent<StatusEffect>();
         textBoxHandler.AddTextAsStatusInfliction(userStats.user.Id, statsToApplyToo.user.Id, s.Name);
@@ -62,30 +69,32 @@ public class EntityAction : MonoBehaviour
         }
     }
 
-    public List<EntityActionInfo> DetermineAction(List<StatsManager> statsTooAttack, float damageScale, int indexToAttack, BattleTextBoxHandler textBoxHandler)
+    public List<EntityActionInfo> DetermineAction(List<StatsManager> statsTooPerformActionOn, float damageScale, int indexToActOn, BattleTextBoxHandler textBoxHandler)
     {
-        List<EntityActionInfo> attackInfos = new List<EntityActionInfo>();
+        List<EntityActionInfo> actionInfos = new List<EntityActionInfo>();
         if(!IsAOE)
         {
-            attackInfos.Add(UseAction(statsTooAttack[indexToAttack], damageScale, textBoxHandler));
+            actionInfos.Add(UseAction(statsTooPerformActionOn[indexToActOn], damageScale, textBoxHandler));
         }
         else
         {
-            for(int i = 0; i < statsTooAttack.Count; i++)
+            for(int i = 0; i < statsTooPerformActionOn.Count; i++)
             {
-                attackInfos.Add(UseAction(statsTooAttack[i], damageScale, textBoxHandler));
+                actionInfos.Add(UseAction(statsTooPerformActionOn[i], damageScale, textBoxHandler));
             }
         }
 
-        return attackInfos;
+        return actionInfos;
     }
 
-    public EntityActionInfo UseAction(StatsManager statsTooAttack, float scale, BattleTextBoxHandler textBoxHandler)
+    public EntityActionInfo UseAction(StatsManager statsTooActOn, float scale, BattleTextBoxHandler textBoxHandler)
     {
+        userStats.ManaManager.ReduceAmount(ManaReduction);
+
         int chance = UnityEngine.Random.Range(0, 100);
         bool hasInflicted = false;
 
-        textBoxHandler.AddTextAsAttack(userStats.user.Id, AttackText, statsTooAttack.user.Id);
+        textBoxHandler.AddTextAsAttack(userStats.user.Id, ActionText, statsTooActOn.user.Id);
 
         if (chance < Accuracy)
         {
@@ -93,49 +102,36 @@ public class EntityAction : MonoBehaviour
 
             if (critChance < CritChance)
             {
-                if (IsSupport)
-                {
-                    statsTooAttack.HealthManager.RegenAmount(MathExtension.RoundToNearestInteger(Amount * scale * CritMultiplier));
-                }
-                else
-                {
-                    statsTooAttack.HealthManager.ReduceAmount(MathExtension.RoundToNearestInteger(Amount * scale * CritMultiplier));
-                }
+                OnCrit(statsTooActOn, scale);
                 textBoxHandler.AddTextAsCriticalHit();
-
                 if (StatusEffectPrefab != null)
                 {
-                    hasInflicted = ApplyStatusEffect(statsTooAttack, true, textBoxHandler);
+                    hasInflicted = ApplyStatusEffect(statsTooActOn, true, textBoxHandler);
                 }
                 Debug.Log("Critical hit");
-                return new EntityActionInfo(statsTooAttack.user.Id, true, hasInflicted);
+                return new EntityActionInfo(statsTooActOn.user.Id, true, hasInflicted);
             }
             else
             {
-                if (IsSupport)
-                {
-                    statsTooAttack.HealthManager.RegenAmount(MathExtension.RoundToNearestInteger(Amount * scale));
-                }
-                else
-                {
-                    statsTooAttack.HealthManager.ReduceAmount(MathExtension.RoundToNearestInteger(Amount * scale));
-                }
-
+                OnNonCrit(statsTooActOn, scale);
                 if (StatusEffectPrefab != null)
                 {
-                    hasInflicted = ApplyStatusEffect(statsTooAttack, false, textBoxHandler);
+                    hasInflicted = ApplyStatusEffect(statsTooActOn, false, textBoxHandler);
                 }
-                return new EntityActionInfo(statsTooAttack.user.Id, true, hasInflicted);
+                return new EntityActionInfo(statsTooActOn.user.Id, true, hasInflicted);
             }
         }
         else
         {
-            textBoxHandler.AddTextOnMiss(userStats.user.Id, statsTooAttack.user.Id);
-            return new EntityActionInfo(statsTooAttack.user.Id, false, false);
+            textBoxHandler.AddTextOnMiss(userStats.user.Id, statsTooActOn.user.Id);
+            return new EntityActionInfo(statsTooActOn.user.Id, false, false);
         }
     }
 
-    public bool ValidateManaForAction(StatsManager userStats)
+    protected abstract void OnCrit(StatsManager statsTooActOn, float scale);
+    protected abstract void OnNonCrit(StatsManager statsTooActOn, float scale);
+
+    public virtual bool ValidateManaForAction(StatsManager userStats)
     {
         if (userStats.ManaManager.CurrentAmount - ManaReduction <= 0)
         {

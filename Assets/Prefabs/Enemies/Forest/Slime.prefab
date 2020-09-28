@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3376011954525368232}
   - component: {fileID: 3376011954525368234}
   - component: {fileID: -7334648606454433584}
-  - component: {fileID: -7623231250017409417}
+  - component: {fileID: 6497215810239895593}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -104,7 +104,7 @@ MonoBehaviour:
   <EntityType>k__BackingField: 1
   <ExpOnDeath>k__BackingField: 100
   <Attacks>k__BackingField:
-  - {fileID: -7623231250017409417}
+  - {fileID: 6497215810239895593}
   <PrefabItemsToDrop>k__BackingField: []
 --- !u!114 &-7334648606454433584
 MonoBehaviour:
@@ -129,7 +129,7 @@ MonoBehaviour:
   <ManaManager>k__BackingField:
     <CurrentAmount>k__BackingField: 0
     <MaxAmount>k__BackingField: 0
---- !u!114 &-7623231250017409417
+--- !u!114 &6497215810239895593
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,18 +138,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 3376011954525368277}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c2340d3c11bbf4093bfa4a0c9ca362, type: 3}
+  m_Script: {fileID: 11500000, guid: 9200b74c3c40e3241b6dc0b8ad4dd7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Leap
   <IsAOE>k__BackingField: 0
-  <IsSupport>k__BackingField: 0
-  <Amount>k__BackingField: 2
-  <ManaReduction>k__BackingField: 0
-  <Accuracy>k__BackingField: 100
-  <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,
+  ActionText: leaps at
+  ManaReduction: 0
+  Amount: 3
+  Accuracy: 100
+  CritChance: 15
+  CritMultiplier: 1.5
+  StatusEffectPrefab: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,
     type: 3}
-  <StatusEffectChance>k__BackingField: 40
-  <CritChance>k__BackingField: 5
-  <CritMultiplier>k__BackingField: 2.5
-  <AttackText>k__BackingField: leaps onto
+  StatusEffectChance: 45
+  userStats: {fileID: 0}

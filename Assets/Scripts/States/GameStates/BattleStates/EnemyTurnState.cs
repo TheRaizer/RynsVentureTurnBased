@@ -34,11 +34,17 @@ public class EnemyTurnState : StatusEffectCheckState
         }
         battleLogic.CheckForAttackablePlayers();
 
-        int playerIndexToAttack = Random.Range(0, battleLogic.AttackablesDic[EntityType.Player].Count);
         EntityAction attackToUse = battleLogic.CurrentEnemy.Attacks[Random.Range(0, battleLogic.CurrentEnemy.Attacks.Count)];
-
-        List<EntityActionInfo> attackInfos = attackToUse.DetermineAction(battleLogic.AttackablesDic[EntityType.Player], battleLogic.CurrentEnemy.Stats.DamageScale, playerIndexToAttack, textBoxHandler);
-
+        if (attackToUse.ActionType == EntityAction.ActionTypes.Support)
+        {
+            int enemyIndexToSupport = Random.Range(0, battleLogic.AttackablesDic[EntityType.Enemy].Count);
+            List<EntityActionInfo> actionInfos = attackToUse.DetermineAction(battleLogic.AttackablesDic[EntityType.Enemy], battleLogic.CurrentEnemy.Stats.DamageScale, enemyIndexToSupport, textBoxHandler);
+        }
+        else
+        {
+            int playerIndexToAttack = Random.Range(0, battleLogic.AttackablesDic[EntityType.Player].Count);
+            List<EntityActionInfo> actionInfos = attackToUse.DetermineAction(battleLogic.AttackablesDic[EntityType.Player], battleLogic.CurrentEnemy.Stats.DamageScale, playerIndexToAttack, textBoxHandler);
+        }
         battleLogic.textMods.PrintPlayerHealth();
         battleLogic.textMods.ChangePlayerTextColour();
         Debug.Log("printing enemy attacks");

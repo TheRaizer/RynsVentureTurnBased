@@ -71,13 +71,13 @@ public class MagicChoiceState : State
             battleLogic.CurrentPlayerAttack = magicAttacks[matrixMenuTraversal.currentXIndex, matrixMenuTraversal.currentYIndex];
             if (!battleLogic.CurrentPlayerAttack.IsAOE)
             {
-                if (battleLogic.CurrentPlayerAttack.IsSupport)
-                {
-                    stateMachine.ChangeState(BattleStates.SupportPlayerChoice);
-                }
-                else
+                if(battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Attack)
                 {
                     stateMachine.ChangeState(BattleStates.EnemyChoice);
+                }
+                else if(battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Support || battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Revive)
+                {
+                    stateMachine.ChangeState(BattleStates.SupportPlayerChoice);
                 }
             }
             Debug.Log(battleLogic.CurrentPlayerAttack.Id);

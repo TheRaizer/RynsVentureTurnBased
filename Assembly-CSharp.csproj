@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\EnemyTurnState.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\RoamMenuChoiceState.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\InventoryChoiceState.cs" />
+    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\SupportPlayerChoiceState.cs" />
     <Compile Include="Assets\Scripts\States\StateLogic\BattleStatusEffectsManager.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\MultiTurnTriggeredEffects\Poison.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\ItemPlayerChoiceState.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\WorldMenuState.cs" />
     <Compile Include="Assets\Scripts\Player\LevelSystem.cs" />
     <Compile Include="Assets\Scripts\MenusHandlers\WorldMenusHandler.cs" />
+    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\PlayerChoiceState.cs" />
     <Compile Include="Assets\Scripts\GeneralEntity\StatsManager.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyGenerator.cs" />
     <Compile Include="Assets\Scripts\States\State.cs" />
@@ -125,8 +127,9 @@
     <Compile Include="Assets\Scripts\WorldMenuOptions\InventoryTypeChoiceOption.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\FightMenuState.cs" />
-    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\PlayerChoiceState.cs" />
-    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\SupportPlayerChoiceState.cs" />
+    <Compile Include="Assets\Scripts\AttackActions\ReviveAction.cs" />
+    <Compile Include="Assets\Scripts\AttackActions\SupportAction.cs" />
+    <Compile Include="Assets\Scripts\AttackActions\AttackAction.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

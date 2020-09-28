@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class HealthManager : AmountManager
 {
-    public bool Dead { get; private set; }
+    public bool Dead { get; set; }
 
     public HealthManager(int _maxHealth) : base(_maxHealth)
     {
@@ -21,6 +21,7 @@ public class HealthManager : AmountManager
             Dead = true;
         }
     }
+
     public override void ZeroOut()
     {
         base.ZeroOut();

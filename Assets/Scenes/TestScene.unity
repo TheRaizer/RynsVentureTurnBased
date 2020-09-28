@@ -2713,17 +2713,8 @@ MonoBehaviour:
   - {fileID: 4800670343032372104, guid: 9f19616387679e0478280c48ad6b7db1, type: 3}
   <InventoryChoiceOptions>k__BackingField:
   - {fileID: 2096662133330265421, guid: bb742ab7373905c459ee695638a4e962, type: 3}
-  content: {fileID: 1510187855}
-  textBoxPrefab: {fileID: 8041868199397885982, guid: 3629c5a7a8bd2d642a2df56c150047f1,
-    type: 3}
-  maxNumberOfTextBoxesToGenerate: 40
   <MenuPanel>k__BackingField: {fileID: 1577315502}
   <Pointer>k__BackingField: {fileID: 1369486390}
-  startingPointerLocation:
-    top: -30.22925
-    bottom: 5443.37
-    left: -43.34694
-    right: 95.25307
 --- !u!1 &594545145
 GameObject:
   m_ObjectHideFlags: 0
@@ -2931,6 +2922,7 @@ GameObject:
   - component: {fileID: 615585381}
   - component: {fileID: 615585380}
   - component: {fileID: 615585379}
+  - component: {fileID: 615585389}
   - component: {fileID: 615585388}
   m_Layer: 0
   m_Name: Zable
@@ -2948,21 +2940,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 615585378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c2340d3c11bbf4093bfa4a0c9ca362, type: 3}
+  m_Script: {fileID: 11500000, guid: 9200b74c3c40e3241b6dc0b8ad4dd7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: Fight
+  <Id>k__BackingField: whack
   <IsAOE>k__BackingField: 0
-  <IsSupport>k__BackingField: 0
-  <Amount>k__BackingField: 3
-  <ManaReduction>k__BackingField: 0
-  <Accuracy>k__BackingField: 95
-  <StatusEffectPrefab>k__BackingField: {fileID: 6422291583160218353, guid: a8273d23506d89c45b172dbb50f71405,
-    type: 3}
-  <StatusEffectChance>k__BackingField: 100
-  <CritChance>k__BackingField: 10
-  <CritMultiplier>k__BackingField: 2.5
-  <AttackText>k__BackingField: casts fire upon
+  ActionText: whacks
+  ManaReduction: 0
+  Amount: 2
+  Accuracy: 85
+  CritChance: 5
+  CritMultiplier: 1.5
+  StatusEffectPrefab: {fileID: 0}
+  StatusEffectChance: 0
   userStats: {fileID: 0}
 --- !u!114 &615585380
 MonoBehaviour:
@@ -2982,6 +2972,7 @@ MonoBehaviour:
   percentExperiencePerLevel: 0.75
   <FightAttack>k__BackingField: {fileID: 615585379}
   <Magic>k__BackingField:
+  - {fileID: 615585389}
   - {fileID: 615585388}
   <LevelSystem>k__BackingField:
     <Experience>k__BackingField: 0
@@ -3140,7 +3131,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &615585388
 MonoBehaviour:
@@ -3151,21 +3142,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 615585378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c2340d3c11bbf4093bfa4a0c9ca362, type: 3}
+  m_Script: {fileID: 11500000, guid: 394be9e4619465443a981e7fbd114dd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: Blessed Buff
+  <Id>k__BackingField: Revival
   <IsAOE>k__BackingField: 0
-  <IsSupport>k__BackingField: 1
-  <Amount>k__BackingField: 4
-  <ManaReduction>k__BackingField: 0
-  <Accuracy>k__BackingField: 100
-  <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 71967b9dc9c3bd34aac2d99b9e4dc805,
+  ActionText: tries to revive
+  ManaReduction: 0
+  Amount: 0
+  Accuracy: 100
+  CritChance: 15
+  CritMultiplier: 1.5
+  StatusEffectPrefab: {fileID: 0}
+  StatusEffectChance: 0
+  userStats: {fileID: 0}
+  percentHealthAfterRevive: 0.2
+--- !u!114 &615585389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615585378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a864692a7055c324a8b7698413ed8544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: Litel
+  <IsAOE>k__BackingField: 0
+  ActionText: increases attack of
+  ManaReduction: 7
+  Amount: 0
+  Accuracy: 0
+  CritChance: 0
+  CritMultiplier: 0
+  StatusEffectPrefab: {fileID: 999671665069997296, guid: 71967b9dc9c3bd34aac2d99b9e4dc805,
     type: 3}
-  <StatusEffectChance>k__BackingField: 100
-  <CritChance>k__BackingField: 10
-  <CritMultiplier>k__BackingField: 2.5
-  <AttackText>k__BackingField: heals and increases attack of
+  StatusEffectChance: 100
   userStats: {fileID: 0}
 --- !u!1 &666992833
 GameObject:
@@ -3352,20 +3366,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 740601877}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c2340d3c11bbf4093bfa4a0c9ca362, type: 3}
+  m_Script: {fileID: 11500000, guid: 9200b74c3c40e3241b6dc0b8ad4dd7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: Fight
+  <Id>k__BackingField: hammer
   <IsAOE>k__BackingField: 0
-  <IsSupport>k__BackingField: 0
-  <Amount>k__BackingField: 4
-  <ManaReduction>k__BackingField: 0
-  <Accuracy>k__BackingField: 95
-  <StatusEffectPrefab>k__BackingField: {fileID: 0}
-  <StatusEffectChance>k__BackingField: 0
-  <CritChance>k__BackingField: 10
-  <CritMultiplier>k__BackingField: 2.5
-  <AttackText>k__BackingField: hammers
+  ActionText: hammers
+  ManaReduction: 0
+  Amount: 3
+  Accuracy: 100
+  CritChance: 5
+  CritMultiplier: 1.5
+  StatusEffectPrefab: {fileID: 0}
+  StatusEffectChance: 0
   userStats: {fileID: 0}
 --- !u!114 &740601879
 MonoBehaviour:
@@ -3542,7 +3555,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &774640467
 GameObject:
@@ -6184,21 +6197,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1552954257}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c2340d3c11bbf4093bfa4a0c9ca362, type: 3}
+  m_Script: {fileID: 11500000, guid: 9200b74c3c40e3241b6dc0b8ad4dd7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: Fight
+  <Id>k__BackingField: Stab
   <IsAOE>k__BackingField: 0
-  <IsSupport>k__BackingField: 0
-  <Amount>k__BackingField: 5
-  <ManaReduction>k__BackingField: 0
-  <Accuracy>k__BackingField: 100
-  <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,
+  ActionText: stabs
+  ManaReduction: 0
+  Amount: 4
+  Accuracy: 100
+  CritChance: 25
+  CritMultiplier: 1.5
+  StatusEffectPrefab: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,
     type: 3}
-  <StatusEffectChance>k__BackingField: 100
-  <CritChance>k__BackingField: 10
-  <CritMultiplier>k__BackingField: 2.5
-  <AttackText>k__BackingField: stabs
+  StatusEffectChance: 100
   userStats: {fileID: 0}
 --- !u!114 &1552954259
 MonoBehaviour:
@@ -7426,11 +7438,11 @@ GameObject:
   - component: {fileID: 1843531472}
   - component: {fileID: 1843531473}
   - component: {fileID: 1843531474}
-  - component: {fileID: 1843531475}
-  - component: {fileID: 1843531476}
-  - component: {fileID: 1843531477}
   - component: {fileID: 1843531479}
   - component: {fileID: 1843531478}
+  - component: {fileID: 1843531477}
+  - component: {fileID: 1843531476}
+  - component: {fileID: 1843531475}
   m_Layer: 0
   m_Name: Ryn
   m_TagString: Player
@@ -7609,12 +7621,12 @@ MonoBehaviour:
   <EntityType>k__BackingField: 0
   baseExperienceToNextLevel: 500
   percentExperiencePerLevel: 0.75
-  <FightAttack>k__BackingField: {fileID: 1843531475}
+  <FightAttack>k__BackingField: {fileID: 1843531479}
   <Magic>k__BackingField:
-  - {fileID: 1843531476}
-  - {fileID: 1843531477}
-  - {fileID: 1843531479}
   - {fileID: 1843531478}
+  - {fileID: 1843531477}
+  - {fileID: 1843531476}
+  - {fileID: 1843531475}
   <LevelSystem>k__BackingField:
     <Experience>k__BackingField: 0
     <ExperienceToNextLevel>k__BackingField: 0
@@ -7629,20 +7641,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1843531466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c2340d3c11bbf4093bfa4a0c9ca362, type: 3}
+  m_Script: {fileID: 11500000, guid: a864692a7055c324a8b7698413ed8544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: Fight
+  <Id>k__BackingField: Heal
   <IsAOE>k__BackingField: 0
-  <IsSupport>k__BackingField: 0
-  <Amount>k__BackingField: 3
-  <ManaReduction>k__BackingField: 0
-  <Accuracy>k__BackingField: 95
-  <StatusEffectPrefab>k__BackingField: {fileID: 0}
-  <StatusEffectChance>k__BackingField: 100
-  <CritChance>k__BackingField: 10
-  <CritMultiplier>k__BackingField: 2.5
-  <AttackText>k__BackingField: slashes
+  ActionText: heals
+  ManaReduction: 5
+  Amount: 7
+  Accuracy: 100
+  CritChance: 10
+  CritMultiplier: 2.5
+  StatusEffectPrefab: {fileID: 0}
+  StatusEffectChance: 0
   userStats: {fileID: 0}
 --- !u!114 &1843531476
 MonoBehaviour:
@@ -7653,20 +7664,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1843531466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c2340d3c11bbf4093bfa4a0c9ca362, type: 3}
+  m_Script: {fileID: 11500000, guid: 9200b74c3c40e3241b6dc0b8ad4dd7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: Fire Ball
+  <Id>k__BackingField: Flame Sword
   <IsAOE>k__BackingField: 0
-  <IsSupport>k__BackingField: 0
-  <Amount>k__BackingField: 4
-  <ManaReduction>k__BackingField: 15
-  <Accuracy>k__BackingField: 88
-  <StatusEffectPrefab>k__BackingField: {fileID: 0}
-  <StatusEffectChance>k__BackingField: 0
-  <CritChance>k__BackingField: 8
-  <CritMultiplier>k__BackingField: 2.5
-  <AttackText>k__BackingField: casts Fire Ball upon
+  ActionText: flame slashes
+  ManaReduction: 4
+  Amount: 4
+  Accuracy: 80
+  CritChance: 10
+  CritMultiplier: 1.5
+  StatusEffectPrefab: {fileID: 6422291583160218353, guid: a8273d23506d89c45b172dbb50f71405,
+    type: 3}
+  StatusEffectChance: 80
   userStats: {fileID: 0}
 --- !u!114 &1843531477
 MonoBehaviour:
@@ -7677,20 +7688,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1843531466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c2340d3c11bbf4093bfa4a0c9ca362, type: 3}
+  m_Script: {fileID: 11500000, guid: 9200b74c3c40e3241b6dc0b8ad4dd7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: Fire Slash
+  <Id>k__BackingField: Lighting
   <IsAOE>k__BackingField: 0
-  <IsSupport>k__BackingField: 0
-  <Amount>k__BackingField: 5
-  <ManaReduction>k__BackingField: 30
-  <Accuracy>k__BackingField: 95
-  <StatusEffectPrefab>k__BackingField: {fileID: 0}
-  <StatusEffectChance>k__BackingField: 0
-  <CritChance>k__BackingField: 15
-  <CritMultiplier>k__BackingField: 1.5
-  <AttackText>k__BackingField: slashes with a Flame Blade against
+  ActionText: summons lighting upon
+  ManaReduction: 10
+  Amount: 7
+  Accuracy: 100
+  CritChance: 30
+  CritMultiplier: 1.5
+  StatusEffectPrefab: {fileID: 999671665069997296, guid: 10249f38991cd1a418c69e19ef9d40a7,
+    type: 3}
+  StatusEffectChance: 80
   userStats: {fileID: 0}
 --- !u!114 &1843531478
 MonoBehaviour:
@@ -7701,20 +7712,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1843531466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c2340d3c11bbf4093bfa4a0c9ca362, type: 3}
+  m_Script: {fileID: 11500000, guid: 9200b74c3c40e3241b6dc0b8ad4dd7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: Blizzard
+  <Id>k__BackingField: Fire Ball
   <IsAOE>k__BackingField: 0
-  <IsSupport>k__BackingField: 0
-  <Amount>k__BackingField: 5
-  <ManaReduction>k__BackingField: 5
-  <Accuracy>k__BackingField: 100
-  <StatusEffectPrefab>k__BackingField: {fileID: 0}
-  <StatusEffectChance>k__BackingField: 0
-  <CritChance>k__BackingField: 2
-  <CritMultiplier>k__BackingField: 2.5
-  <AttackText>k__BackingField: casts Blizzard
+  ActionText: releases a fire ball on
+  ManaReduction: 5
+  Amount: 5
+  Accuracy: 75
+  CritChance: 10
+  CritMultiplier: 1.5
+  StatusEffectPrefab: {fileID: 6422291583160218353, guid: a8273d23506d89c45b172dbb50f71405,
+    type: 3}
+  StatusEffectChance: 100
   userStats: {fileID: 0}
 --- !u!114 &1843531479
 MonoBehaviour:
@@ -7725,20 +7736,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1843531466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c2340d3c11bbf4093bfa4a0c9ca362, type: 3}
+  m_Script: {fileID: 11500000, guid: 9200b74c3c40e3241b6dc0b8ad4dd7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: Lightning
+  <Id>k__BackingField: Sword Slash
   <IsAOE>k__BackingField: 0
-  <IsSupport>k__BackingField: 0
-  <Amount>k__BackingField: 6
-  <ManaReduction>k__BackingField: 20
-  <Accuracy>k__BackingField: 65
-  <StatusEffectPrefab>k__BackingField: {fileID: 0}
-  <StatusEffectChance>k__BackingField: 0
-  <CritChance>k__BackingField: 10
-  <CritMultiplier>k__BackingField: 2.5
-  <AttackText>k__BackingField: casts Lighting on
+  ActionText: slashes
+  ManaReduction: 0
+  Amount: 3
+  Accuracy: 100
+  CritChance: 15
+  CritMultiplier: 1.5
+  StatusEffectPrefab: {fileID: 0}
+  StatusEffectChance: 0
   userStats: {fileID: 0}
 --- !u!1 &1854956311
 GameObject:

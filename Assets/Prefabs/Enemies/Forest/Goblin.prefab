@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3376011954525368232}
   - component: {fileID: 3376011954525368234}
   - component: {fileID: -7334648606454433584}
-  - component: {fileID: -7623231250017409417}
+  - component: {fileID: -6042711507243387711}
   m_Layer: 0
   m_Name: Goblin
   m_TagString: Untagged
@@ -104,7 +104,7 @@ MonoBehaviour:
   <EntityType>k__BackingField: 1
   <ExpOnDeath>k__BackingField: 200
   <Attacks>k__BackingField:
-  - {fileID: -7623231250017409417}
+  - {fileID: -6042711507243387711}
   <PrefabItemsToDrop>k__BackingField: []
 --- !u!114 &-7334648606454433584
 MonoBehaviour:
@@ -129,7 +129,7 @@ MonoBehaviour:
   <ManaManager>k__BackingField:
     <CurrentAmount>k__BackingField: 0
     <MaxAmount>k__BackingField: 0
---- !u!114 &-7623231250017409417
+--- !u!114 &-6042711507243387711
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,18 +138,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 3376011954525368277}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c2340d3c11bbf4093bfa4a0c9ca362, type: 3}
+  m_Script: {fileID: 11500000, guid: 9200b74c3c40e3241b6dc0b8ad4dd7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: Spear Throw
+  <Id>k__BackingField: throw
   <IsAOE>k__BackingField: 0
-  <IsSupport>k__BackingField: 0
-  <Amount>k__BackingField: 4
-  <ManaReduction>k__BackingField: 0
-  <Accuracy>k__BackingField: 97
-  <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 10249f38991cd1a418c69e19ef9d40a7,
+  ActionText: throws a rock at
+  ManaReduction: 0
+  Amount: 4
+  Accuracy: 100
+  CritChance: 10
+  CritMultiplier: 1.5
+  StatusEffectPrefab: {fileID: 999671665069997296, guid: 10249f38991cd1a418c69e19ef9d40a7,
     type: 3}
-  <StatusEffectChance>k__BackingField: 25
-  <CritChance>k__BackingField: 7
-  <CritMultiplier>k__BackingField: 2.5
-  <AttackText>k__BackingField: throws spear
+  StatusEffectChance: 15
+  userStats: {fileID: 0}
