@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public enum BattleStates
 {
@@ -12,6 +13,7 @@ public enum BattleStates
     MagicChoice,
     ItemChoice,
     ItemPlayerChoice,
+    SupportPlayerChoice,
 }
 
 public class BattleState : State
@@ -43,7 +45,8 @@ public class BattleState : State
             { BattleStates.BattleTextBox, new BattleTextBoxState(BattleStateMachine, textBoxHandler, menusHandler) },
             { BattleStates.MagicChoice, new MagicChoiceState(BattleStateMachine, BattleLogic, menusHandler) },
             { BattleStates.ItemChoice, new ItemChoiceState(BattleStateMachine, menusHandler, inventory, BattleLogic, textBoxHandler) },
-            { BattleStates.ItemPlayerChoice, new ItemPlayerChoiceState(BattleStateMachine, BattleLogic, menusHandler, inventory, textBoxHandler) }
+            { BattleStates.ItemPlayerChoice, new ItemPlayerChoiceState(BattleStateMachine, BattleLogic, menusHandler, inventory, textBoxHandler) },
+            { BattleStates.SupportPlayerChoice, new SupportPlayerChoiceState(BattleStateMachine, menusHandler, BattleLogic, textBoxHandler) }
         };
         enemyChoice = new EnemyChoiceState(BattleStateMachine, BattleLogic, menusHandler, textBoxHandler, statusEffectsManager);
         battleStates.Add(BattleStates.EnemyChoice, enemyChoice);

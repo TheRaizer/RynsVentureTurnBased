@@ -15,7 +15,7 @@ public class EnemyChoiceState : State
         textBoxHandler = _textBoxHandler;
         battleStatusManager = _battleStatusManager;
 
-        menuTraversal = new VectorMenuTraversal(PositionPointer)
+        menuTraversal = new VectorMenuTraversal(PositionPointerForEnemyChoice)
         {
             MaxIndex = battleLogic.Enemies.Length - 1
         };
@@ -31,7 +31,7 @@ public class EnemyChoiceState : State
             menuTraversal.currentIndex++;
             menuTraversal.CheckIfIndexInRange();
         }
-        PositionPointer();
+        PositionPointerForEnemyChoice();
     }
 
     public override void OnFullRotationEnter()
@@ -62,22 +62,8 @@ public class EnemyChoiceState : State
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
             Enemy enemyToAttack = battleLogic.Enemies[menuTraversal.currentIndex].GetComponent<Enemy>();
-            EntityActionInfo attackInfo = battleLogic.CurrentPlayerAttack.UseAttack(enemyToAttack.Stats, battleLogic.CurrentPlayer.Stats.DamageScale, textBoxHandler);
+            EntityActionInfo attackInfo = battleLogic.CurrentPlayerAttack.UseAction(enemyToAttack.Stats, battleLogic.CurrentPlayer.Stats.DamageScale, textBoxHandler);
             Debug.Log(attackInfo.inflictedStatusEffect);
-            textBoxHandler.AddTextAsAttack(battleLogic.CurrentPlayer.Id, battleLogic.CurrentPlayerAttack.AttackText, attackInfo.targetId);
-
-            if (!attackInfo.hitTarget)
-            {
-                textBoxHandler.AddTextOnMiss(battleLogic.CurrentPlayer.Id, attackInfo.targetId);
-            }
-            else if(battleLogic.CurrentPlayerAttack.WasCriticalHit)
-            {
-                textBoxHandler.AddTextAsCriticalHit();
-            }
-            if (attackInfo.inflictedStatusEffect)
-            {
-                textBoxHandler.AddTextAsStatusInfliction(battleLogic.CurrentPlayer.Id, attackInfo.targetId, battleLogic.CurrentPlayerAttack.StatusEffectPrefab.GetComponent<StatusEffect>().Name);
-            }
 
             battleLogic.CheckForEnemiesRemaining();
             battleLogic.textMods.ChangeEnemyNameColour();
@@ -85,7 +71,7 @@ public class EnemyChoiceState : State
         }
     }
 
-    private void PositionPointer()
+    private void PositionPointerForEnemyChoice()
     {
         menusHandler.PositionPointer
             (

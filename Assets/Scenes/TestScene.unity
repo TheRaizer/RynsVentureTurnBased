@@ -2931,6 +2931,7 @@ GameObject:
   - component: {fileID: 615585381}
   - component: {fileID: 615585380}
   - component: {fileID: 615585379}
+  - component: {fileID: 615585388}
   m_Layer: 0
   m_Name: Zable
   m_TagString: Player
@@ -2952,7 +2953,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Fight
   <IsAOE>k__BackingField: 0
-  <Damage>k__BackingField: 4
+  <IsSupport>k__BackingField: 0
+  <Amount>k__BackingField: 3
   <ManaReduction>k__BackingField: 0
   <Accuracy>k__BackingField: 95
   <StatusEffectPrefab>k__BackingField: {fileID: 6422291583160218353, guid: a8273d23506d89c45b172dbb50f71405,
@@ -2961,6 +2963,7 @@ MonoBehaviour:
   <CritChance>k__BackingField: 10
   <CritMultiplier>k__BackingField: 2.5
   <AttackText>k__BackingField: casts fire upon
+  userStats: {fileID: 0}
 --- !u!114 &615585380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2978,7 +2981,8 @@ MonoBehaviour:
   baseExperienceToNextLevel: 500
   percentExperiencePerLevel: 0.75
   <FightAttack>k__BackingField: {fileID: 615585379}
-  <Magic>k__BackingField: []
+  <Magic>k__BackingField:
+  - {fileID: 615585388}
   <LevelSystem>k__BackingField:
     <Experience>k__BackingField: 0
     <ExperienceToNextLevel>k__BackingField: 0
@@ -3138,6 +3142,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &615585388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615585378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7c2340d3c11bbf4093bfa4a0c9ca362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: Blessed Buff
+  <IsAOE>k__BackingField: 0
+  <IsSupport>k__BackingField: 1
+  <Amount>k__BackingField: 4
+  <ManaReduction>k__BackingField: 0
+  <Accuracy>k__BackingField: 100
+  <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 71967b9dc9c3bd34aac2d99b9e4dc805,
+    type: 3}
+  <StatusEffectChance>k__BackingField: 100
+  <CritChance>k__BackingField: 10
+  <CritMultiplier>k__BackingField: 2.5
+  <AttackText>k__BackingField: heals and increases attack of
+  userStats: {fileID: 0}
 --- !u!1 &666992833
 GameObject:
   m_ObjectHideFlags: 0
@@ -3328,7 +3357,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Fight
   <IsAOE>k__BackingField: 0
-  <Damage>k__BackingField: 3
+  <IsSupport>k__BackingField: 0
+  <Amount>k__BackingField: 4
   <ManaReduction>k__BackingField: 0
   <Accuracy>k__BackingField: 95
   <StatusEffectPrefab>k__BackingField: {fileID: 0}
@@ -3336,6 +3366,7 @@ MonoBehaviour:
   <CritChance>k__BackingField: 10
   <CritMultiplier>k__BackingField: 2.5
   <AttackText>k__BackingField: hammers
+  userStats: {fileID: 0}
 --- !u!114 &740601879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6158,7 +6189,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Fight
   <IsAOE>k__BackingField: 0
-  <Damage>k__BackingField: 4
+  <IsSupport>k__BackingField: 0
+  <Amount>k__BackingField: 5
   <ManaReduction>k__BackingField: 0
   <Accuracy>k__BackingField: 100
   <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,
@@ -6167,6 +6199,7 @@ MonoBehaviour:
   <CritChance>k__BackingField: 10
   <CritMultiplier>k__BackingField: 2.5
   <AttackText>k__BackingField: stabs
+  userStats: {fileID: 0}
 --- !u!114 &1552954259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7601,7 +7634,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Fight
   <IsAOE>k__BackingField: 0
-  <Damage>k__BackingField: 5
+  <IsSupport>k__BackingField: 0
+  <Amount>k__BackingField: 3
   <ManaReduction>k__BackingField: 0
   <Accuracy>k__BackingField: 95
   <StatusEffectPrefab>k__BackingField: {fileID: 0}
@@ -7609,6 +7643,7 @@ MonoBehaviour:
   <CritChance>k__BackingField: 10
   <CritMultiplier>k__BackingField: 2.5
   <AttackText>k__BackingField: slashes
+  userStats: {fileID: 0}
 --- !u!114 &1843531476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7623,7 +7658,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Fire Ball
   <IsAOE>k__BackingField: 0
-  <Damage>k__BackingField: 8
+  <IsSupport>k__BackingField: 0
+  <Amount>k__BackingField: 4
   <ManaReduction>k__BackingField: 15
   <Accuracy>k__BackingField: 88
   <StatusEffectPrefab>k__BackingField: {fileID: 0}
@@ -7631,6 +7667,7 @@ MonoBehaviour:
   <CritChance>k__BackingField: 8
   <CritMultiplier>k__BackingField: 2.5
   <AttackText>k__BackingField: casts Fire Ball upon
+  userStats: {fileID: 0}
 --- !u!114 &1843531477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7645,7 +7682,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Fire Slash
   <IsAOE>k__BackingField: 0
-  <Damage>k__BackingField: 10
+  <IsSupport>k__BackingField: 0
+  <Amount>k__BackingField: 5
   <ManaReduction>k__BackingField: 30
   <Accuracy>k__BackingField: 95
   <StatusEffectPrefab>k__BackingField: {fileID: 0}
@@ -7653,6 +7691,7 @@ MonoBehaviour:
   <CritChance>k__BackingField: 15
   <CritMultiplier>k__BackingField: 1.5
   <AttackText>k__BackingField: slashes with a Flame Blade against
+  userStats: {fileID: 0}
 --- !u!114 &1843531478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7667,7 +7706,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Blizzard
   <IsAOE>k__BackingField: 0
-  <Damage>k__BackingField: 6
+  <IsSupport>k__BackingField: 0
+  <Amount>k__BackingField: 5
   <ManaReduction>k__BackingField: 5
   <Accuracy>k__BackingField: 100
   <StatusEffectPrefab>k__BackingField: {fileID: 0}
@@ -7675,6 +7715,7 @@ MonoBehaviour:
   <CritChance>k__BackingField: 2
   <CritMultiplier>k__BackingField: 2.5
   <AttackText>k__BackingField: casts Blizzard
+  userStats: {fileID: 0}
 --- !u!114 &1843531479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7689,7 +7730,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Lightning
   <IsAOE>k__BackingField: 0
-  <Damage>k__BackingField: 9
+  <IsSupport>k__BackingField: 0
+  <Amount>k__BackingField: 6
   <ManaReduction>k__BackingField: 20
   <Accuracy>k__BackingField: 65
   <StatusEffectPrefab>k__BackingField: {fileID: 0}
@@ -7697,6 +7739,7 @@ MonoBehaviour:
   <CritChance>k__BackingField: 10
   <CritMultiplier>k__BackingField: 2.5
   <AttackText>k__BackingField: casts Lighting on
+  userStats: {fileID: 0}
 --- !u!1 &1854956311
 GameObject:
   m_ObjectHideFlags: 0

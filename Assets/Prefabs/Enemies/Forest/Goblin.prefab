@@ -143,7 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Spear Throw
   <IsAOE>k__BackingField: 0
-  <Damage>k__BackingField: 2
+  <IsSupport>k__BackingField: 0
+  <Amount>k__BackingField: 4
   <ManaReduction>k__BackingField: 0
   <Accuracy>k__BackingField: 97
   <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 10249f38991cd1a418c69e19ef9d40a7,

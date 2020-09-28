@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class SettingsState : WorldMenuState
 {
+    private int indexLeftOffAt = 0;
     public SettingsState(StateMachine _stateMachine, WorldMenusHandler _menusHandler) : base(_stateMachine, _menusHandler)
     {
     }
@@ -14,6 +15,8 @@ public class SettingsState : WorldMenuState
         worldMenusHandler.EmptyTextBoxes();
         worldMenusHandler.SetMenuTraversalMaxIndex(0);
         worldMenusHandler.TextBoxes[0].GetComponent<TextMeshProUGUI>().text = "This is the settings";
+        worldMenusHandler.SetMenuTraversalCurrentIndex(indexLeftOffAt);
+        worldMenusHandler.PositionPointer();
     }
 
     public override void InputUpdate()
@@ -22,6 +25,7 @@ public class SettingsState : WorldMenuState
 
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
         {
+            indexLeftOffAt = worldMenusHandler.MenuTraversalCurrentIndex;
             stateMachine.ReturnBackToState(WorldRoamingStates.MenuChoiceState);
         }
     }

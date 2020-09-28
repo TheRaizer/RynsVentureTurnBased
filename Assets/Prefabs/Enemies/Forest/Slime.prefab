@@ -143,7 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Leap
   <IsAOE>k__BackingField: 0
-  <Damage>k__BackingField: 1
+  <IsSupport>k__BackingField: 0
+  <Amount>k__BackingField: 2
   <ManaReduction>k__BackingField: 0
   <Accuracy>k__BackingField: 100
   <StatusEffectPrefab>k__BackingField: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,

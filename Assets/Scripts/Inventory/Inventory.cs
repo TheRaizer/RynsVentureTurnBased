@@ -10,13 +10,11 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject attackUpPrefab = null;
 
     public Dictionary<Type, IList> InventoryDic { get; private set; } = new Dictionary<Type, IList>();
-    private WorldMenusHandler worldMenusHandler;
 
     public Type CurrentInventoryOpen { get; set; } = typeof(Useable);
 
     private void Awake()
     {
-        worldMenusHandler = GetComponent<WorldMenusHandler>();
         InventoryDic.Add(typeof(Useable), new List<Useable>());
 
         Useable hpPotion_1 = hpPotionPrefab.GetComponent<SmallHpPotion>().ShallowClone();

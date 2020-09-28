@@ -42,7 +42,6 @@ public class WorldRoamingState : State
     {
         base.PhysicsUpdate();
         worldRoamingStateMachine.CurrentState.PhysicsUpdate();
-        //Debug.Log(worldRoamingStateMachine.CurrentState);
     }
 
     public override void LogicUpdate()

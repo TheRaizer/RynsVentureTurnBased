@@ -1,46 +1,22 @@
 ﻿using UnityEngine;
 
-public class ItemPlayerChoiceState : State
+public class ItemPlayerChoiceState : PlayerChoiceState
 {
     private readonly BattleLogic battleLogic;
-    private readonly BattleMenusHandler battleMenusHandler;
-    private readonly VectorMenuTraversal vectorMenuTraversal;
     private readonly Inventory inventory;
     private readonly BattleTextBoxHandler textBox;
 
-    public ItemPlayerChoiceState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleMenusHandler _battleMenusHandler, Inventory _inventory, BattleTextBoxHandler _textBox) : base(_stateMachine)
+    public ItemPlayerChoiceState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleMenusHandler _battleMenusHandler, Inventory _inventory, BattleTextBoxHandler _textBox) : base(_stateMachine, _battleMenusHandler)
     {
         battleLogic = _battleLogic;
-        battleMenusHandler = _battleMenusHandler;
         inventory = _inventory;
         textBox = _textBox;
-
-        vectorMenuTraversal = new VectorMenuTraversal(PositionPointer)
-        {
-            MaxIndex = ConstantNumbers.MAX_NUMBER_OF_FIELD_CHARACTERS - 1
-        };
-    }
-
-    public override void OnEnterOrReturn()
-    {
-        base.OnEnterOrReturn();
-
-        PositionPointer();
-    }
-
-    public override void OnFullRotationEnter()
-    {
-        base.OnFullRotationEnter();
-
-        vectorMenuTraversal.currentIndex = 0;
-        PositionPointer();
     }
 
     public override void InputUpdate()
     {
         base.InputUpdate();
 
-        vectorMenuTraversal.Traverse();
 
         if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
@@ -67,16 +43,5 @@ public class ItemPlayerChoiceState : State
         {
             stateMachine.ReturnBackToState(BattleStates.ItemChoice);
         }
-    }
-
-    private void PositionPointer()
-    {
-        battleMenusHandler.PositionPointer
-            (
-                battleMenusHandler.ActivePlayerPointerLocation[vectorMenuTraversal.currentIndex].top,
-                battleMenusHandler.ActivePlayerPointerLocation[vectorMenuTraversal.currentIndex].bottom,
-                battleMenusHandler.ActivePlayerPointerLocation[vectorMenuTraversal.currentIndex].left,
-                battleMenusHandler.ActivePlayerPointerLocation[vectorMenuTraversal.currentIndex].right
-            );
     }
 }

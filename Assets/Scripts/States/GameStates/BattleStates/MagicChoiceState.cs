@@ -16,7 +16,7 @@ public class MagicChoiceState : State
         battleLogic = _battleLogic;
         menusHandler = _menusHandler;
 
-        matrixMenuTraversal = new MatrixMenuTraversal(PositionPointer)
+        matrixMenuTraversal = new MatrixMenuTraversal(PositionPointerForMagic)
         {
             MaxXIndex = ConstantNumbers.MAX_MAGIC_X_LENGTH - 1,
             MaxYIndex = ConstantNumbers.MAX_MAGIC_Y_LENGTH - 1
@@ -28,7 +28,7 @@ public class MagicChoiceState : State
         base.OnEnterOrReturn();
         matrixMenuTraversal.ResetIndexes();
         menusHandler.MagicPanel.SetActive(true);
-        PositionPointer();
+        PositionPointerForMagic();
     }
 
     public override void OnFullRotationEnter()
@@ -69,9 +69,16 @@ public class MagicChoiceState : State
         if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
             battleLogic.CurrentPlayerAttack = magicAttacks[matrixMenuTraversal.currentXIndex, matrixMenuTraversal.currentYIndex];
-            if(!battleLogic.CurrentPlayerAttack.IsAOE)
+            if (!battleLogic.CurrentPlayerAttack.IsAOE)
             {
-                stateMachine.ChangeState(BattleStates.EnemyChoice);
+                if (battleLogic.CurrentPlayerAttack.IsSupport)
+                {
+                    stateMachine.ChangeState(BattleStates.SupportPlayerChoice);
+                }
+                else
+                {
+                    stateMachine.ChangeState(BattleStates.EnemyChoice);
+                }
             }
             Debug.Log(battleLogic.CurrentPlayerAttack.Id);
         }
@@ -81,7 +88,7 @@ public class MagicChoiceState : State
         }
     }
 
-    private void PositionPointer()
+    private void PositionPointerForMagic()
     {
         Directions pointerLocation = ArrayExtensions.Get1DElementFrom2DArray(menusHandler.MagicChoicePointerLocations, ConstantNumbers.MAX_MAGIC_X_LENGTH, matrixMenuTraversal.currentYIndex, matrixMenuTraversal.currentXIndex);
         menusHandler.PositionPointer(pointerLocation.top, pointerLocation.bottom, pointerLocation.left, pointerLocation.right);

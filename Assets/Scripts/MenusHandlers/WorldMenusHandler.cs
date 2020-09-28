@@ -12,16 +12,10 @@ public class WorldMenusHandler : MonoBehaviour
     [field: Header("Menu Options")]
     [field: SerializeField] public List<MenuOption> StartingMenuOptions { get; private set; }
     [field: SerializeField] public List<InventoryTypeChoiceOption> InventoryChoiceOptions { get; private set; }
-     
-    [Header("TextBox generation fields")]
-    [SerializeField] private RectTransform content = null;
-    [SerializeField] private RectTransform textBoxPrefab = null;
-    [SerializeField] private int maxNumberOfTextBoxesToGenerate = 40;
     [field: SerializeField] public GameObject MenuPanel { get; private set; }
 
     [field: Header("Menu Pointer")]
     [field: SerializeField] public Image Pointer { get; private set; }
-    [SerializeField] private Directions startingPointerLocation = null;
 
     public GameObject[] TextBoxes { get; private set; }
     private VectorMenuTraversal currentMenuTraversal;
@@ -43,7 +37,7 @@ public class WorldMenusHandler : MonoBehaviour
         PositionPointer();
     }
 
-    private void PositionPointer()
+    public void PositionPointer()
     {
         RectTransformExtensions.SetBottom(Pointer.rectTransform, pointerLocations[currentMenuTraversal.currentIndex].bottom);
         RectTransformExtensions.SetLeft(Pointer.rectTransform, pointerLocations[currentMenuTraversal.currentIndex].left);
@@ -60,6 +54,10 @@ public class WorldMenusHandler : MonoBehaviour
     }
 
     public int MenuTraversalCurrentIndex => currentMenuTraversal.currentIndex;
+    public void SetMenuTraversalCurrentIndex(int index)
+    {
+        currentMenuTraversal.currentIndex = index;
+    }
     public void SetMenuTraversalMaxIndex(int maxIndex) => currentMenuTraversal.MaxIndex = maxIndex;
     public void ResetPointerPosition() 
     {

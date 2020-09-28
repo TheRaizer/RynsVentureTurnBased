@@ -9,9 +9,9 @@ public class MenuInitialization
     [SerializeField] private Directions startingPointerLocation = null;
     [SerializeField] private int numOfTextBoxes = 40;
 
-    [SerializeField] private RectTransform textPrefab;
-    [SerializeField] private GameObject conentPanel;
-    [SerializeField] private Directions textBoxStartingDirection;
+    [SerializeField] private RectTransform textPrefab = null;
+    [SerializeField] private GameObject conentPanel = null;
+    [SerializeField] private Directions textBoxStartingDirection = null;
 
     public List<Directions> InitializePointerLocations()
     {

@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\InventoryChoiceState.cs" />
     <Compile Include="Assets\Scripts\States\StateLogic\BattleStatusEffectsManager.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\MultiTurnTriggeredEffects\Poison.cs" />
+    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\ItemPlayerChoiceState.cs" />
     <Compile Include="Assets\Scripts\WorldMenuOptions\MenuOption.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\BattleTextBoxState.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\VictoryState.cs" />
@@ -115,7 +116,7 @@
     <Compile Include="Assets\Scripts\Items\Useable.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\ItemChoiceState.cs" />
     <Compile Include="Assets\Scripts\PointerControl\Directions.cs" />
-    <Compile Include="Assets\Scripts\Text\TextBoxHandler.cs" />
+    <Compile Include="Assets\Scripts\Text\BattleTextBoxHandler.cs" />
     <Compile Include="Assets\Scripts\GeneralEntity\StatusEffectsManager.cs" />
     <Compile Include="Assets\Scripts\States\StateLogic\BattleLogic.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\MultiTurnTriggeredEffects\Burn.cs" />
@@ -124,7 +125,8 @@
     <Compile Include="Assets\Scripts\WorldMenuOptions\InventoryTypeChoiceOption.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\FightMenuState.cs" />
-    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\ItemPlayerChoiceState.cs" />
+    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\PlayerChoiceState.cs" />
+    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\SupportPlayerChoiceState.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
