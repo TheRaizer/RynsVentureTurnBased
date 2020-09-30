@@ -105,7 +105,10 @@ MonoBehaviour:
   <ExpOnDeath>k__BackingField: 100
   <Attacks>k__BackingField:
   - {fileID: 6497215810239895593}
-  <PrefabItemsToDrop>k__BackingField: []
+  <DroppableItems>k__BackingField:
+  - {fileID: 5167520314604045391, guid: d467bfab67f0de746a9b74bc6b96ff80, type: 3}
+  <DropChance>k__BackingField:
+  - 20
 --- !u!114 &-7334648606454433584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,13 +146,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Leap
   <IsAOE>k__BackingField: 0
-  ActionText: leaps at
-  ManaReduction: 0
-  Amount: 3
-  Accuracy: 100
-  CritChance: 15
-  CritMultiplier: 1.5
-  StatusEffectPrefab: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,
+  <ManaReduction>k__BackingField: 0
+  actionText: leaps
+  amount: 3
+  accuracy: 85
+  critChance: 10
+  critMultiplier: 2.5
+  statusEffectPrefab: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,
     type: 3}
-  StatusEffectChance: 45
+  statusEffectChance: 80
   userStats: {fileID: 0}

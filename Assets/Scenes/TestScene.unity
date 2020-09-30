@@ -2945,14 +2945,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: whack
   <IsAOE>k__BackingField: 0
-  ActionText: whacks
-  ManaReduction: 0
-  Amount: 2
-  Accuracy: 85
-  CritChance: 5
-  CritMultiplier: 1.5
-  StatusEffectPrefab: {fileID: 0}
-  StatusEffectChance: 0
+  <ManaReduction>k__BackingField: 0
+  actionText: whacks
+  amount: 2
+  accuracy: 85
+  critChance: 10
+  critMultiplier: 1.5
+  statusEffectPrefab: {fileID: 0}
+  statusEffectChance: 0
   userStats: {fileID: 0}
 --- !u!114 &615585380
 MonoBehaviour:
@@ -3147,14 +3147,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Revival
   <IsAOE>k__BackingField: 0
-  ActionText: tries to revive
-  ManaReduction: 0
-  Amount: 0
-  Accuracy: 100
-  CritChance: 15
-  CritMultiplier: 1.5
-  StatusEffectPrefab: {fileID: 0}
-  StatusEffectChance: 0
+  <ManaReduction>k__BackingField: 25
+  actionText: revives
+  amount: 0
+  accuracy: 90
+  critChance: 10
+  critMultiplier: 1.5
+  statusEffectPrefab: {fileID: 0}
+  statusEffectChance: 0
   userStats: {fileID: 0}
   percentHealthAfterRevive: 0.2
 --- !u!114 &615585389
@@ -3171,15 +3171,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Litel
   <IsAOE>k__BackingField: 0
-  ActionText: increases attack of
-  ManaReduction: 7
-  Amount: 0
-  Accuracy: 0
-  CritChance: 0
-  CritMultiplier: 0
-  StatusEffectPrefab: {fileID: 999671665069997296, guid: 71967b9dc9c3bd34aac2d99b9e4dc805,
+  <ManaReduction>k__BackingField: 18
+  actionText: heals and buffs
+  amount: 15
+  accuracy: 100
+  critChance: 10
+  critMultiplier: 1.5
+  statusEffectPrefab: {fileID: 999671665069997296, guid: 71967b9dc9c3bd34aac2d99b9e4dc805,
     type: 3}
-  StatusEffectChance: 100
+  statusEffectChance: 100
   userStats: {fileID: 0}
 --- !u!1 &666992833
 GameObject:
@@ -3371,14 +3371,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: hammer
   <IsAOE>k__BackingField: 0
-  ActionText: hammers
-  ManaReduction: 0
-  Amount: 3
-  Accuracy: 100
-  CritChance: 5
-  CritMultiplier: 1.5
-  StatusEffectPrefab: {fileID: 0}
-  StatusEffectChance: 0
+  <ManaReduction>k__BackingField: 0
+  actionText: hammers
+  amount: 3
+  accuracy: 100
+  critChance: 10
+  critMultiplier: 1.5
+  statusEffectPrefab: {fileID: 0}
+  statusEffectChance: 0
   userStats: {fileID: 0}
 --- !u!114 &740601879
 MonoBehaviour:
@@ -6202,15 +6202,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Stab
   <IsAOE>k__BackingField: 0
-  ActionText: stabs
-  ManaReduction: 0
-  Amount: 4
-  Accuracy: 100
-  CritChance: 25
-  CritMultiplier: 1.5
-  StatusEffectPrefab: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,
+  <ManaReduction>k__BackingField: 0
+  actionText: stabs
+  amount: 4
+  accuracy: 100
+  critChance: 18
+  critMultiplier: 1.5
+  statusEffectPrefab: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,
     type: 3}
-  StatusEffectChance: 100
+  statusEffectChance: 95
   userStats: {fileID: 0}
 --- !u!114 &1552954259
 MonoBehaviour:
@@ -7646,14 +7646,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Heal
   <IsAOE>k__BackingField: 0
-  ActionText: heals
-  ManaReduction: 5
-  Amount: 7
-  Accuracy: 100
-  CritChance: 10
-  CritMultiplier: 2.5
-  StatusEffectPrefab: {fileID: 0}
-  StatusEffectChance: 0
+  <ManaReduction>k__BackingField: 7
+  actionText: heals
+  amount: 10
+  accuracy: 100
+  critChance: 10
+  critMultiplier: 1.5
+  statusEffectPrefab: {fileID: 0}
+  statusEffectChance: 0
   userStats: {fileID: 0}
 --- !u!114 &1843531476
 MonoBehaviour:
@@ -7669,15 +7669,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Flame Sword
   <IsAOE>k__BackingField: 0
-  ActionText: flame slashes
-  ManaReduction: 4
-  Amount: 4
-  Accuracy: 80
-  CritChance: 10
-  CritMultiplier: 1.5
-  StatusEffectPrefab: {fileID: 6422291583160218353, guid: a8273d23506d89c45b172dbb50f71405,
+  <ManaReduction>k__BackingField: 7
+  actionText: slashes in flames on
+  amount: 6
+  accuracy: 100
+  critChance: 10
+  critMultiplier: 1.7
+  statusEffectPrefab: {fileID: 6422291583160218353, guid: a8273d23506d89c45b172dbb50f71405,
     type: 3}
-  StatusEffectChance: 80
+  statusEffectChance: 65
   userStats: {fileID: 0}
 --- !u!114 &1843531477
 MonoBehaviour:
@@ -7693,15 +7693,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Lighting
   <IsAOE>k__BackingField: 0
-  ActionText: summons lighting upon
-  ManaReduction: 10
-  Amount: 7
-  Accuracy: 100
-  CritChance: 30
-  CritMultiplier: 1.5
-  StatusEffectPrefab: {fileID: 999671665069997296, guid: 10249f38991cd1a418c69e19ef9d40a7,
+  <ManaReduction>k__BackingField: 20
+  actionText: summons lighting upon
+  amount: 15
+  accuracy: 75
+  critChance: 25
+  critMultiplier: 2
+  statusEffectPrefab: {fileID: 999671665069997296, guid: 10249f38991cd1a418c69e19ef9d40a7,
     type: 3}
-  StatusEffectChance: 80
+  statusEffectChance: 80
   userStats: {fileID: 0}
 --- !u!114 &1843531478
 MonoBehaviour:
@@ -7717,15 +7717,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Fire Ball
   <IsAOE>k__BackingField: 0
-  ActionText: releases a fire ball on
-  ManaReduction: 5
-  Amount: 5
-  Accuracy: 75
-  CritChance: 10
-  CritMultiplier: 1.5
-  StatusEffectPrefab: {fileID: 6422291583160218353, guid: a8273d23506d89c45b172dbb50f71405,
+  <ManaReduction>k__BackingField: 15
+  actionText: launches a fireball at
+  amount: 10
+  accuracy: 90
+  critChance: 10
+  critMultiplier: 1.7
+  statusEffectPrefab: {fileID: 6422291583160218353, guid: a8273d23506d89c45b172dbb50f71405,
     type: 3}
-  StatusEffectChance: 100
+  statusEffectChance: 100
   userStats: {fileID: 0}
 --- !u!114 &1843531479
 MonoBehaviour:
@@ -7741,14 +7741,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Sword Slash
   <IsAOE>k__BackingField: 0
-  ActionText: slashes
-  ManaReduction: 0
-  Amount: 3
-  Accuracy: 100
-  CritChance: 15
-  CritMultiplier: 1.5
-  StatusEffectPrefab: {fileID: 0}
-  StatusEffectChance: 0
+  <ManaReduction>k__BackingField: 0
+  actionText: slashes
+  amount: 4
+  accuracy: 95
+  critChance: 10
+  critMultiplier: 1.5
+  statusEffectPrefab: {fileID: 0}
+  statusEffectChance: 0
   userStats: {fileID: 0}
 --- !u!1 &1854956311
 GameObject:

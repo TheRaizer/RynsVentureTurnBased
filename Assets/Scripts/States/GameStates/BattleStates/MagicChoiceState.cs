@@ -7,14 +7,16 @@ public class MagicChoiceState : State
     private readonly BattleLogic battleLogic;
     private readonly MatrixMenuTraversal matrixMenuTraversal;
     private readonly BattleMenusHandler menusHandler;
+    private readonly BattleTextBoxHandler textBoxHandler;
 
     private readonly EntityAction[,] magicAttacks = new EntityAction[3, 4];
     private int playerMagicIndex = 0;
 
-    public MagicChoiceState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleMenusHandler _menusHandler) : base(_stateMachine)
+    public MagicChoiceState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleMenusHandler _menusHandler, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
         battleLogic = _battleLogic;
         menusHandler = _menusHandler;
+        textBoxHandler = _textBoxHandler;
 
         matrixMenuTraversal = new MatrixMenuTraversal(PositionPointerForMagic)
         {
@@ -69,6 +71,15 @@ public class MagicChoiceState : State
         if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
             battleLogic.CurrentPlayerAttack = magicAttacks[matrixMenuTraversal.currentXIndex, matrixMenuTraversal.currentYIndex];
+
+            if (!battleLogic.CurrentPlayer.Stats.ManaManager.CanUse(battleLogic.CurrentPlayerAttack.ManaReduction))
+            {
+                textBoxHandler.AddTextAsNotEnoughMana(battleLogic.CurrentPlayer.Id);
+                textBoxHandler.PreviousState = BattleStates.MagicChoice;
+                stateMachine.ChangeState(BattleStates.BattleTextBox);
+                return;
+            }
+
             if (!battleLogic.CurrentPlayerAttack.IsAOE)
             {
                 if(battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Attack)

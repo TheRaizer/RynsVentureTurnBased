@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public enum EntityType
@@ -12,11 +13,12 @@ public enum EntityType
 public class BattleLogic
 {
     private const int CLOCK_TICK_MAX = 100;
+    public List<Item> ItemsToGiveToPlayer { get; set; } = new List<Item>();
     public int TotalExpFromBattle { get; set; } = 0;
 
-    public int EnemiesRemaining { get; private set; }
+    public int EnemiesRemaining { get; private set; }//when this hits zero the player wins
 
-    public GameObject[] Enemies { get; private set; } = new GameObject[ConstantNumbers.MAX_NUMBER_OF_ENEMIES];
+    public GameObject[] Enemies { get; private set; } = new GameObject[ConstantNumbers.MAX_NUMBER_OF_ENEMIES];//the number of enemies on the field. It cannot surpass a given limit
 
     public Dictionary<EntityType, List<StatsManager>> AttackablesDic { get; set; } = new Dictionary<EntityType, List<StatsManager>>();//attackableEnemies is only used to track if player wins
 
@@ -46,6 +48,19 @@ public class BattleLogic
         }
     }
 
+    public void CheckForItemDrop(Enemy enemy)
+    {
+        int dropChance = UnityEngine.Random.Range(0, 100);
+
+        for(int i = 0; i < enemy.DroppableItems.Count; i++)
+        {
+            if(dropChance < enemy.DropChance[i])
+            {
+                ItemsToGiveToPlayer.Add(enemy.DroppableItems[i]);
+            }
+        }
+    }
+
     public void CheckForEnemiesRemaining()
     {
         EnemiesRemaining = 0;
@@ -63,7 +78,7 @@ public class BattleLogic
                 Enemies[i] = null;
 
                 e.GetComponent<Enemy>().Stats.StatusEffectsManager.RemoveAllStatusEffects();
-
+                CheckForItemDrop(e.GetComponent<Enemy>());
                 UnityEngine.Object.Destroy(e);
                 menusHandler.EnemyIdText[i].text = "Dead";
             }

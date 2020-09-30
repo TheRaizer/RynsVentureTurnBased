@@ -16,7 +16,8 @@ public class Enemy : MonoBehaviour, IUser
 
     [field: SerializeField] public int ExpOnDeath { get; private set; }
     [field: SerializeField] public List<EntityAction> Attacks { get; private set; }
-    [field: SerializeField] public List<GameObject> PrefabItemsToDrop { get; private set; }
+    [field: SerializeField] public List<Item> DroppableItems { get; private set; }//the indices of this list must corrospond with the indices of DropChance list
+    [field: SerializeField] public List<float> DropChance { get; private set; }//the indices of this list must corrospond with the indices of DroppableItem list
 
 
     public StatsManager Stats { get; private set; }

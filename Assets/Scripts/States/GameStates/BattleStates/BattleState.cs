@@ -40,10 +40,10 @@ public class BattleState : State
         Dictionary<Enum, State> battleStates = new Dictionary<Enum, State>()
         {
             { BattleStates.EnemyTurn, new EnemyTurnState(BattleStateMachine, BattleLogic, statusEffectsManager, textBoxHandler) },
-            { BattleStates.Victory, new VictoryState(BattleStateMachine, this, menusHandler, BattleLogic) },
+            { BattleStates.Victory, new VictoryState(BattleStateMachine, this, menusHandler, BattleLogic, inventory) },
             { BattleStates.FightMenu, new FightMenuState(BattleStateMachine, BattleLogic, menusHandler, statusEffectsManager, textBoxHandler) },
             { BattleStates.BattleTextBox, new BattleTextBoxState(BattleStateMachine, textBoxHandler, menusHandler) },
-            { BattleStates.MagicChoice, new MagicChoiceState(BattleStateMachine, BattleLogic, menusHandler) },
+            { BattleStates.MagicChoice, new MagicChoiceState(BattleStateMachine, BattleLogic, menusHandler, textBoxHandler) },
             { BattleStates.ItemChoice, new ItemChoiceState(BattleStateMachine, menusHandler, inventory, BattleLogic, textBoxHandler) },
             { BattleStates.ItemPlayerChoice, new ItemPlayerChoiceState(BattleStateMachine, BattleLogic, menusHandler, inventory, textBoxHandler) },
             { BattleStates.SupportPlayerChoice, new SupportPlayerChoiceState(BattleStateMachine, menusHandler, BattleLogic, textBoxHandler) }
@@ -63,6 +63,7 @@ public class BattleState : State
         BattleLogic.textMods.PrintEnemyIds();
         BattleLogic.textMods.PrintPlayerIds();
         BattleLogic.textMods.PrintPlayerHealth();
+        BattleLogic.textMods.PrintPlayerMana();
 
         menusHandler.BattleMenus.SetActive(true);
         BattleLogic.CheckForAttackablePlayers();

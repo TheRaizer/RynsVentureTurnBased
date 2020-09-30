@@ -8,6 +8,5 @@
     }
     public readonly string targetId;
     public readonly bool hitTarget;
-
     public readonly bool inflictedStatusEffect;
 }

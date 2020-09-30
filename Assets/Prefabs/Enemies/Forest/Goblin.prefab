@@ -105,7 +105,10 @@ MonoBehaviour:
   <ExpOnDeath>k__BackingField: 200
   <Attacks>k__BackingField:
   - {fileID: -6042711507243387711}
-  <PrefabItemsToDrop>k__BackingField: []
+  <DroppableItems>k__BackingField:
+  - {fileID: 137016431253528069, guid: 5413dab0f8d84434286e9344e1b689b1, type: 3}
+  <DropChance>k__BackingField:
+  - 100
 --- !u!114 &-7334648606454433584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,13 +146,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Id>k__BackingField: throw
   <IsAOE>k__BackingField: 0
-  ActionText: throws a rock at
-  ManaReduction: 0
-  Amount: 4
-  Accuracy: 100
-  CritChance: 10
-  CritMultiplier: 1.5
-  StatusEffectPrefab: {fileID: 999671665069997296, guid: 10249f38991cd1a418c69e19ef9d40a7,
+  <ManaReduction>k__BackingField: 0
+  actionText: throws
+  amount: 4
+  accuracy: 95
+  critChance: 10
+  critMultiplier: 1.5
+  statusEffectPrefab: {fileID: 999671665069997296, guid: 10249f38991cd1a418c69e19ef9d40a7,
     type: 3}
-  StatusEffectChance: 15
+  statusEffectChance: 65
   userStats: {fileID: 0}

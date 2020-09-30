@@ -25,7 +25,6 @@ public class FightMenuState : StatusEffectCheckState
     {
         base.OnEnterOrReturn();
 
-        menuTraversal.currentIndex = 0;
         PositionPointer();
     }
 
@@ -33,6 +32,7 @@ public class FightMenuState : StatusEffectCheckState
     {
         base.OnFullRotationEnter();
 
+        menuTraversal.currentIndex = 0;
         Debug.Log(battleLogic.CurrentPlayer.Id + " Turn");
         textBoxHandler.AddTextAsTurn(battleLogic.CurrentPlayer.Id);
         textBoxHandler.PreviousState = BattleStates.FightMenu;
@@ -53,6 +53,7 @@ public class FightMenuState : StatusEffectCheckState
             stateMachine.ChangeState(BattleStates.Victory);
         }
         battleLogic.textMods.PrintPlayerHealth();
+        battleLogic.textMods.PrintPlayerMana();
     }
 
     public override void InputUpdate()

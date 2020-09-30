@@ -5,4 +5,13 @@ public class ManaManager : AmountManager
     {
 
     }
+
+    public bool CanUse(int amount)
+    {
+        if(CurrentAmount - amount < 0)
+        {
+            return false;
+        }
+        return true;
+    }
 }

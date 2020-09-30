@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Useable : Item
 {
-    public bool IsEmpty => Amount > 0;
+    public bool IsEmpty => Amount <= 0;
 
     public virtual void OnUseInBattle(StatsManager user, List<StatsManager> friendlyStats, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
     {

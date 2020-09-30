@@ -14,15 +14,15 @@ public abstract class EntityAction : MonoBehaviour
     public abstract ActionTypes ActionType { get; protected set; }
     [field: SerializeField] public string Id { get; private set; }
     [field: SerializeField] public bool IsAOE { get; private set; }
+    [field: SerializeField] public int ManaReduction { get; private set; }
 
-    [SerializeField] protected string ActionText;
-    [SerializeField] protected int ManaReduction;
-    [SerializeField] protected int Amount;
-    [SerializeField] protected float Accuracy;
-    [SerializeField] protected float CritChance;
-    [SerializeField] protected float CritMultiplier;
-    [SerializeField] protected GameObject StatusEffectPrefab;
-    [SerializeField] private float StatusEffectChance;
+    [SerializeField] protected string actionText = "";
+    [SerializeField] protected int amount = 0;
+    [SerializeField] protected float accuracy = 0;
+    [SerializeField] protected float critChance = 0;
+    [SerializeField] protected float critMultiplier = 0;
+    [SerializeField] protected GameObject statusEffectPrefab = null;
+    [SerializeField] private float statusEffectChance = 0;
 
     [SerializeField] protected StatsManager userStats;
 
@@ -37,7 +37,7 @@ public abstract class EntityAction : MonoBehaviour
         {
             float chance = UnityEngine.Random.Range(0, 100);
 
-            if (chance <= StatusEffectChance)
+            if (chance <= statusEffectChance)
             {
                 StatusEffectApplication(statsToApplyToo, textBoxHandler);
                 return true;
@@ -55,7 +55,7 @@ public abstract class EntityAction : MonoBehaviour
 
     protected void StatusEffectApplication(StatsManager statsToApplyToo, BattleTextBoxHandler textBoxHandler)
     {
-        StatusEffect s = StatusEffectPrefab.GetComponent<StatusEffect>();
+        StatusEffect s = statusEffectPrefab.GetComponent<StatusEffect>();
         textBoxHandler.AddTextAsStatusInfliction(userStats.user.Id, statsToApplyToo.user.Id, s.Name);
         Debug.Log("Apply " + s.Name + " too " + statsToApplyToo.user.Id);
 
@@ -90,21 +90,20 @@ public abstract class EntityAction : MonoBehaviour
     public EntityActionInfo UseAction(StatsManager statsTooActOn, float scale, BattleTextBoxHandler textBoxHandler)
     {
         userStats.ManaManager.ReduceAmount(ManaReduction);
-
         int chance = UnityEngine.Random.Range(0, 100);
         bool hasInflicted = false;
 
-        textBoxHandler.AddTextAsAttack(userStats.user.Id, ActionText, statsTooActOn.user.Id);
+        textBoxHandler.AddTextAsAttack(userStats.user.Id, actionText, statsTooActOn.user.Id);
 
-        if (chance < Accuracy)
+        if (chance < accuracy)
         {
             int critChance = UnityEngine.Random.Range(0, 100);
 
-            if (critChance < CritChance)
+            if (critChance < this.critChance)
             {
                 OnCrit(statsTooActOn, scale);
                 textBoxHandler.AddTextAsCriticalHit();
-                if (StatusEffectPrefab != null)
+                if (statusEffectPrefab != null)
                 {
                     hasInflicted = ApplyStatusEffect(statsTooActOn, true, textBoxHandler);
                 }
@@ -114,7 +113,7 @@ public abstract class EntityAction : MonoBehaviour
             else
             {
                 OnNonCrit(statsTooActOn, scale);
-                if (StatusEffectPrefab != null)
+                if (statusEffectPrefab != null)
                 {
                     hasInflicted = ApplyStatusEffect(statsTooActOn, false, textBoxHandler);
                 }
@@ -130,13 +129,4 @@ public abstract class EntityAction : MonoBehaviour
 
     protected abstract void OnCrit(StatsManager statsTooActOn, float scale);
     protected abstract void OnNonCrit(StatsManager statsTooActOn, float scale);
-
-    public virtual bool ValidateManaForAction(StatsManager userStats)
-    {
-        if (userStats.ManaManager.CurrentAmount - ManaReduction <= 0)
-        {
-            return false;
-        }
-        else return true;
-    }
 }

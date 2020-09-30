@@ -53,6 +53,17 @@ public class TextModifications
         }
     }
 
+    public void PrintPlayerMana()
+    {
+        for (int i = 0; i < battleLogic.ActivePlayableCharacters.Length; i++)
+        {
+            if (battleLogic.ActivePlayableCharacters[i] != null)
+            {
+                menusHandler.PlayerManaText[i].text = battleLogic.ActivePlayableCharacters[i].Stats.ManaManager.CurrentAmount.ToString();
+            }
+        }
+    }
+
     public void ChangeEnemyNameColour()
     {
         for (int i = 0; i < battleLogic.Enemies.Length; i++)

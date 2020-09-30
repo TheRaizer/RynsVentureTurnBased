@@ -146,6 +146,11 @@ public class BattleTextBoxHandler
         AddTextLines(userToHealId + " is already at max health.");
     }
 
+    public void AddTextAsNotEnoughMana(string userId)
+    {
+        AddTextLines(userId + " does not have enough MP for this.");
+    }
+
     private void ReturnToPreviousState()
     {
         Enum s = PreviousState;

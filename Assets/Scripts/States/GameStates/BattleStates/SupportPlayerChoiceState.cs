@@ -23,6 +23,15 @@ public class SupportPlayerChoiceState : PlayerChoiceState
             if (battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Revive && !playerToSupport.HealthManager.Dead)
             {
                 textBoxHandler.AddTextAsNonRevive(battleLogic.CurrentPlayer.Id, playerToSupport.user.Id);
+                textBoxHandler.PreviousState = BattleStates.SupportPlayerChoice;
+                stateMachine.ChangeState(BattleStates.BattleTextBox);
+                return;
+            }
+            else if (!battleLogic.CurrentPlayer.Stats.ManaManager.CanUse(battleLogic.CurrentPlayerAttack.ManaReduction))
+            {
+                textBoxHandler.AddTextAsNotEnoughMana(battleLogic.CurrentPlayer.Id);
+                textBoxHandler.PreviousState = BattleStates.SupportPlayerChoice;
+                stateMachine.ChangeState(BattleStates.BattleTextBox);
                 return;
             }
             EntityActionInfo actionInfo =  battleLogic.CurrentPlayerAttack.UseAction

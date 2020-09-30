@@ -8,7 +8,6 @@ public class AttackUp : StatusEffect
     public override void OnEffectStart(StatsManager inhabitor, BattleTextBoxHandler textBoxHandler)
     {
         base.OnEffectStart(inhabitor, textBoxHandler);
-        textBoxHandler.AddTextAsStatusEffect(inhabitor.user.Id, Name);
         inhabitor.DamageScale += damageScaleIncrease;
     }
 

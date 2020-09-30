@@ -4,11 +4,11 @@
 
     protected override void OnCrit(StatsManager statsTooActOn, float scale)
     {
-        statsTooActOn.HealthManager.ReduceAmount(MathExtension.RoundToNearestInteger(Amount * scale * CritMultiplier));
+        statsTooActOn.HealthManager.ReduceAmount(MathExtension.RoundToNearestInteger(amount * scale * critMultiplier));
     }
 
     protected override void OnNonCrit(StatsManager statsTooActOn, float scale)
     {
-        statsTooActOn.HealthManager.ReduceAmount(MathExtension.RoundToNearestInteger(Amount * scale));
+        statsTooActOn.HealthManager.ReduceAmount(MathExtension.RoundToNearestInteger(amount * scale));
     }
 }
