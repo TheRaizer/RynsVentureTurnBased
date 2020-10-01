@@ -1,0 +1,300 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &424382459263548259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 424382459263548269}
+  - component: {fileID: 424382459263548268}
+  - component: {fileID: 424382459263548270}
+  - component: {fileID: 424382459263548271}
+  - component: {fileID: 424382459263548264}
+  - component: {fileID: 424382459263548265}
+  - component: {fileID: 424382459263548266}
+  m_Layer: 0
+  m_Name: GameMaster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &424382459263548269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424382459263548259}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.393473, y: -8.323625, z: -7.7434454}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &424382459263548268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424382459263548259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51fb233c88cd6374b965652114c27291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies:
+  - area: 0
+    enemyObjects:
+    - {fileID: 3376011954525368277, guid: f55a819a84cf7544397ebd4f574ab318, type: 3}
+    - {fileID: 3376011954525368277, guid: 5781e82aa4b2e6648a1148197aaa92b7, type: 3}
+--- !u!114 &424382459263548270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424382459263548259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3be0840f5712324eb2df3b947c966be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <CharacterObjectRoster>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &424382459263548271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424382459263548259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7168925d5f2e864db201308eabfcf28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuInit:
+    spaceBetweenTexts: 19
+    startingPointerLocation:
+      top: 96.31002
+      bottom: 228.29
+      left: 248.1
+      right: 451.9
+    numOfTextBoxes: 40
+    textPrefab: {fileID: 5298416465222676334, guid: 1cec1b2d13fa339449eaba1a611e2e80,
+      type: 3}
+    conentPanel: {fileID: 0}
+    textBoxStartingDirection:
+      top: 1.291504
+      bottom: 5484.292
+      left: 21.09594
+      right: -0.00006103516
+  objectsToDisableOnTextOpen:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  <BattleMenus>k__BackingField: {fileID: 0}
+  <MagicPanel>k__BackingField: {fileID: 0}
+  <TextPanel>k__BackingField: {fileID: 0}
+  <ItemChoicePanel>k__BackingField: {fileID: 0}
+  <TextArea>k__BackingField: {fileID: 0}
+  <FightMenuCommands>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  <EnemyChoicePointerLocations>k__BackingField:
+  - top: 271.2
+    bottom: 78.79999
+    left: -29.60001
+    right: 729.6
+  - top: 283.9
+    bottom: 40.69999
+    left: -29.60001
+    right: 729.6
+  - top: 309.3
+    bottom: 15.29999
+    left: -29.60001
+    right: 729.6
+  - top: 347.8
+    bottom: 2.199966
+    left: -29.60001
+    right: 729.6
+  - top: 360.1
+    bottom: -35.50002
+    left: -29.60001
+    right: 729.6
+  <MagicChoicePointerLocations>k__BackingField:
+  - top: 261.1
+    bottom: 63.49998
+    left: -28
+    right: 728
+  - top: 261.1
+    bottom: 63.49998
+    left: 126.5
+    right: 573.5
+  - top: 261.1
+    bottom: 63.49998
+    left: 281.3
+    right: 418.7
+  - top: 293.9
+    bottom: 30.69998
+    left: -28
+    right: 728
+  - top: 293.9
+    bottom: 30.69998
+    left: 126.5
+    right: 573.5
+  - top: 293.9
+    bottom: 30.69998
+    left: 281.3
+    right: 418.7
+  - top: 324.5
+    bottom: 0.09999084
+    left: -28
+    right: 728
+  - top: 324.5
+    bottom: 0.09999084
+    left: 126.5
+    right: 573.5
+  - top: 324.5
+    bottom: 0.09999084
+    left: 281.3
+    right: 418.7
+  - top: 356.4
+    bottom: -31.80002
+    left: -28
+    right: 728
+  - top: 356.4
+    bottom: -31.80002
+    left: 126.5
+    right: 573.5
+  - top: 356.4
+    bottom: -31.80002
+    left: 281.3
+    right: 418.7
+  <ActivePlayerPointerLocation>k__BackingField:
+  - top: 262.4
+    bottom: 62.19999
+    left: 457.5
+    right: 242.5
+  - top: 294
+    bottom: 30.59999
+    left: 457.5
+    right: 242.5
+  - top: 325.5
+    bottom: -0.9000092
+    left: 457.5
+    right: 242.5
+  - top: 357
+    bottom: -32.40001
+    left: 457.5
+    right: 242.5
+  <EnemyIdText>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  <PlayerHealthText>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  <PlayerNameText>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  <PlayerManaText>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  <MagicText>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  <MenuPointer>k__BackingField: {fileID: 0}
+--- !u!114 &424382459263548264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424382459263548259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57fbc0dc83cf72944b6e8ea844fe371b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpPotionPrefab: {fileID: 823056596499699075, guid: 5413dab0f8d84434286e9344e1b689b1,
+    type: 3}
+  attackUpPrefab: {fileID: 5230813577702730387, guid: d467bfab67f0de746a9b74bc6b96ff80,
+    type: 3}
+--- !u!114 &424382459263548265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424382459263548259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f683afea1a2faaf44af255a7c65f85fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuInit:
+    spaceBetweenTexts: 19
+    startingPointerLocation:
+      top: -30.22925
+      bottom: 5443.37
+      left: -43.34694
+      right: 95.25307
+    numOfTextBoxes: 40
+    textPrefab: {fileID: 8041868199397885982, guid: 3629c5a7a8bd2d642a2df56c150047f1,
+      type: 3}
+    conentPanel: {fileID: 0}
+    textBoxStartingDirection:
+      top: 6.35376
+      bottom: 5480.153
+      left: 13.11145
+      right: 0.00006103516
+  <StartingMenuOptions>k__BackingField:
+  - {fileID: 8032475902943637043, guid: 92b3a2c450a339246813dea359dbd7e3, type: 3}
+  - {fileID: 4800670343032372104, guid: 9f19616387679e0478280c48ad6b7db1, type: 3}
+  <InventoryChoiceOptions>k__BackingField:
+  - {fileID: 2096662133330265421, guid: bb742ab7373905c459ee695638a4e962, type: 3}
+  <MenuPanel>k__BackingField: {fileID: 0}
+  <Pointer>k__BackingField: {fileID: 0}
+--- !u!114 &424382459263548266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424382459263548259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3951b1a7321cb3542a3619df359a5681, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 7400000, guid: 64fdf3cdaf783724f8cd7ccd3929da75, type: 2}

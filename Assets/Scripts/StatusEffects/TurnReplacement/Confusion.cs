@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Confusion : StatusEffect
 {
-    public override void OnEffectStart(StatsManager inhabitor, BattleTextBoxHandler textBoxHandler)
-    {
-        base.OnEffectStart(inhabitor, textBoxHandler);
-
-        textBoxHandler.AddTextAsStatusEffect(inhabitor.user.Id, Name);
-    }
-
     public override void OnTurn(BattleLogic battleLogic, StatsManager currentUser, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
     {
         base.OnTurn(battleLogic, currentUser, battleStateMachine, textBoxHandler);

@@ -10,7 +10,7 @@ public class SmallAttackUp : Useable
     {
         base.OnUseInBattle(StatsToHeal, friendlyStats, battleStateMachine, textBoxHandler);
 
-        StatsToHeal.StatusEffectsManager.AddToStatusEffectsDic(EffectType.SingleTurnTrigger, attackUpEffect, textBoxHandler);
+        StatsToHeal.StatusEffectsManager.AddToStatusEffectsDic(EffectType.SingleTurnTrigger, attackUpEffect);
         textBoxHandler.AddTextAsStatusInfliction("S Attack Up", StatsToHeal.user.Id, attackUpEffect.Name);
         battleStateMachine.ChangeState(BattleStates.BattleTextBox);
     }

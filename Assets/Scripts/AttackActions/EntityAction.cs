@@ -15,6 +15,8 @@ public abstract class EntityAction : MonoBehaviour
     [field: SerializeField] public string Id { get; private set; }
     [field: SerializeField] public bool IsAOE { get; private set; }
     [field: SerializeField] public int ManaReduction { get; private set; }
+    [field: SerializeField] public string TriggerName { get; private set; }
+    [field: SerializeField] public AnimationClip AnimToPlay { get; private set; }
 
     [SerializeField] protected string actionText = "";
     [SerializeField] protected int amount = 0;
@@ -61,11 +63,11 @@ public abstract class EntityAction : MonoBehaviour
 
         if(s.EffectType == EffectType.ReplaceTurn)
         {
-            statsToApplyToo.StatusEffectsManager.AddToReplacementTurn(s.ShallowCopy(), textBoxHandler);
+            statsToApplyToo.StatusEffectsManager.AddToReplacementTurn(s.ShallowCopy());
         }
         else
         {
-            statsToApplyToo.StatusEffectsManager.AddToStatusEffectsDic(s.EffectType, s.ShallowCopy(), textBoxHandler);
+            statsToApplyToo.StatusEffectsManager.AddToStatusEffectsDic(s.EffectType, s.ShallowCopy());
         }
     }
 

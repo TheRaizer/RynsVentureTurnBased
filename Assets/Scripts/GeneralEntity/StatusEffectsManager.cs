@@ -40,7 +40,7 @@ public class StatusEffectsManager
         }
     }
 
-    public void AddToStatusEffectsDic(EffectType effectType, StatusEffect statusEffect, BattleTextBoxHandler textBoxHandler)
+    public void AddToStatusEffectsDic(EffectType effectType, StatusEffect statusEffect)
     {
         if (statusEffectsDic.TryGetValue(effectType, out List<StatusEffect> effects))
         {
@@ -51,14 +51,14 @@ public class StatusEffectsManager
             else
             {
                 statusEffectsDic[effectType].Add(statusEffect);
-                statusEffect.OnEffectStart(stats, textBoxHandler);
+                statusEffect.OnEffectStart(stats);
             }
         }
         else
         {
             effects.Add(statusEffect);
             statusEffectsDic.Add(effectType, effects);
-            statusEffect.OnEffectStart(stats, textBoxHandler);
+            statusEffect.OnEffectStart(stats);
         }
         PrintAllStatusEffects();
     }
@@ -68,7 +68,7 @@ public class StatusEffectsManager
         statusEffectsDic[effectType].Remove(statusObject);
     }
 
-    public void AddToReplacementTurn(StatusEffect statusObject, BattleTextBoxHandler textBoxHandler)
+    public void AddToReplacementTurn(StatusEffect statusObject)
     {
         if (statusEffectsDic.TryGetValue(EffectType.ReplaceTurn, out List<StatusEffect> effects))
         {
@@ -80,7 +80,7 @@ public class StatusEffectsManager
             effects.Add(statusObject);
             statusEffectsDic.Add(EffectType.ReplaceTurn, effects);
         }
-        statusObject.OnEffectStart(stats, textBoxHandler);
+        statusObject.OnEffectStart(stats);
     }
 
     public void ClearStatusEffects(EffectType effectType)

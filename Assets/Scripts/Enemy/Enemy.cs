@@ -10,9 +10,10 @@ public class Enemy : MonoBehaviour, IUser
     [SerializeField] private float percentHealthIncrease = 0;//health exponentially increase while damage scale linearly increases
     [SerializeField] private float damageScalingIncrease = 0;//since damage scale is multiplied by each attacks damage the scale does not need to exponentially increase
 
-    [field: Header("Name")]
+    [field: Header("User Properties")]
     [field: SerializeField] public string Id { get; set; }
     [field: SerializeField] public EntityType EntityType { get; private set; }
+    [field: SerializeField] public Animator Animator { get; private set; }
 
     [field: SerializeField] public int ExpOnDeath { get; private set; }
     [field: SerializeField] public List<EntityAction> Attacks { get; private set; }

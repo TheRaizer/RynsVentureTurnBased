@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DamageScale>k__BackingField: 1
   <Speed>k__BackingField: 3
-  <ClockTick>k__BackingField: 0
+  <ClockTick>k__BackingField: 3
   baseMaxHp: 15
   baseMaxMp: 0
   <HealthManager>k__BackingField:
@@ -147,6 +147,8 @@ MonoBehaviour:
   <Id>k__BackingField: throw
   <IsAOE>k__BackingField: 0
   <ManaReduction>k__BackingField: 0
+  <TriggerName>k__BackingField: 
+  <AnimToPlay>k__BackingField: {fileID: 0}
   actionText: throws
   amount: 4
   accuracy: 95

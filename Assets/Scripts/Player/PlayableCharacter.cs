@@ -5,9 +5,12 @@ using UnityEngine;
 
 public class PlayableCharacter : MonoBehaviour, ILevel, IUser
 {
-    [field: Header("Name")]
+    [field: SerializeField] public GameObject BattleVersionPrefab { get; private set; }
+
+    [field: Header("User Properties")]
     [field: SerializeField] public string Id { get; private set; }
     [field: SerializeField] public EntityType EntityType { get; private set; }
+    [field: SerializeField] public Animator Animator { get; private set; }
 
     [field: Header("Level Specifics")]
     [field: SerializeField] public float PercentHealthIncreasePerLevel { get; }
@@ -53,4 +56,5 @@ public interface IUser
 {
     string Id { get; }
     EntityType EntityType { get; }
+    Animator Animator { get; }
 }

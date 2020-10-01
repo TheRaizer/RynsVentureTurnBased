@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DamageScale>k__BackingField: 1
   <Speed>k__BackingField: 2
-  <ClockTick>k__BackingField: 0
+  <ClockTick>k__BackingField: 2
   baseMaxHp: 10
   baseMaxMp: 0
   <HealthManager>k__BackingField:
@@ -147,6 +147,8 @@ MonoBehaviour:
   <Id>k__BackingField: Leap
   <IsAOE>k__BackingField: 0
   <ManaReduction>k__BackingField: 0
+  <TriggerName>k__BackingField: 
+  <AnimToPlay>k__BackingField: {fileID: 0}
   actionText: leaps
   amount: 3
   accuracy: 85
