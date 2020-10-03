@@ -31,8 +31,9 @@ public class BattleLogic
 
 
     private readonly BattleMenusHandler menusHandler;
-    public readonly TextModifications textMods;
+    public TextModifications TextMods { get; }
     public StateMachine BattleStateMachine { get; }
+    public BattleAnimationsHandler AnimationsHandler { get; }
 
     public Useable ItemToUse { get; set; }
     public int ItemIndex { get; set; }
@@ -41,13 +42,46 @@ public class BattleLogic
     {
         menusHandler = _menusHandler;
         BattleStateMachine = _battleStateMachine;
-        textMods = new TextModifications(menusHandler, this);
+        TextMods = new TextModifications(menusHandler, this);
+        AnimationsHandler = new BattleAnimationsHandler(_menusHandler);
         foreach (EntityType a in Enum.GetValues(typeof(EntityType)))
         {
             AttackablesDic.Add(a, new List<StatsManager>());
         }
     }
 
+    public void OutputActivePlayerSprites()
+    {
+        for(int i = 0; i < ActivePlayableCharacters.Length; i++)
+        {
+            if(ActivePlayableCharacters[i] != null)
+            {
+                GameObject g = UnityEngine.Object.Instantiate(ActivePlayableCharacters[i].BattleVersionPrefab);
+                ActivePlayableCharacters[i].Animator = g.GetComponent<Animator>();
+                g.transform.SetParent(menusHandler.Entities.transform);
+                RectTransform rect = g.GetComponent<RectTransform>();
+                rect.anchoredPosition = new Vector2(menusHandler.PlayerSpritesReferenceVector.x, menusHandler.PlayerSpritesReferenceVector.y);
+                menusHandler.PlayerSpritesReferenceVector.y -= ConstantNumbers.SPACE_BETWEEN_ENTITIES;
+            }
+        }
+    }
+
+    public void OutputEnemySprites()
+    {
+        for (int i = 0; i < Enemies.Length; i++)
+        {
+            if (Enemies[i] != null)
+            {
+                Enemy enemy = Enemies[i].GetComponent<Enemy>();
+                GameObject g = UnityEngine.Object.Instantiate(enemy.BattleVersionPrefab);
+                enemy.Animator = g.GetComponent<Animator>();
+                g.transform.SetParent(menusHandler.Entities.transform);
+                RectTransform rect = g.GetComponent<RectTransform>();
+                rect.anchoredPosition = new Vector2(menusHandler.EnemySpritesReferenceVector.x, menusHandler.EnemySpritesReferenceVector.y);
+                menusHandler.EnemySpritesReferenceVector.y -= ConstantNumbers.SPACE_BETWEEN_ENTITIES;
+            }
+        }
+    }
     public void CheckForItemDrop(Enemy enemy)
     {
         int dropChance = UnityEngine.Random.Range(0, 100);

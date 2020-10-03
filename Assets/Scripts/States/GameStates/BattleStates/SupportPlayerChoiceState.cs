@@ -40,8 +40,8 @@ public class SupportPlayerChoiceState : PlayerChoiceState
                 );
 
             battleLogic.CheckForAttackablePlayers();
-            battleLogic.textMods.PrintPlayerHealth();
-            battleLogic.textMods.PrintPlayerIds();
+            battleLogic.TextMods.PrintPlayerHealth();
+            battleLogic.TextMods.PrintPlayerIds();
 
             stateMachine.ChangeState(BattleStates.BattleTextBox);
         }

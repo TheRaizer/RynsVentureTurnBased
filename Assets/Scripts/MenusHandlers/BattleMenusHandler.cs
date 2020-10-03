@@ -16,6 +16,7 @@ public class BattleMenusHandler : MonoBehaviour
     [field: SerializeField] public GameObject MagicPanel { get; private set; }
     [field: SerializeField] public GameObject TextPanel { get; private set; }
     [field: SerializeField] public GameObject ItemChoicePanel { get; private set; }
+    [field: SerializeField] public GameObject Entities { get; private set; }
 
     [field: Header("Text Area")]
     [field: SerializeField] public TextMeshProUGUI TextArea { get; private set; }
@@ -42,6 +43,8 @@ public class BattleMenusHandler : MonoBehaviour
     public List<Directions> ItemUsePointerLocations { get; private set; }
 
     public VectorMenuTraversal VectorMenuNoNulls { get; private set; }
+    public Vector2 PlayerSpritesReferenceVector;
+    public Vector2 EnemySpritesReferenceVector;
 
     private void Awake()
     {
@@ -81,6 +84,14 @@ public class BattleMenusHandler : MonoBehaviour
         for (int i = 0; i < ItemTextBoxes.Length; i++)
         {
             ItemTextBoxes[i].GetComponent<TextMeshProUGUI>().text = "";
+        }
+    }
+
+    public void ClosePanels()
+    {
+        foreach (GameObject g in objectsToDisableOnTextOpen)
+        {
+            g.SetActive(false);
         }
     }
 

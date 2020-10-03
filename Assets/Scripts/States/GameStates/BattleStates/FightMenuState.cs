@@ -52,8 +52,8 @@ public class FightMenuState : StatusEffectCheckState
         {
             stateMachine.ChangeState(BattleStates.Victory);
         }
-        battleLogic.textMods.PrintPlayerHealth();
-        battleLogic.textMods.PrintPlayerMana();
+        battleLogic.TextMods.PrintPlayerHealth();
+        battleLogic.TextMods.PrintPlayerMana();
     }
 
     public override void InputUpdate()

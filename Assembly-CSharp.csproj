@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\InventoryState.cs" />
     <Compile Include="Assets\Scripts\Items\SmallAllHeal.cs" />
     <Compile Include="Assets\Scripts\Enemy\Areas.cs" />
+    <Compile Include="Assets\Scripts\TestingScript.cs" />
     <Compile Include="Assets\Scripts\Items\SmallHpPotion.cs" />
     <Compile Include="Assets\Scripts\MenuTraversal\VectorMenuTraversal.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimations.cs" />
@@ -130,7 +131,7 @@
     <Compile Include="Assets\Scripts\WorldMenuOptions\InventoryTypeChoiceOption.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\FightMenuState.cs" />
-    <Compile Include="Assets\Scripts\TestingScript.cs" />
+    <Compile Include="Assets\Scripts\BattleAnimationsHandler.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

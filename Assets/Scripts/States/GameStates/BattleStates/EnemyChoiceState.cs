@@ -59,15 +59,24 @@ public class EnemyChoiceState : State
 
     private void EnterChoice()
     {
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E) && !battleLogic.AnimationsHandler.RanAnim)
         {
             Enemy enemyToAttack = battleLogic.Enemies[menuTraversal.currentIndex].GetComponent<Enemy>();
             EntityActionInfo attackInfo = battleLogic.CurrentPlayerAttack.UseAction(enemyToAttack.Stats, battleLogic.CurrentPlayer.Stats.DamageScale, textBoxHandler);
-            Debug.Log(attackInfo.inflictedStatusEffect);
 
+            battleLogic.AnimationsHandler.RunAnim(battleLogic.CurrentPlayer.Stats.user.Animator, battleLogic.CurrentPlayerAttack.AnimToPlay, battleLogic.CurrentPlayerAttack.TriggerName);
             battleLogic.CheckForEnemiesRemaining();
-            battleLogic.textMods.ChangeEnemyNameColour();
-            stateMachine.ChangeState(BattleStates.BattleTextBox);
+            return;
+        }
+        if (battleLogic.AnimationsHandler.RanAnim)
+        {
+            if (!battleLogic.AnimationsHandler.IsRunningAnim())
+            {
+                Debug.Log("Move from animation to textbox");
+                battleLogic.AnimationsHandler.RanAnim = false;
+                battleLogic.TextMods.ChangeEnemyNameColour();
+                battleLogic.BattleStateMachine.ChangeState(BattleStates.BattleTextBox);
+            }
         }
     }
 

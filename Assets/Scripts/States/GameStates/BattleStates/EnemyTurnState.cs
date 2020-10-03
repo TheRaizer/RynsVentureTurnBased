@@ -20,14 +20,7 @@ public class EnemyTurnState : StatusEffectCheckState
         base.OnFullRotationEnter();
 
         Debug.Log(battleLogic.CurrentEnemy.Id + " Turn");
-        textBoxHandler.AddTextAsTurn(battleLogic.CurrentEnemy.Id);
-        stateMachine.ChangeState(BattleStates.BattleTextBox);
 
-        if (CheckForStatusEffects(battleStatusManager, battleLogic, textBoxHandler, battleLogic.CurrentEnemy.Stats, null))
-        {
-            Debug.Log("printing status effects");
-            stateMachine.ChangeState(BattleStates.BattleTextBox);
-        }
         if (battleStatusManager.CheckForReplacementStatusEffect(battleLogic, battleLogic.CurrentEnemy.Stats, true))
         {
             return;
@@ -45,9 +38,31 @@ public class EnemyTurnState : StatusEffectCheckState
             int playerIndexToAttack = Random.Range(0, battleLogic.AttackablesDic[EntityType.Player].Count);
             List<EntityActionInfo> actionInfos = attackToUse.DetermineAction(battleLogic.AttackablesDic[EntityType.Player], battleLogic.CurrentEnemy.Stats.DamageScale, playerIndexToAttack, textBoxHandler);
         }
-        battleLogic.textMods.PrintPlayerHealth();
-        battleLogic.textMods.ChangePlayerTextColour();
+        battleLogic.TextMods.PrintPlayerHealth();
+        battleLogic.TextMods.ChangePlayerTextColour();
         Debug.Log("printing enemy attacks");
-        stateMachine.ChangeState(BattleStates.BattleTextBox);
+
+        battleLogic.AnimationsHandler.RunAnim(battleLogic.CurrentEnemy.Animator, attackToUse.AnimToPlay, attackToUse.TriggerName);
+    }
+
+    public override void InputUpdate()
+    {
+        base.InputUpdate();
+
+        if (battleLogic.AnimationsHandler.RanAnim)
+        {
+            if (!battleLogic.AnimationsHandler.IsRunningAnim())
+            {
+                battleLogic.AnimationsHandler.RanAnim = false;
+                Debug.Log("Falsify");
+                if (CheckForStatusEffects(battleStatusManager, battleLogic, textBoxHandler, battleLogic.CurrentEnemy.Stats, null))
+                {
+                    Debug.Log("printing status effects");
+                    stateMachine.ChangeState(BattleStates.BattleTextBox);
+                    return;
+                }
+                stateMachine.ChangeState(BattleStates.BattleTextBox);
+            }
+        }
     }
 }

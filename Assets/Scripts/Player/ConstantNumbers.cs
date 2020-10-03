@@ -9,4 +9,5 @@ public static class ConstantNumbers
 
     public const int MAX_MAGIC_X_LENGTH = 3;
     public const int MAX_MAGIC_Y_LENGTH = 4;
+    public const float SPACE_BETWEEN_ENTITIES = 69.6f;
 }

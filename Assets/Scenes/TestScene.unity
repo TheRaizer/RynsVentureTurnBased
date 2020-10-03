@@ -2662,8 +2662,9 @@ MonoBehaviour:
   <Id>k__BackingField: whack
   <IsAOE>k__BackingField: 0
   <ManaReduction>k__BackingField: 0
-  <TriggerName>k__BackingField: 
-  <AnimToPlay>k__BackingField: {fileID: 0}
+  <TriggerName>k__BackingField: Fight
+  <AnimToPlay>k__BackingField: {fileID: 7400000, guid: 17179de5ccf4cd641ab3746197b84f9d,
+    type: 2}
   actionText: whacks
   amount: 2
   accuracy: 85
@@ -2688,8 +2689,6 @@ MonoBehaviour:
     type: 3}
   <Id>k__BackingField: Zable
   <EntityType>k__BackingField: 0
-  <Animator>k__BackingField: {fileID: 2660015376144706078, guid: 9c6c415e8099c27429f36a87388716ea,
-    type: 3}
   baseExperienceToNextLevel: 500
   percentExperiencePerLevel: 0.75
   <FightAttack>k__BackingField: {fileID: 615585379}
@@ -3098,8 +3097,9 @@ MonoBehaviour:
   <Id>k__BackingField: hammer
   <IsAOE>k__BackingField: 0
   <ManaReduction>k__BackingField: 0
-  <TriggerName>k__BackingField: 
-  <AnimToPlay>k__BackingField: {fileID: 0}
+  <TriggerName>k__BackingField: Fight
+  <AnimToPlay>k__BackingField: {fileID: 7400000, guid: 17179de5ccf4cd641ab3746197b84f9d,
+    type: 2}
   actionText: hammers
   amount: 3
   accuracy: 100
@@ -3124,8 +3124,6 @@ MonoBehaviour:
     type: 3}
   <Id>k__BackingField: Reinhart
   <EntityType>k__BackingField: 0
-  <Animator>k__BackingField: {fileID: 2012782647870388700, guid: 31ff05c33743d3e4691fa2f3def8ab71,
-    type: 3}
   baseExperienceToNextLevel: 500
   percentExperiencePerLevel: 0.75
   <FightAttack>k__BackingField: {fileID: 740601878}
@@ -5970,8 +5968,9 @@ MonoBehaviour:
   <Id>k__BackingField: Stab
   <IsAOE>k__BackingField: 0
   <ManaReduction>k__BackingField: 0
-  <TriggerName>k__BackingField: 
-  <AnimToPlay>k__BackingField: {fileID: 0}
+  <TriggerName>k__BackingField: Fight
+  <AnimToPlay>k__BackingField: {fileID: 7400000, guid: 17179de5ccf4cd641ab3746197b84f9d,
+    type: 2}
   actionText: stabs
   amount: 4
   accuracy: 100
@@ -5997,8 +5996,6 @@ MonoBehaviour:
     type: 3}
   <Id>k__BackingField: Pinhead
   <EntityType>k__BackingField: 0
-  <Animator>k__BackingField: {fileID: 6574297792811925791, guid: eccfc58fcc1f8d548a255a1729ed209f,
-    type: 3}
   baseExperienceToNextLevel: 500
   percentExperiencePerLevel: 0.75
   <FightAttack>k__BackingField: {fileID: 1552954258}
@@ -7395,8 +7392,6 @@ MonoBehaviour:
     type: 3}
   <Id>k__BackingField: Ryn
   <EntityType>k__BackingField: 0
-  <Animator>k__BackingField: {fileID: 3561549639231665039, guid: c78b586ff09155c46aaf23c94d80d9db,
-    type: 3}
   baseExperienceToNextLevel: 500
   percentExperiencePerLevel: 0.75
   <FightAttack>k__BackingField: {fileID: 1843531479}
@@ -7528,8 +7523,9 @@ MonoBehaviour:
   <Id>k__BackingField: Sword Slash
   <IsAOE>k__BackingField: 0
   <ManaReduction>k__BackingField: 0
-  <TriggerName>k__BackingField: 
-  <AnimToPlay>k__BackingField: {fileID: 0}
+  <TriggerName>k__BackingField: Fight
+  <AnimToPlay>k__BackingField: {fileID: 7400000, guid: 17179de5ccf4cd641ab3746197b84f9d,
+    type: 2}
   actionText: slashes
   amount: 4
   accuracy: 95
@@ -8146,56 +8142,6 @@ PrefabInstance:
       propertyPath: <Pointer>k__BackingField
       value: 
       objectReference: {fileID: 1369486390}
-    - target: {fileID: 424382459263548266, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
-        type: 3}
-      propertyPath: players.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 424382459263548266, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
-        type: 3}
-      propertyPath: players.Array.data[0]
-      value: 
-      objectReference: {fileID: 1843531474}
-    - target: {fileID: 424382459263548266, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
-        type: 3}
-      propertyPath: players.Array.data[1]
-      value: 
-      objectReference: {fileID: 1552954259}
-    - target: {fileID: 424382459263548266, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
-        type: 3}
-      propertyPath: players.Array.data[2]
-      value: 
-      objectReference: {fileID: 615585380}
-    - target: {fileID: 424382459263548266, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
-        type: 3}
-      propertyPath: players.Array.data[3]
-      value: 
-      objectReference: {fileID: 740601879}
-    - target: {fileID: 424382459263548266, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
-        type: 3}
-      propertyPath: anim
-      value: 
-      objectReference: {fileID: 7400000, guid: 17179de5ccf4cd641ab3746197b84f9d, type: 2}
-    - target: {fileID: 424382459263548266, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
-        type: 3}
-      propertyPath: entities
-      value: 
-      objectReference: {fileID: 1248022658}
-    - target: {fileID: 424382459263548266, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
-        type: 3}
-      propertyPath: referenceVector.x
-      value: -70
-      objectReference: {fileID: 0}
-    - target: {fileID: 424382459263548266, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
-        type: 3}
-      propertyPath: referenceVector.y
-      value: 183.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 424382459263548266, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
-        type: 3}
-      propertyPath: Idle_anim
-      value: 
-      objectReference: {fileID: 7400000, guid: 6dde5936ca1c9a648b80f0ffb436cbf8, type: 2}
     - target: {fileID: 424382459263548269, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8486,5 +8432,30 @@ PrefabInstance:
       propertyPath: <MenuPointer>k__BackingField
       value: 
       objectReference: {fileID: 539798552}
+    - target: {fileID: 424382459263548271, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
+        type: 3}
+      propertyPath: PlayerSpritesReferenceVector.y
+      value: 183.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 424382459263548271, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
+        type: 3}
+      propertyPath: PlayerSpritesReferenceVector.x
+      value: -70
+      objectReference: {fileID: 0}
+    - target: {fileID: 424382459263548271, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
+        type: 3}
+      propertyPath: <Entities>k__BackingField
+      value: 
+      objectReference: {fileID: 1248022658}
+    - target: {fileID: 424382459263548271, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
+        type: 3}
+      propertyPath: EnemySpritesReferenceVector.x
+      value: -550
+      objectReference: {fileID: 0}
+    - target: {fileID: 424382459263548271, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
+        type: 3}
+      propertyPath: EnemySpritesReferenceVector.y
+      value: 183.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2468c8f781eff7e4a9c007ee900a5e8d, type: 3}

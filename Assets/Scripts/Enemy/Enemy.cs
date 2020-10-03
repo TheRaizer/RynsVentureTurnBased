@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IUser
 {
+    [field: SerializeField] public GameObject BattleVersionPrefab { get; private set; }  
     [Header("Level Specifics")]
     [SerializeField] public int level = 0;
     [SerializeField] private float percentHealthIncrease = 0;//health exponentially increase while damage scale linearly increases
@@ -13,7 +14,7 @@ public class Enemy : MonoBehaviour, IUser
     [field: Header("User Properties")]
     [field: SerializeField] public string Id { get; set; }
     [field: SerializeField] public EntityType EntityType { get; private set; }
-    [field: SerializeField] public Animator Animator { get; private set; }
+    public Animator Animator { get; set; }
 
     [field: SerializeField] public int ExpOnDeath { get; private set; }
     [field: SerializeField] public List<EntityAction> Attacks { get; private set; }

@@ -10,7 +10,7 @@ public class PlayableCharacter : MonoBehaviour, ILevel, IUser
     [field: Header("User Properties")]
     [field: SerializeField] public string Id { get; private set; }
     [field: SerializeField] public EntityType EntityType { get; private set; }
-    [field: SerializeField] public Animator Animator { get; private set; }
+    public Animator Animator { get; set; }
 
     [field: Header("Level Specifics")]
     [field: SerializeField] public float PercentHealthIncreasePerLevel { get; }

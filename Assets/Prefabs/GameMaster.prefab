@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 424382459263548271}
   - component: {fileID: 424382459263548264}
   - component: {fileID: 424382459263548265}
-  - component: {fileID: 424382459263548266}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -107,6 +106,7 @@ MonoBehaviour:
   <MagicPanel>k__BackingField: {fileID: 0}
   <TextPanel>k__BackingField: {fileID: 0}
   <ItemChoicePanel>k__BackingField: {fileID: 0}
+  <Entities>k__BackingField: {fileID: 0}
   <TextArea>k__BackingField: {fileID: 0}
   <FightMenuCommands>k__BackingField:
   - {fileID: 0}
@@ -234,6 +234,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   <MenuPointer>k__BackingField: {fileID: 0}
+  PlayerSpritesReferenceVector: {x: 0, y: 0}
+  EnemySpritesReferenceVector: {x: 0, y: 0}
 --- !u!114 &424382459263548264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,16 +287,3 @@ MonoBehaviour:
   - {fileID: 2096662133330265421, guid: bb742ab7373905c459ee695638a4e962, type: 3}
   <MenuPanel>k__BackingField: {fileID: 0}
   <Pointer>k__BackingField: {fileID: 0}
---- !u!114 &424382459263548266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424382459263548259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3951b1a7321cb3542a3619df359a5681, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 7400000, guid: 64fdf3cdaf783724f8cd7ccd3929da75, type: 2}

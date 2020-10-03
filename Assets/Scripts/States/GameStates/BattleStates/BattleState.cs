@@ -59,11 +59,16 @@ public class BattleState : State
         base.OnEnterOrReturn();
 
         EnemyGenerator.InstantiateEnemies();
+
+        BattleLogic.OutputActivePlayerSprites();
+        BattleLogic.OutputEnemySprites();
+
         BattleLogic.ResetAllPlayerClockTicks();
-        BattleLogic.textMods.PrintEnemyIds();
-        BattleLogic.textMods.PrintPlayerIds();
-        BattleLogic.textMods.PrintPlayerHealth();
-        BattleLogic.textMods.PrintPlayerMana();
+
+        BattleLogic.TextMods.PrintEnemyIds();
+        BattleLogic.TextMods.PrintPlayerIds();
+        BattleLogic.TextMods.PrintPlayerHealth();
+        BattleLogic.TextMods.PrintPlayerMana();
 
         menusHandler.BattleMenus.SetActive(true);
         BattleLogic.CheckForAttackablePlayers();
@@ -76,6 +81,7 @@ public class BattleState : State
         base.LogicUpdate();
 
         BattleStateMachine.CurrentState.LogicUpdate();
+        //Debug.Log(BattleStateMachine.CurrentState);
     }
 
     public override void PhysicsUpdate()
