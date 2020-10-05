@@ -2,13 +2,19 @@
 {
     public override ActionTypes ActionType { get; protected set; } = ActionTypes.Attack;
 
-    protected override void OnCrit(StatsManager statsTooActOn, float scale)
+    protected override EntityActionInfo OnCrit(StatsManager statsTooActOn, float scale)
     {
-        statsTooActOn.HealthManager.ReduceAmount(MathExtension.RoundToNearestInteger(amount * scale * critMultiplier));
+        int damage = MathExtension.RoundToNearestInteger(amount * scale * critMultiplier);
+        statsTooActOn.HealthManager.ReduceAmount(damage);
+
+        return new EntityActionInfo(statsTooActOn.user.Id, true, damage, false);
     }
 
-    protected override void OnNonCrit(StatsManager statsTooActOn, float scale)
+    protected override EntityActionInfo OnNonCrit(StatsManager statsTooActOn, float scale)
     {
-        statsTooActOn.HealthManager.ReduceAmount(MathExtension.RoundToNearestInteger(amount * scale));
+        int damage = MathExtension.RoundToNearestInteger(amount * scale);
+        statsTooActOn.HealthManager.ReduceAmount(damage);
+
+        return new EntityActionInfo(statsTooActOn.user.Id, true, damage, false);
     }
 }

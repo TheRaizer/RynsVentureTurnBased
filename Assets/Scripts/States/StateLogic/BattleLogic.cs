@@ -111,8 +111,11 @@ public class BattleLogic
                 AttackablesDic[EntityType.Enemy].Remove(e.GetComponent<Enemy>().Stats);
                 Enemies[i] = null;
 
-                e.GetComponent<Enemy>().Stats.StatusEffectsManager.RemoveAllStatusEffects();
-                CheckForItemDrop(e.GetComponent<Enemy>());
+                Enemy enemy = e.GetComponent<Enemy>();
+                enemy.Stats.StatusEffectsManager.RemoveAllStatusEffects();
+                CheckForItemDrop(enemy);
+                UnityEngine.Object.Destroy(enemy.Animator.gameObject);
+
                 UnityEngine.Object.Destroy(e);
                 menusHandler.EnemyIdText[i].text = "Dead";
             }
@@ -202,5 +205,24 @@ public class BattleLogic
         }
 
         TotalExpFromBattle = 0;
+    }
+
+    public void SetActionPopupForEntity(GameObject user, List<GameObject> foesToAttack, int damage, bool critical, bool support, bool missed)
+    {
+        SpawnActionPopup spawnDamage = user.GetComponent<SpawnActionPopup>();
+        spawnDamage.Amount = damage;
+        spawnDamage.Critical = critical;
+        spawnDamage.Support = support;
+        spawnDamage.HitTarget = missed;
+
+        List<Vector2> locationsToSpawn = new List<Vector2>();
+
+        foreach(GameObject g in foesToAttack)
+        {
+            RectTransform r = g.GetComponent<RectTransform>();
+            Vector2 pos = new Vector2(r.anchoredPosition.x, r.anchoredPosition.y);
+            locationsToSpawn.Add(pos);
+        }
+        spawnDamage.LocationsToSpawn = locationsToSpawn;
     }
 }

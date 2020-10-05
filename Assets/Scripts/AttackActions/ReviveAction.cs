@@ -5,15 +5,23 @@ public class ReviveAction : EntityAction
     public override ActionTypes ActionType { get; protected set; } = ActionTypes.Revive;
     [SerializeField] private float percentHealthAfterRevive = 0;
 
-    protected override void OnCrit(StatsManager statsTooActOn, float scale)
+    protected override EntityActionInfo OnCrit(StatsManager statsTooActOn, float scale)
     {
         statsTooActOn.HealthManager.Dead = false;
-        statsTooActOn.HealthManager.RegenAmount(MathExtension.RoundToNearestInteger(statsTooActOn.HealthManager.MaxAmount * percentHealthAfterRevive * critMultiplier));
+
+        int regenAmount = MathExtension.RoundToNearestInteger(statsTooActOn.HealthManager.MaxAmount * percentHealthAfterRevive * critMultiplier);
+        statsTooActOn.HealthManager.RegenAmount(regenAmount);
+
+        return new EntityActionInfo(statsTooActOn.user.Id, true, regenAmount, true);
     }
 
-    protected override void OnNonCrit(StatsManager statsTooActOn, float scale)
+    protected override EntityActionInfo OnNonCrit(StatsManager statsTooActOn, float scale)
     {
         statsTooActOn.HealthManager.Dead = false;
-        statsTooActOn.HealthManager.RegenAmount(MathExtension.RoundToNearestInteger(statsTooActOn.HealthManager.MaxAmount * percentHealthAfterRevive));
+        int regenAmount = MathExtension.RoundToNearestInteger(statsTooActOn.HealthManager.MaxAmount * percentHealthAfterRevive);
+
+        statsTooActOn.HealthManager.RegenAmount(regenAmount);
+
+        return new EntityActionInfo(statsTooActOn.user.Id, true, regenAmount, true);
     }
 }

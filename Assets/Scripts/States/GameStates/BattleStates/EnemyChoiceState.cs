@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class EnemyChoiceState : State
 {
@@ -64,8 +65,12 @@ public class EnemyChoiceState : State
             Enemy enemyToAttack = battleLogic.Enemies[menuTraversal.currentIndex].GetComponent<Enemy>();
             EntityActionInfo attackInfo = battleLogic.CurrentPlayerAttack.UseAction(enemyToAttack.Stats, battleLogic.CurrentPlayer.Stats.DamageScale, textBoxHandler);
 
+            List<GameObject> enemiesToAttack = new List<GameObject>
+            {
+                enemyToAttack.Animator.gameObject
+            };
+            battleLogic.SetActionPopupForEntity(battleLogic.CurrentPlayer.Animator.gameObject, enemiesToAttack, attackInfo.amount, attackInfo.CriticalHit, attackInfo.support, attackInfo.hitTarget);
             battleLogic.AnimationsHandler.RunAnim(battleLogic.CurrentPlayer.Stats.user.Animator, battleLogic.CurrentPlayerAttack.AnimToPlay, battleLogic.CurrentPlayerAttack.TriggerName);
-            battleLogic.CheckForEnemiesRemaining();
             return;
         }
         if (battleLogic.AnimationsHandler.RanAnim)
@@ -74,6 +79,7 @@ public class EnemyChoiceState : State
             {
                 Debug.Log("Move from animation to textbox");
                 battleLogic.AnimationsHandler.RanAnim = false;
+                battleLogic.CheckForEnemiesRemaining();
                 battleLogic.TextMods.ChangeEnemyNameColour();
                 battleLogic.BattleStateMachine.ChangeState(BattleStates.BattleTextBox);
             }

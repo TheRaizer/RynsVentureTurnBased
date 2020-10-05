@@ -5972,7 +5972,7 @@ MonoBehaviour:
   <AnimToPlay>k__BackingField: {fileID: 7400000, guid: 17179de5ccf4cd641ab3746197b84f9d,
     type: 2}
   actionText: stabs
-  amount: 4
+  amount: 5
   accuracy: 100
   critChance: 18
   critMultiplier: 1.5
@@ -6546,6 +6546,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1676104458}
   m_CullTransparentMesh: 0
+--- !u!1 &1683673963 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 424382459263548259, guid: 2468c8f781eff7e4a9c007ee900a5e8d,
+    type: 3}
+  m_PrefabInstance: {fileID: 424382458729539620}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1683673970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683673963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d12a8def5846ff4e83d213c4560e338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolsToGenerate:
+  - id: ActionPopup
+    amount: 5
+    prefab: {fileID: 890781119189234549, guid: 014b159314da0f241b94bed391e3f1de, type: 3}
+    parentObject: {fileID: 1248022658}
 --- !u!1 &1702651488
 GameObject:
   m_ObjectHideFlags: 0
@@ -7420,8 +7443,9 @@ MonoBehaviour:
   <Id>k__BackingField: Heal
   <IsAOE>k__BackingField: 0
   <ManaReduction>k__BackingField: 7
-  <TriggerName>k__BackingField: 
-  <AnimToPlay>k__BackingField: {fileID: 0}
+  <TriggerName>k__BackingField: Fight
+  <AnimToPlay>k__BackingField: {fileID: 7400000, guid: 17179de5ccf4cd641ab3746197b84f9d,
+    type: 2}
   actionText: heals
   amount: 10
   accuracy: 100
@@ -7445,8 +7469,9 @@ MonoBehaviour:
   <Id>k__BackingField: Flame Sword
   <IsAOE>k__BackingField: 0
   <ManaReduction>k__BackingField: 7
-  <TriggerName>k__BackingField: 
-  <AnimToPlay>k__BackingField: {fileID: 0}
+  <TriggerName>k__BackingField: Fight
+  <AnimToPlay>k__BackingField: {fileID: 7400000, guid: 17179de5ccf4cd641ab3746197b84f9d,
+    type: 2}
   actionText: slashes in flames on
   amount: 6
   accuracy: 100
@@ -7471,8 +7496,9 @@ MonoBehaviour:
   <Id>k__BackingField: Lighting
   <IsAOE>k__BackingField: 0
   <ManaReduction>k__BackingField: 20
-  <TriggerName>k__BackingField: 
-  <AnimToPlay>k__BackingField: {fileID: 0}
+  <TriggerName>k__BackingField: Fight
+  <AnimToPlay>k__BackingField: {fileID: 7400000, guid: 17179de5ccf4cd641ab3746197b84f9d,
+    type: 2}
   actionText: summons lighting upon
   amount: 5
   accuracy: 85
@@ -7497,8 +7523,9 @@ MonoBehaviour:
   <Id>k__BackingField: Fire Ball
   <IsAOE>k__BackingField: 0
   <ManaReduction>k__BackingField: 15
-  <TriggerName>k__BackingField: 
-  <AnimToPlay>k__BackingField: {fileID: 0}
+  <TriggerName>k__BackingField: Fight
+  <AnimToPlay>k__BackingField: {fileID: 7400000, guid: 17179de5ccf4cd641ab3746197b84f9d,
+    type: 2}
   actionText: launches a fireball at
   amount: 10
   accuracy: 90

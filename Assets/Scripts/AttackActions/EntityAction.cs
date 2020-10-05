@@ -103,32 +103,39 @@ public abstract class EntityAction : MonoBehaviour
 
             if (critChance < this.critChance)
             {
-                OnCrit(statsTooActOn, scale);
+                EntityActionInfo actionInfo = OnCrit(statsTooActOn, scale);
                 textBoxHandler.AddTextAsCriticalHit();
                 if (statusEffectPrefab != null)
                 {
                     hasInflicted = ApplyStatusEffect(statsTooActOn, true, textBoxHandler);
                 }
                 Debug.Log("Critical hit");
-                return new EntityActionInfo(statsTooActOn.user.Id, true, hasInflicted);
+                actionInfo.CriticalHit = true;
+                actionInfo.InflictedStatusEffect = hasInflicted;
+                return actionInfo;
             }
             else
             {
-                OnNonCrit(statsTooActOn, scale);
+                EntityActionInfo actionInfo = OnNonCrit(statsTooActOn, scale);
                 if (statusEffectPrefab != null)
                 {
                     hasInflicted = ApplyStatusEffect(statsTooActOn, false, textBoxHandler);
                 }
-                return new EntityActionInfo(statsTooActOn.user.Id, true, hasInflicted);
+                actionInfo.InflictedStatusEffect = hasInflicted;
+                return actionInfo;
             }
         }
         else
         {
             textBoxHandler.AddTextOnMiss(userStats.user.Id, statsTooActOn.user.Id);
-            return new EntityActionInfo(statsTooActOn.user.Id, false, false);
+            EntityActionInfo actionInfo = new EntityActionInfo(statsTooActOn.user.Id, false, 0, false)
+            {
+                InflictedStatusEffect = false
+            };
+            return actionInfo;
         }
     }
 
-    protected abstract void OnCrit(StatsManager statsTooActOn, float scale);
-    protected abstract void OnNonCrit(StatsManager statsTooActOn, float scale);
+    protected abstract EntityActionInfo OnCrit(StatsManager statsTooActOn, float scale);
+    protected abstract EntityActionInfo OnNonCrit(StatsManager statsTooActOn, float scale);
 }
