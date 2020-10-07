@@ -16,7 +16,16 @@ public class SupportPlayerChoiceState : PlayerChoiceState
     {
         base.InputUpdate();
 
-        if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
+        OnSelection();
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
+        {
+            stateMachine.ReturnBackToState(BattleStates.MagicChoice);
+        }
+    }
+
+    private void OnSelection()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
             StatsManager playerToSupport = battleLogic.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats;
 
@@ -34,7 +43,7 @@ public class SupportPlayerChoiceState : PlayerChoiceState
                 stateMachine.ChangeState(BattleStates.BattleTextBox);
                 return;
             }
-            EntityActionInfo actionInfo =  battleLogic.CurrentPlayerAttack.UseAction
+            EntityActionInfo actionInfo = battleLogic.CurrentPlayerAttack.UseAction
                 (
                     battleLogic.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats, battleLogic.CurrentPlayer.Stats.DamageScale, textBoxHandler
                 );
@@ -44,11 +53,6 @@ public class SupportPlayerChoiceState : PlayerChoiceState
             battleLogic.TextMods.PrintPlayerIds();
 
             stateMachine.ChangeState(BattleStates.BattleTextBox);
-        }
-
-        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
-        {
-            stateMachine.ReturnBackToState(BattleStates.MagicChoice);
         }
     }
 }

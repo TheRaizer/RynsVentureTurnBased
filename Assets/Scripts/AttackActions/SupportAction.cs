@@ -6,7 +6,7 @@
     {
         int regenAmount = MathExtension.RoundToNearestInteger(amount * scale * critMultiplier);
         statsTooActOn.HealthManager.RegenAmount(regenAmount);
-        return new EntityActionInfo(statsTooActOn.user.Id, true, regenAmount, true);
+        return new EntityActionInfo(statsTooActOn.user.Id, regenAmount, true);
     }
 
     protected override EntityActionInfo OnNonCrit(StatsManager statsTooActOn, float scale)
@@ -14,6 +14,6 @@
         int regenAmount = MathExtension.RoundToNearestInteger(amount * scale);
         statsTooActOn.HealthManager.RegenAmount(regenAmount);
 
-        return new EntityActionInfo(statsTooActOn.user.Id, true, regenAmount, true);
+        return new EntityActionInfo(statsTooActOn.user.Id, regenAmount, true);
     }
 }

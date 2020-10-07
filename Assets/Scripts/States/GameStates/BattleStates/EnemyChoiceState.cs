@@ -33,6 +33,7 @@ public class EnemyChoiceState : State
             menuTraversal.CheckIfIndexInRange();
         }
         PositionPointerForEnemyChoice();
+        battleLogic.AnimationsHandler.OnAnimationFinished = OnAnimationFinished;
     }
 
     public override void OnFullRotationEnter()
@@ -41,7 +42,9 @@ public class EnemyChoiceState : State
 
         if (battleStatusManager.CheckForReplacementStatusEffect(battleLogic, battleLogic.CurrentPlayer.Stats, true))
         {
-            return;
+            StatusEffectAnimationState animState = (StatusEffectAnimationState)stateMachine.states[BattleStates.StatusEffectAnimations];
+            animState.stateToReturnToo = BattleStates.FightMenu;
+            stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
         }
     }
 
@@ -51,7 +54,6 @@ public class EnemyChoiceState : State
 
         menuTraversal.TraverseWithNulls(battleLogic.Enemies);
         EnterChoice();
-
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
         {
             stateMachine.ReturnBackToState(BattleStates.FightMenu);
@@ -64,26 +66,19 @@ public class EnemyChoiceState : State
         {
             Enemy enemyToAttack = battleLogic.Enemies[menuTraversal.currentIndex].GetComponent<Enemy>();
             EntityActionInfo attackInfo = battleLogic.CurrentPlayerAttack.UseAction(enemyToAttack.Stats, battleLogic.CurrentPlayer.Stats.DamageScale, textBoxHandler);
-
-            List<GameObject> enemiesToAttack = new List<GameObject>
-            {
-                enemyToAttack.Animator.gameObject
-            };
-            battleLogic.SetActionPopupForEntity(battleLogic.CurrentPlayer.Animator.gameObject, enemiesToAttack, attackInfo.amount, attackInfo.CriticalHit, attackInfo.support, attackInfo.hitTarget);
+                
+            battleLogic.SetActionPopupForEntity(battleLogic.CurrentPlayer.Animator.gameObject, null, enemyToAttack.Animator.gameObject, attackInfo);
             battleLogic.AnimationsHandler.RunAnim(battleLogic.CurrentPlayer.Stats.user.Animator, battleLogic.CurrentPlayerAttack.AnimToPlay, battleLogic.CurrentPlayerAttack.TriggerName);
             return;
         }
-        if (battleLogic.AnimationsHandler.RanAnim)
-        {
-            if (!battleLogic.AnimationsHandler.IsRunningAnim())
-            {
-                Debug.Log("Move from animation to textbox");
-                battleLogic.AnimationsHandler.RanAnim = false;
-                battleLogic.CheckForEnemiesRemaining();
-                battleLogic.TextMods.ChangeEnemyNameColour();
-                battleLogic.BattleStateMachine.ChangeState(BattleStates.BattleTextBox);
-            }
-        }
+        battleLogic.AnimationsHandler.OnLateUpdate();
+    }
+
+    private void OnAnimationFinished()
+    {
+        battleLogic.CheckForEnemiesRemaining();
+        battleLogic.TextMods.ChangeEnemyNameColour();
+        battleLogic.BattleStateMachine.ChangeState(BattleStates.BattleTextBox);
     }
 
     private void PositionPointerForEnemyChoice()

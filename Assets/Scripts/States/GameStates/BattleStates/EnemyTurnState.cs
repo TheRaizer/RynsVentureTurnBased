@@ -19,50 +19,63 @@ public class EnemyTurnState : StatusEffectCheckState
     {
         base.OnFullRotationEnter();
 
+        battleLogic.AnimationsHandler.OnAnimationFinished = OnAnimationFinished;
         Debug.Log(battleLogic.CurrentEnemy.Id + " Turn");
 
         if (battleStatusManager.CheckForReplacementStatusEffect(battleLogic, battleLogic.CurrentEnemy.Stats, true))
         {
+            StatusEffectAnimationState animState = (StatusEffectAnimationState)stateMachine.states[BattleStates.StatusEffectAnimations];
+            animState.stateToReturnToo = BattleStates.FightMenu;
+            stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
             return;
         }
         battleLogic.CheckForAttackablePlayers();
 
-        EntityAction attackToUse = battleLogic.CurrentEnemy.Attacks[Random.Range(0, battleLogic.CurrentEnemy.Attacks.Count)];
-        if (attackToUse.ActionType == EntityAction.ActionTypes.Support)
-        {
-            int enemyIndexToSupport = Random.Range(0, battleLogic.AttackablesDic[EntityType.Enemy].Count);
-            List<EntityActionInfo> actionInfos = attackToUse.DetermineAction(battleLogic.AttackablesDic[EntityType.Enemy], battleLogic.CurrentEnemy.Stats.DamageScale, enemyIndexToSupport, textBoxHandler);
-        }
-        else
-        {
-            int playerIndexToAttack = Random.Range(0, battleLogic.AttackablesDic[EntityType.Player].Count);
-            List<EntityActionInfo> actionInfos = attackToUse.DetermineAction(battleLogic.AttackablesDic[EntityType.Player], battleLogic.CurrentEnemy.Stats.DamageScale, playerIndexToAttack, textBoxHandler);
-        }
-        battleLogic.TextMods.PrintPlayerHealth();
-        battleLogic.TextMods.ChangePlayerTextColour();
-        Debug.Log("printing enemy attacks");
-
-        battleLogic.AnimationsHandler.RunAnim(battleLogic.CurrentEnemy.Animator, attackToUse.AnimToPlay, attackToUse.TriggerName);
+        ManageAttackToUse();
     }
 
     public override void InputUpdate()
     {
         base.InputUpdate();
 
-        if (battleLogic.AnimationsHandler.RanAnim)
+        battleLogic.AnimationsHandler.OnLateUpdate();
+    }
+
+    private void OnAnimationFinished()
+    {
+        if (CheckForStatusEffects(battleStatusManager, battleLogic, textBoxHandler, battleLogic.CurrentEnemy.Stats, null))
         {
-            if (!battleLogic.AnimationsHandler.IsRunningAnim())
-            {
-                battleLogic.AnimationsHandler.RanAnim = false;
-                Debug.Log("Falsify");
-                if (CheckForStatusEffects(battleStatusManager, battleLogic, textBoxHandler, battleLogic.CurrentEnemy.Stats, null))
-                {
-                    Debug.Log("printing status effects");
-                    stateMachine.ChangeState(BattleStates.BattleTextBox);
-                    return;
-                }
-                stateMachine.ChangeState(BattleStates.BattleTextBox);
-            }
+            stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
+            return;
         }
+        stateMachine.ChangeState(BattleStates.BattleTextBox);
+    }
+
+    private void ManageAttackToUse()
+    {
+        EntityAction attackToUse = battleLogic.CurrentEnemy.Attacks[Random.Range(0, battleLogic.CurrentEnemy.Attacks.Count)];
+        if (attackToUse.IsAOE)
+        {
+            AOEState aoeState = (AOEState)stateMachine.states[BattleStates.AOEState];
+            aoeState.ActionToUse = attackToUse;
+            aoeState.EntityUsing = EntityType.Enemy;
+            stateMachine.ChangeState(BattleStates.AOEState);
+            return;
+        }
+        if (attackToUse.ActionType == EntityAction.ActionTypes.Support)
+        {
+            int enemyIndexToSupport = Random.Range(0, battleLogic.AttackablesDic[EntityType.Enemy].Count);
+            List<EntityActionInfo> actionInfos = attackToUse.DetermineAction(battleLogic.AttackablesDic[EntityType.Enemy], battleLogic.CurrentEnemy.Stats.DamageScale, textBoxHandler, enemyIndexToSupport);
+        }
+        else
+        {
+            int playerIndexToAttack = Random.Range(0, battleLogic.AttackablesDic[EntityType.Player].Count);
+            List<EntityActionInfo> actionInfos = attackToUse.DetermineAction(battleLogic.AttackablesDic[EntityType.Player], battleLogic.CurrentEnemy.Stats.DamageScale, textBoxHandler, playerIndexToAttack);
+        }
+        battleLogic.TextMods.PrintPlayerHealth();
+        battleLogic.TextMods.ChangePlayerTextColour();
+        Debug.Log("printing enemy attacks");
+
+        battleLogic.AnimationsHandler.RunAnim(battleLogic.CurrentEnemy.Animator, attackToUse.AnimToPlay, attackToUse.TriggerName);
     }
 }

@@ -12,7 +12,7 @@ public class ReviveAction : EntityAction
         int regenAmount = MathExtension.RoundToNearestInteger(statsTooActOn.HealthManager.MaxAmount * percentHealthAfterRevive * critMultiplier);
         statsTooActOn.HealthManager.RegenAmount(regenAmount);
 
-        return new EntityActionInfo(statsTooActOn.user.Id, true, regenAmount, true);
+        return new EntityActionInfo(statsTooActOn.user.Id, regenAmount, true);
     }
 
     protected override EntityActionInfo OnNonCrit(StatsManager statsTooActOn, float scale)
@@ -22,6 +22,6 @@ public class ReviveAction : EntityAction
 
         statsTooActOn.HealthManager.RegenAmount(regenAmount);
 
-        return new EntityActionInfo(statsTooActOn.user.Id, true, regenAmount, true);
+        return new EntityActionInfo(statsTooActOn.user.Id, regenAmount, true);
     }
 }

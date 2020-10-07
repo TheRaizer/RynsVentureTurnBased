@@ -9,8 +9,6 @@ public class TextModifications
     private const float PERCENT_TILL_YELLOW = 0.5f;
     private const float PERCENT_TILL_RED = 0.25f;
 
-    
-
     private readonly BattleMenusHandler menusHandler;
     private readonly BattleLogic battleLogic;
 

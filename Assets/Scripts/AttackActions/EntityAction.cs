@@ -71,7 +71,7 @@ public abstract class EntityAction : MonoBehaviour
         }
     }
 
-    public List<EntityActionInfo> DetermineAction(List<StatsManager> statsTooPerformActionOn, float damageScale, int indexToActOn, BattleTextBoxHandler textBoxHandler)
+    public List<EntityActionInfo> DetermineAction(List<StatsManager> statsTooPerformActionOn, float damageScale, BattleTextBoxHandler textBoxHandler, int indexToActOn = 0)
     {
         List<EntityActionInfo> actionInfos = new List<EntityActionInfo>();
         if(!IsAOE)
@@ -128,7 +128,7 @@ public abstract class EntityAction : MonoBehaviour
         else
         {
             textBoxHandler.AddTextOnMiss(userStats.user.Id, statsTooActOn.user.Id);
-            EntityActionInfo actionInfo = new EntityActionInfo(statsTooActOn.user.Id, false, 0, false)
+            EntityActionInfo actionInfo = new EntityActionInfo(statsTooActOn.user.Id, 0, false, false)
             {
                 InflictedStatusEffect = false
             };

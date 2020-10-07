@@ -93,6 +93,7 @@
     <Compile Include="Assets\Scripts\WorldMenuOptions\MoveToInventoryOption.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\BattleState.cs" />
     <Compile Include="Assets\Scripts\BattlePressables\BattleCommands.cs" />
+    <Compile Include="Assets\Scripts\FadeTextUp.cs" />
     <Compile Include="Assets\Scripts\MenuTraversal\MatrixMenuTraversal.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\RoamState.cs" />
     <Compile Include="Assets\Scripts\Items\SmallAttackUp.cs" />
@@ -125,16 +126,17 @@
     <Compile Include="Assets\Scripts\PointerControl\Directions.cs" />
     <Compile Include="Assets\Scripts\Text\BattleTextBoxHandler.cs" />
     <Compile Include="Assets\Scripts\GeneralEntity\StatusEffectsManager.cs" />
+    <Compile Include="Assets\Scripts\ObjectPooler.cs" />
     <Compile Include="Assets\Scripts\States\StateLogic\BattleLogic.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\MultiTurnTriggeredEffects\Burn.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\MagicChoiceState.cs" />
+    <Compile Include="Assets\Scripts\SpawnActionPopup.cs" />
     <Compile Include="Assets\Scripts\GeneralEntity\HealthManager.cs" />
     <Compile Include="Assets\Scripts\WorldMenuOptions\InventoryTypeChoiceOption.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\FightMenuState.cs" />
-    <Compile Include="Assets\Scripts\FadeTextUp.cs" />
-    <Compile Include="Assets\Scripts\SpawnActionPopup.cs" />
-    <Compile Include="Assets\Scripts\ObjectPooler.cs" />
+    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\AOEState.cs" />
+    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\StatusEffectAnimationState.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

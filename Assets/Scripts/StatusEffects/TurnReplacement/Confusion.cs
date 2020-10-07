@@ -7,8 +7,10 @@ public class Confusion : StatusEffect
     public override void OnTurn(BattleLogic battleLogic, StatsManager currentUser, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
     {
         base.OnTurn(battleLogic, currentUser, battleStateMachine, textBoxHandler);
+
         Debug.Log("confusion");
         battleLogic.CheckForAttackablePlayers();
+        battleLogic.CheckForEnemiesRemaining();
         EntityType teamType = Random.Range(0, 2) == 0 ? EntityType.Player : EntityType.Enemy;
 
         if (currentUser.user.EntityType == EntityType.Player)
@@ -16,19 +18,20 @@ public class Confusion : StatusEffect
             int entityToHit = Random.Range(0, battleLogic.AttackablesDic[teamType].Count);
 
             StatsManager entityToAttack = battleLogic.AttackablesDic[teamType][entityToHit];
+            AnimToPlay = battleLogic.CurrentPlayerAttack.AnimToPlay;
+            TriggerName = battleLogic.CurrentPlayerAttack.TriggerName;
+
             EntityActionInfo attackInfo = battleLogic.CurrentPlayerAttack.UseAction(entityToAttack, battleLogic.CurrentPlayer.Stats.DamageScale, textBoxHandler);
         }
         else
         {
             int playerIndexToAttack = Random.Range(0, battleLogic.AttackablesDic[teamType].Count);
             EntityAction attackToUse = battleLogic.CurrentEnemy.Attacks[Random.Range(0, battleLogic.CurrentEnemy.Attacks.Count)];
+            AnimToPlay = attackToUse.AnimToPlay;
+            TriggerName = attackToUse.TriggerName;
 
-            List<EntityActionInfo> attackInfos = attackToUse.DetermineAction(battleLogic.AttackablesDic[teamType], battleLogic.CurrentEnemy.Stats.DamageScale, playerIndexToAttack, textBoxHandler);
+            List<EntityActionInfo> attackInfos = attackToUse.DetermineAction(battleLogic.AttackablesDic[teamType], battleLogic.CurrentEnemy.Stats.DamageScale, textBoxHandler, playerIndexToAttack);
         }
-        battleLogic.CheckForAttackablePlayers();
-        battleLogic.CheckForEnemiesRemaining();
-
-        battleStateMachine.ChangeState(BattleStates.BattleTextBox);
     }
 
     public override StatusEffect ShallowCopy()

@@ -10,7 +10,6 @@ public class MagicChoiceState : State
     private readonly BattleTextBoxHandler textBoxHandler;
 
     private readonly EntityAction[,] magicAttacks = new EntityAction[3, 4];
-    private int playerMagicIndex = 0;
 
     public MagicChoiceState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleMenusHandler _menusHandler, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
@@ -36,30 +35,12 @@ public class MagicChoiceState : State
     public override void OnFullRotationEnter()
     {
         base.OnFullRotationEnter();
-        for(int i = 0; i < menusHandler.MagicText.Length; i++)
+        for (int i = 0; i < menusHandler.MagicText.Length; i++)
         {
             menusHandler.MagicText[i].text = "";
         }
 
-        for(int y = 0; y < ConstantNumbers.MAX_MAGIC_Y_LENGTH; y++)
-        {
-            for(int x = 0; x < ConstantNumbers.MAX_MAGIC_X_LENGTH; x++)
-            {
-                if (playerMagicIndex < battleLogic.CurrentPlayer.Magic.Count)
-                {
-                    EntityAction magicAction = battleLogic.CurrentPlayer.Magic[playerMagicIndex];
-
-                    magicAttacks[x, y] = magicAction;
-                    menusHandler.MagicText[playerMagicIndex].text = magicAction.Id;
-                    playerMagicIndex++;
-                }
-                else
-                {
-                    magicAttacks[x, y] = null;
-                }
-            }
-        }
-        playerMagicIndex = 0;
+        GenerateMagicText();
     }
 
     public override void InputUpdate()
@@ -68,34 +49,22 @@ public class MagicChoiceState : State
 
         matrixMenuTraversal.TraverseWithNulls(magicAttacks);
 
-        if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
-        {
-            battleLogic.CurrentPlayerAttack = magicAttacks[matrixMenuTraversal.currentXIndex, matrixMenuTraversal.currentYIndex];
-
-            if (!battleLogic.CurrentPlayer.Stats.ManaManager.CanUse(battleLogic.CurrentPlayerAttack.ManaReduction))
-            {
-                textBoxHandler.AddTextAsNotEnoughMana(battleLogic.CurrentPlayer.Id);
-                textBoxHandler.PreviousState = BattleStates.MagicChoice;
-                stateMachine.ChangeState(BattleStates.BattleTextBox);
-                return;
-            }
-
-            if (!battleLogic.CurrentPlayerAttack.IsAOE)
-            {
-                if(battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Attack)
-                {
-                    stateMachine.ChangeState(BattleStates.EnemyChoice);
-                }
-                else if(battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Support || battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Revive)
-                {
-                    stateMachine.ChangeState(BattleStates.SupportPlayerChoice);
-                }
-            }
-            Debug.Log(battleLogic.CurrentPlayerAttack.Id);
-        }
-        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
+        OnSelection();
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
         {
             stateMachine.ReturnBackToState(BattleStates.FightMenu);
+        }
+    }
+
+    private void SingleEntityAttack()
+    {
+        if (battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Attack)
+        {
+            stateMachine.ChangeState(BattleStates.EnemyChoice);
+        }
+        else if (battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Support || battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Revive)
+        {
+            stateMachine.ChangeState(BattleStates.SupportPlayerChoice);
         }
     }
 
@@ -111,4 +80,56 @@ public class MagicChoiceState : State
 
         menusHandler.MagicPanel.SetActive(false);
     }
+
+    private void GenerateMagicText()
+    {
+        int playerMagicIndex = 0;
+        for (int y = 0; y < ConstantNumbers.MAX_MAGIC_Y_LENGTH; y++)
+        {
+            for (int x = 0; x < ConstantNumbers.MAX_MAGIC_X_LENGTH; x++)
+            {
+                if (playerMagicIndex < battleLogic.CurrentPlayer.Magic.Count)
+                {
+                    EntityAction magicAction = battleLogic.CurrentPlayer.Magic[playerMagicIndex];
+
+                    magicAttacks[x, y] = magicAction;
+                    menusHandler.MagicText[playerMagicIndex].text = magicAction.Id;
+                    playerMagicIndex++;
+                }
+                else
+                {
+                    magicAttacks[x, y] = null;
+                }
+            }
+        }
+    }
+
+    private void OnSelection()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
+        {
+            battleLogic.CurrentPlayerAttack = magicAttacks[matrixMenuTraversal.currentXIndex, matrixMenuTraversal.currentYIndex];
+
+            if (!battleLogic.CurrentPlayer.Stats.ManaManager.CanUse(battleLogic.CurrentPlayerAttack.ManaReduction))
+            {
+                textBoxHandler.AddTextAsNotEnoughMana(battleLogic.CurrentPlayer.Id);
+                textBoxHandler.PreviousState = BattleStates.MagicChoice;
+                stateMachine.ChangeState(BattleStates.BattleTextBox);
+                return;
+            }
+
+            if (!battleLogic.CurrentPlayerAttack.IsAOE)
+            {
+                SingleEntityAttack();
+            }
+            else
+            {
+                AOEState aoeState = (AOEState)stateMachine.states[BattleStates.AOEState];
+                aoeState.ActionToUse = battleLogic.CurrentPlayerAttack;
+                aoeState.EntityUsing = EntityType.Player;
+                stateMachine.ChangeState(BattleStates.AOEState);
+            }
+        }
+    }
+
 }

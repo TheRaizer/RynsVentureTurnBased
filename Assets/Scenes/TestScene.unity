@@ -2893,7 +2893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Litel
-  <IsAOE>k__BackingField: 0
+  <IsAOE>k__BackingField: 1
   <ManaReduction>k__BackingField: 18
   <TriggerName>k__BackingField: 
   <AnimToPlay>k__BackingField: {fileID: 0}
@@ -5012,7 +5012,7 @@ GameObject:
   - component: {fileID: 1248022659}
   m_Layer: 5
   m_Name: Entities
-  m_TagString: Untagged
+  m_TagString: BattleEntities
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7467,7 +7467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Id>k__BackingField: Flame Sword
-  <IsAOE>k__BackingField: 0
+  <IsAOE>k__BackingField: 1
   <ManaReduction>k__BackingField: 7
   <TriggerName>k__BackingField: Fight
   <AnimToPlay>k__BackingField: {fileID: 7400000, guid: 17179de5ccf4cd641ab3746197b84f9d,

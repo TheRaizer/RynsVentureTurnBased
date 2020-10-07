@@ -6,10 +6,10 @@ using UnityEngine;
 public class SpawnActionPopup : MonoBehaviour
 {
     public List<Vector2> LocationsToSpawn { private get; set; }
-    public int Amount  { private get; set; }
-    public bool Critical { private get; set; }
+    public List<int> Amount  { private get; set; }
+    public List<bool> Critical { private get; set; }
     public bool Support { private get; set; }
-    public bool HitTarget { private get; set; }
+    public List<bool> TargetHits { private get; set; }
 
     private ObjectPooler objectPooler;
 
@@ -26,12 +26,12 @@ public class SpawnActionPopup : MonoBehaviour
 
             RectTransform r = g.GetComponent<RectTransform>();
 
-            if (!HitTarget)
+            if (!TargetHits[i])
             {
                 g.GetComponent<TextMeshProUGUI>().text = "Miss";
             }
             else
-                g.GetComponent<TextMeshProUGUI>().text = Amount.ToString();
+                g.GetComponent<TextMeshProUGUI>().text = Amount[i].ToString();
 
             r.anchoredPosition = LocationsToSpawn[i];
         }

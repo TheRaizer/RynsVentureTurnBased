@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <DamageScale>k__BackingField: 1
-  <Speed>k__BackingField: 3
+  <Speed>k__BackingField: 5
   <ClockTick>k__BackingField: 3
   baseMaxHp: 15
   baseMaxMp: 0
@@ -157,7 +157,6 @@ MonoBehaviour:
   accuracy: 95
   critChance: 10
   critMultiplier: 1.5
-  statusEffectPrefab: {fileID: 999671665069997296, guid: 10249f38991cd1a418c69e19ef9d40a7,
-    type: 3}
-  statusEffectChance: 65
+  statusEffectPrefab: {fileID: 0}
+  statusEffectChance: 0
   userStats: {fileID: 0}

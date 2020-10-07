@@ -36,15 +36,14 @@ public class FightMenuState : StatusEffectCheckState
         Debug.Log(battleLogic.CurrentPlayer.Id + " Turn");
         textBoxHandler.AddTextAsTurn(battleLogic.CurrentPlayer.Id);
         textBoxHandler.PreviousState = BattleStates.FightMenu;
-        stateMachine.ChangeState(BattleStates.BattleTextBox);
 
-        if (CheckForStatusEffects(statusManager, battleLogic, textBoxHandler, battleLogic.CurrentPlayer.Stats, BattleStates.FightMenu))
+        if(CheckForStatusEffects(statusManager, battleLogic, textBoxHandler, battleLogic.CurrentPlayer.Stats, BattleStates.FightMenu))
+        {
+            stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
+        }
+        else
         {
             stateMachine.ChangeState(BattleStates.BattleTextBox);
-        }
-        if(statusManager.CheckForReplacementStatusEffect(battleLogic, battleLogic.CurrentPlayer.Stats, false))
-        {
-            return;
         }
 
         battleLogic.CheckForEnemiesRemaining();
@@ -53,7 +52,15 @@ public class FightMenuState : StatusEffectCheckState
             stateMachine.ChangeState(BattleStates.Victory);
         }
         battleLogic.TextMods.PrintPlayerHealth();
+        battleLogic.TextMods.ChangePlayerTextColour();
         battleLogic.TextMods.PrintPlayerMana();
+
+        if(statusManager.CheckForReplacementStatusEffect(battleLogic, battleLogic.CurrentPlayer.Stats, false))
+        {
+            StatusEffectAnimationState animState = (StatusEffectAnimationState)stateMachine.states[BattleStates.StatusEffectAnimations];
+            animState.stateToReturnToo = BattleStates.FightMenu;
+            stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
+        }
     }
 
     public override void InputUpdate()

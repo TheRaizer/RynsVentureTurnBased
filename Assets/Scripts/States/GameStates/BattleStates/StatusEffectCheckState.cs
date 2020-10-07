@@ -15,7 +15,8 @@ public abstract class StatusEffectCheckState : State
         {
             if (!inhibitor.HealthManager.Dead)
             {
-                textBoxHandler.PreviousState = currentState;
+                StatusEffectAnimationState animState = (StatusEffectAnimationState)stateMachine.states[BattleStates.StatusEffectAnimations];
+                animState.stateToReturnToo = currentState;
             }
             return true;
         }

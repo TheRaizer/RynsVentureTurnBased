@@ -14,6 +14,8 @@ public enum BattleStates
     ItemChoice,
     ItemPlayerChoice,
     SupportPlayerChoice,
+    AOEState,
+    StatusEffectAnimations,
 }
 
 public class BattleState : State
@@ -26,7 +28,6 @@ public class BattleState : State
 
     private readonly BattleStatusEffectsManager statusEffectsManager;
     private readonly BattleTextBoxHandler textBoxHandler;
-    private readonly EnemyChoiceState enemyChoice;
 
     public BattleState(StateMachine _stateMachine, BattleMenusHandler _menusHandler, Inventory inventory) : base(_stateMachine)
     {
@@ -46,12 +47,13 @@ public class BattleState : State
             { BattleStates.MagicChoice, new MagicChoiceState(BattleStateMachine, BattleLogic, menusHandler, textBoxHandler) },
             { BattleStates.ItemChoice, new ItemChoiceState(BattleStateMachine, menusHandler, inventory, BattleLogic, textBoxHandler) },
             { BattleStates.ItemPlayerChoice, new ItemPlayerChoiceState(BattleStateMachine, BattleLogic, menusHandler, inventory, textBoxHandler) },
-            { BattleStates.SupportPlayerChoice, new SupportPlayerChoiceState(BattleStateMachine, menusHandler, BattleLogic, textBoxHandler) }
+            { BattleStates.SupportPlayerChoice, new SupportPlayerChoiceState(BattleStateMachine, menusHandler, BattleLogic, textBoxHandler) },
+            { BattleStates.EnemyChoice, new EnemyChoiceState(BattleStateMachine, BattleLogic, menusHandler, textBoxHandler, statusEffectsManager) },
+            { BattleStates.AOEState, new AOEState(BattleStateMachine, BattleLogic, textBoxHandler) },
+            { BattleStates.StatusEffectAnimations, new StatusEffectAnimationState(BattleStateMachine, BattleLogic, textBoxHandler) }
         };
-        enemyChoice = new EnemyChoiceState(BattleStateMachine, BattleLogic, menusHandler, textBoxHandler, statusEffectsManager);
-        battleStates.Add(BattleStates.EnemyChoice, enemyChoice);
-
         BattleStateMachine.Initialize(battleStates, BattleStates.FightMenu);
+        statusEffectsManager.EffectAnimations = (StatusEffectAnimationState)BattleStateMachine.states[BattleStates.StatusEffectAnimations];
     }
 
     public override void OnEnterOrReturn()
@@ -102,7 +104,8 @@ public class BattleState : State
     {
         base.OnExit();
 
-        enemyChoice.menuTraversal.ResetCurrentIndex();
+        EnemyChoiceState enemyChoiceState = (EnemyChoiceState)BattleStateMachine.states[BattleStates.EnemyChoice];
+        enemyChoiceState.menuTraversal.ResetCurrentIndex();
         menusHandler.BattleMenus.SetActive(false);
     }
 

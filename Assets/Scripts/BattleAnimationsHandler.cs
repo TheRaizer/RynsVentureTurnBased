@@ -1,13 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleAnimationsHandler
 {
     private readonly BattleMenusHandler menusHandler;
-    public bool RanAnim { get; set; }
-    public AnimationClip CurrentAnimClip { get; set; }
-    public Animator CurrentAnimator { get; set; }
+    public bool RanAnim { get; private set; }
+    private AnimationClip currentAnimClip;
+    private Animator currentAnimator;
+    public Action OnAnimationFinished { get; set; }
 
     public BattleAnimationsHandler(BattleMenusHandler _menusHandler)
     {
@@ -18,14 +20,26 @@ public class BattleAnimationsHandler
     {
         menusHandler.ClosePanels();
         animator.SetTrigger(triggerName);
-        CurrentAnimator = animator;
-        CurrentAnimClip = animation;
+        currentAnimator = animator;
+        currentAnimClip = animation;
         RanAnim = true;
     }
 
-    public bool IsRunningAnim()
+    public void OnLateUpdate()
     {
-        if (!CurrentAnimator.GetCurrentAnimatorStateInfo(0).IsName(CurrentAnimClip.name))
+        if (RanAnim)
+        {
+            if (!IsRunningAnim())
+            {
+                RanAnim = false;
+                OnAnimationFinished?.Invoke();
+            }
+        }
+    }
+
+    private bool IsRunningAnim()
+    {
+        if (!currentAnimator.GetCurrentAnimatorStateInfo(0).IsName(currentAnimClip.name))
         {
             return false;
         }
