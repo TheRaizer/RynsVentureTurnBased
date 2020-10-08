@@ -7,6 +7,7 @@ public class EnemyTurnState : StatusEffectCheckState
     private readonly BattleLogic battleLogic;
     private readonly BattleStatusEffectsManager battleStatusManager;
     private readonly BattleTextBoxHandler textBoxHandler;
+    private bool checkedForStatusEffects = false;
 
     public EnemyTurnState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleStatusEffectsManager _battleStatusManager, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
@@ -15,18 +16,31 @@ public class EnemyTurnState : StatusEffectCheckState
         textBoxHandler = _textBoxHandler;
     }
 
-    public override void OnFullRotationEnter()
+    public override void OnEnterOrReturn()
     {
-        base.OnFullRotationEnter();
+        base.OnEnterOrReturn();
 
         battleLogic.AnimationsHandler.OnAnimationFinished = OnAnimationFinished;
         Debug.Log(battleLogic.CurrentEnemy.Id + " Turn");
+        StatusEffectAnimationState animState = (StatusEffectAnimationState)stateMachine.states[BattleStates.StatusEffectAnimations];
+        if (!checkedForStatusEffects)
+        {
+            if (CheckForStatusEffects(battleStatusManager, battleLogic, battleLogic.CurrentEnemy.Stats, null))
+            {
+                checkedForStatusEffects = true;
+                animState.StateToReturnToo = BattleStates.EnemyTurn;
+                stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
+                return;
+            }
+        }
+        else
+        {
+            checkedForStatusEffects = false;
+        }
 
         if (battleStatusManager.CheckForReplacementStatusEffect(battleLogic, battleLogic.CurrentEnemy.Stats, true))
         {
-            StatusEffectAnimationState animState = (StatusEffectAnimationState)stateMachine.states[BattleStates.StatusEffectAnimations];
-            animState.stateToReturnToo = BattleStates.FightMenu;
-            stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
+            animState.RunReplacementAnimation();
             return;
         }
         battleLogic.CheckForAttackablePlayers();
@@ -43,11 +57,6 @@ public class EnemyTurnState : StatusEffectCheckState
 
     private void OnAnimationFinished()
     {
-        if (CheckForStatusEffects(battleStatusManager, battleLogic, textBoxHandler, battleLogic.CurrentEnemy.Stats, null))
-        {
-            stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
-            return;
-        }
         stateMachine.ChangeState(BattleStates.BattleTextBox);
     }
 

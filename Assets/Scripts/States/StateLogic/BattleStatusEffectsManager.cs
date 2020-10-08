@@ -42,11 +42,12 @@ public class BattleStatusEffectsManager
             }
             else
             {
-                if (statusEffect.runAfterAttackChoice != isAfterAttackChoice) return false;
+                if (statusEffect.runAfterAttackChoice != isAfterAttackChoice) return false;//return false if it is supposed to run after attack chosen but attack has not been chosen
 
                 EffectAnimations.ReplacementEffect = statusEffect;
                 textBoxHandler.PreviousState = null;
                 textBoxHandler.AddTextAsStatusEffect(currentInfectee.user.Id, statusEffect.Name);
+                EffectAnimations.ReplacementEffect = statusEffect;
                 if (currentInfectee.user.EntityType == EntityType.Enemy)
                 {
                     statusEffect.OnTurn(battleLogic, currentInfectee, battleStatemachine, textBoxHandler);

@@ -8,16 +8,11 @@ public abstract class StatusEffectCheckState : State
 
     }
 
-    protected bool CheckForStatusEffects(BattleStatusEffectsManager statusManager, BattleLogic battleLogic, BattleTextBoxHandler textBoxHandler, StatsManager inhibitor, Enum currentState)
+    protected bool CheckForStatusEffects(BattleStatusEffectsManager statusManager, BattleLogic battleLogic, StatsManager inhibitor, Enum currentState)
     {
         Debug.Log("StatusCheck");
         if (statusManager.CheckForStatusEffect(battleLogic, inhibitor))
         {
-            if (!inhibitor.HealthManager.Dead)
-            {
-                StatusEffectAnimationState animState = (StatusEffectAnimationState)stateMachine.states[BattleStates.StatusEffectAnimations];
-                animState.stateToReturnToo = currentState;
-            }
             return true;
         }
         else

@@ -7558,8 +7558,9 @@ MonoBehaviour:
   accuracy: 95
   critChance: 10
   critMultiplier: 1.5
-  statusEffectPrefab: {fileID: 0}
-  statusEffectChance: 0
+  statusEffectPrefab: {fileID: 999671665069997296, guid: dc1c2de5101271f4bb518ba70c469b2b,
+    type: 3}
+  statusEffectChance: 100
   userStats: {fileID: 0}
 --- !u!1 &1854956311
 GameObject:

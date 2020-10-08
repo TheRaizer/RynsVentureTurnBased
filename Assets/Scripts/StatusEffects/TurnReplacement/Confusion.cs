@@ -13,6 +13,8 @@ public class Confusion : StatusEffect
         battleLogic.CheckForEnemiesRemaining();
         EntityType teamType = Random.Range(0, 2) == 0 ? EntityType.Player : EntityType.Enemy;
 
+        AnimatedVer = currentUser.user.Animator.gameObject;//the object we will be animating is the current user whose turn will be replaced
+
         if (currentUser.user.EntityType == EntityType.Player)
         {
             int entityToHit = Random.Range(0, battleLogic.AttackablesDic[teamType].Count);

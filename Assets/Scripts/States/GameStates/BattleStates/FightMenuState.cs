@@ -37,7 +37,7 @@ public class FightMenuState : StatusEffectCheckState
         textBoxHandler.AddTextAsTurn(battleLogic.CurrentPlayer.Id);
         textBoxHandler.PreviousState = BattleStates.FightMenu;
 
-        if(CheckForStatusEffects(statusManager, battleLogic, textBoxHandler, battleLogic.CurrentPlayer.Stats, BattleStates.FightMenu))
+        if(CheckForStatusEffects(statusManager, battleLogic, battleLogic.CurrentPlayer.Stats, BattleStates.FightMenu))
         {
             stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
         }
@@ -57,8 +57,6 @@ public class FightMenuState : StatusEffectCheckState
 
         if(statusManager.CheckForReplacementStatusEffect(battleLogic, battleLogic.CurrentPlayer.Stats, false))
         {
-            StatusEffectAnimationState animState = (StatusEffectAnimationState)stateMachine.states[BattleStates.StatusEffectAnimations];
-            animState.stateToReturnToo = BattleStates.FightMenu;
             stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
         }
     }

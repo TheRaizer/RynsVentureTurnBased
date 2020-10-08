@@ -42,8 +42,6 @@ public class EnemyChoiceState : State
 
         if (battleStatusManager.CheckForReplacementStatusEffect(battleLogic, battleLogic.CurrentPlayer.Stats, true))
         {
-            StatusEffectAnimationState animState = (StatusEffectAnimationState)stateMachine.states[BattleStates.StatusEffectAnimations];
-            animState.stateToReturnToo = BattleStates.FightMenu;
             stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
         }
     }
