@@ -6,9 +6,9 @@ public class FightCommand : BattleCommands
         actionOnPress = Fight;
     }
 
-    private void Fight(BattleLogic battleLogic)
+    private void Fight(BattleHandler battleHandler)
     {
-        battleLogic.CurrentPlayerAttack = battleLogic.CurrentPlayer.FightAttack;
-        battleLogic.BattleStateMachine.ChangeState(BattleStates.EnemyChoice);
+        battleHandler.CurrentPlayerAttack = battleHandler.CurrentPlayer.FightAttack;
+        battleHandler.BattleStateMachine.ChangeState(BattleStates.EnemyChoice);
     }
 }

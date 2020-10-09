@@ -5,6 +5,16 @@ using UnityEngine;
 
 public abstract class EntityAction : MonoBehaviour
 {
+    /*
+     * This is a abstract class that handles all types of entity actions
+     * listed in the ActionTypes Enum below.
+     * 
+     * There are classes that extend this one which will be placed on the Unity
+     * GameObject whose StatsManager corrospond to the entity that has these attacks.
+     * 
+     * The serialized properties and fields below will be filled inside Unity.
+     */
+
     public enum ActionTypes
     {
         Support,
@@ -26,15 +36,24 @@ public abstract class EntityAction : MonoBehaviour
     [SerializeField] protected GameObject statusEffectPrefab = null;
     [SerializeField] private float statusEffectChance = 0;
 
-    [SerializeField] protected StatsManager userStats;
+    protected StatsManager userStats;
 
     public virtual void Awake()
     {
         userStats = GetComponent<StatsManager>();
     }
 
-    protected bool ApplyStatusEffect(StatsManager statsToApplyToo, bool instantApply, BattleTextBoxHandler textBoxHandler)
+    protected bool RollForStatusEffect(StatsManager statsToApplyToo, bool instantApply, BattleTextBoxHandler textBoxHandler)
     {
+        /*
+         * statsToApplyToo = StatsManager to add the status effect too.
+         * instantApply = Whether this should apply instantly without rolling for a chance.
+         * textBoxHandler = class that controls the text that will be placed into the textBox.
+         * 
+         * This methods job is to roll a chance, and if it is less than or equal too this actions statusEffectChance
+         * or instantApply is true than it will run StatusEffectApplication() method and return true. Else return false.
+         */
+
         if (!instantApply)
         {
             float chance = UnityEngine.Random.Range(0, 100);
@@ -57,6 +76,15 @@ public abstract class EntityAction : MonoBehaviour
 
     protected void StatusEffectApplication(StatsManager statsToApplyToo, BattleTextBoxHandler textBoxHandler)
     {
+        /*
+         * statsTooApplyToo = StatsManager to add the effect too.
+         * textBoxHandler = class that controls the text that will be placed into the textBox.
+         * 
+         * This methods job is to add text as infliction to the textBoxHandler as well as adding 
+         * this actions status effect to the statsToApplyToo's StatusEffectManager's 
+         * StatusEffectsDic. It will do this according to the type of status effect being applied.
+         */
+
         StatusEffect s = statusEffectPrefab.GetComponent<StatusEffect>();
         textBoxHandler.AddTextAsStatusInfliction(userStats.user.Id, statsToApplyToo.user.Id, s.Name);
         Debug.Log("Apply " + s.Name + " too " + statsToApplyToo.user.Id);
@@ -71,19 +99,12 @@ public abstract class EntityAction : MonoBehaviour
         }
     }
 
-    public List<EntityActionInfo> DetermineAction(List<StatsManager> statsTooPerformActionOn, float damageScale, BattleTextBoxHandler textBoxHandler, int indexToActOn = 0)
+    public List<EntityActionInfo> UseAOEAction(List<StatsManager> statsToPerformActionOn, float damageScale, BattleTextBoxHandler textBoxHandler)
     {
         List<EntityActionInfo> actionInfos = new List<EntityActionInfo>();
-        if(!IsAOE)
+        for (int i = 0; i < statsToPerformActionOn.Count; i++)
         {
-            actionInfos.Add(UseAction(statsTooPerformActionOn[indexToActOn], damageScale, textBoxHandler));
-        }
-        else
-        {
-            for(int i = 0; i < statsTooPerformActionOn.Count; i++)
-            {
-                actionInfos.Add(UseAction(statsTooPerformActionOn[i], damageScale, textBoxHandler));
-            }
+            actionInfos.Add(UseAction(statsToPerformActionOn[i], damageScale, textBoxHandler));
         }
 
         return actionInfos;
@@ -107,7 +128,7 @@ public abstract class EntityAction : MonoBehaviour
                 textBoxHandler.AddTextAsCriticalHit();
                 if (statusEffectPrefab != null)
                 {
-                    hasInflicted = ApplyStatusEffect(statsTooActOn, true, textBoxHandler);
+                    hasInflicted = RollForStatusEffect(statsTooActOn, true, textBoxHandler);
                 }
                 Debug.Log("Critical hit");
                 actionInfo.CriticalHit = true;
@@ -119,7 +140,7 @@ public abstract class EntityAction : MonoBehaviour
                 EntityActionInfo actionInfo = OnNonCrit(statsTooActOn, scale);
                 if (statusEffectPrefab != null)
                 {
-                    hasInflicted = ApplyStatusEffect(statsTooActOn, false, textBoxHandler);
+                    hasInflicted = RollForStatusEffect(statsTooActOn, false, textBoxHandler);
                 }
                 actionInfo.InflictedStatusEffect = hasInflicted;
                 return actionInfo;

@@ -29,14 +29,14 @@ public class GameStateManager : MonoBehaviour
         WorldMenus = GetComponent<WorldMenusHandler>();
         stateMachine = new StateMachine();
         battleState = new BattleState(stateMachine, BattleMenus, inventory);
-        enemyGenerator = new EnemyGenerator(FindObjectOfType<EnemyStorageForArea>(), battleState.BattleLogic);
+        enemyGenerator = new EnemyGenerator(FindObjectOfType<EnemyStorageForArea>(), battleState.BattleHandler);
         battleState.EnemyGenerator = enemyGenerator;
 
         //FOR LOOP IS A TEST WAY TO ADD PLAYERS TO ACTIVE ROSTER
         for (int i = 0; i < CharacterObjectRoster.Count; i++)
         {
-            battleState.BattleLogic.ActivePlayableCharacters[i] = CharacterObjectRoster[i].GetComponent<PlayableCharacter>();
-            battleState.BattleLogic.PlayableCharacterRoster.Add(CharacterObjectRoster[i].GetComponent<PlayableCharacter>());
+            battleState.BattleHandler.ActivePlayableCharacters[i] = CharacterObjectRoster[i].GetComponent<PlayableCharacter>();
+            battleState.BattleHandler.PlayableCharacterRoster.Add(CharacterObjectRoster[i].GetComponent<PlayableCharacter>());
         }
 
         Dictionary<Enum, State> states = new Dictionary<Enum, State>()
@@ -67,6 +67,6 @@ public class GameStateManager : MonoBehaviour
     public void ChangePlayerObjects(GameObject playerObject)
     {
         CharacterObjectRoster.Add(playerObject);
-        battleState.BattleLogic.PlayableCharacterRoster.Add(playerObject.GetComponent<PlayableCharacter>());
+        battleState.BattleHandler.PlayableCharacterRoster.Add(playerObject.GetComponent<PlayableCharacter>());
     }
 }

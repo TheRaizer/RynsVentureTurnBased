@@ -23,22 +23,36 @@ public class RoamMenuChoiceState : WorldMenuState
         worldMenusHandler.SetMenuTraversalMaxIndex(worldMenusHandler.StartingMenuOptions.Count - 1);
         worldMenusHandler.SetMenuTraversalCurrentIndex(indexLeftOffAt);
         worldMenusHandler.PositionPointer();
-    
-        for(int i = 0; i < worldMenusHandler.StartingMenuOptions.Count; i++)
-        {
-            worldMenusHandler.TextBoxes[i].GetComponent<TextMeshProUGUI>().text = worldMenusHandler.StartingMenuOptions[i].OptionName;
-        }
+        InitStartingMenuOptionsText();
     }
 
     public override void InputUpdate()
     {
         base.InputUpdate();
 
+        CheckIfEnterSelected();
+        CheckIfExitSelected();
+    }
+
+    private void InitStartingMenuOptionsText()
+    {
+        for (int i = 0; i < worldMenusHandler.StartingMenuOptions.Count; i++)
+        {
+            worldMenusHandler.TextBoxes[i].GetComponent<TextMeshProUGUI>().text = worldMenusHandler.StartingMenuOptions[i].OptionName;
+        }
+    }
+
+    private void CheckIfEnterSelected()
+    {
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
             indexLeftOffAt = worldMenusHandler.MenuTraversalCurrentIndex;
             worldMenusHandler.StartingMenuOptions[worldMenusHandler.MenuTraversalCurrentIndex].OnSelection(stateMachine);
         }
+    }
+
+    private void CheckIfExitSelected()
+    {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
         {
             indexLeftOffAt = 0;

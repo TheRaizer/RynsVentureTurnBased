@@ -6,15 +6,15 @@ public class ItemChoiceState : State
 {
     private readonly BattleMenusHandler battleMenuHandler;
     private readonly Inventory inventory;
-    private readonly BattleLogic battleLogic;
+    private readonly BattleHandler battleHandler;
     private readonly VectorMenuTraversal itemTraversal;
     private readonly BattleTextBoxHandler textBoxHandler;
 
-    public ItemChoiceState(StateMachine _stateMachine, BattleMenusHandler _battleMenuHandler, Inventory _inventory, BattleLogic _battleLogic, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
+    public ItemChoiceState(StateMachine _stateMachine, BattleMenusHandler _battleMenuHandler, Inventory _inventory, BattleHandler _battleHandler, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
         battleMenuHandler = _battleMenuHandler;
         inventory = _inventory;
-        battleLogic = _battleLogic;
+        battleHandler = _battleHandler;
         textBoxHandler = _textBoxHandler;
         itemTraversal = new VectorMenuTraversal(PositionPointerForItemUse);
     }
@@ -43,30 +43,39 @@ public class ItemChoiceState : State
 
         itemTraversal.Traverse();
 
+        CheckIfEnterSelected();
+        CheckIfExitSelected();
+    }
+
+    private void CheckIfExitSelected()
+    {
+        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Escape))
+        {
+            stateMachine.ReturnBackToState(BattleStates.FightMenu);
+        }
+    }
+
+    private void CheckIfEnterSelected()
+    {
         if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return))
         {
-            battleLogic.ItemIndex = itemTraversal.currentIndex;
-            Useable useable = (Useable)inventory.InventoryDic[inventory.CurrentInventoryOpen][battleLogic.ItemIndex];
-            battleLogic.ItemToUse = useable;
+            battleHandler.ItemIndex = itemTraversal.currentIndex;
+            Useable useable = (Useable)inventory.InventoryDic[inventory.CurrentInventoryOpen][battleHandler.ItemIndex];
+            battleHandler.ItemToUse = useable;
 
             if (useable.UseOnAll())
             {
                 List<StatsManager> friendlyStats = new List<StatsManager>();
-                foreach(PlayableCharacter p in battleLogic.ActivePlayableCharacters)
+                foreach (PlayableCharacter p in battleHandler.ActivePlayableCharacters)
                 {
                     friendlyStats.Add(p.Stats);
                 }
-                useable.OnUseInBattle(battleLogic.CurrentPlayer.Stats, friendlyStats, stateMachine, textBoxHandler);
+                useable.OnUseInBattle(battleHandler.CurrentPlayer.Stats, friendlyStats, stateMachine, textBoxHandler);
             }
             else if (!useable.UseOnAll())
             {
                 stateMachine.ChangeState(BattleStates.ItemPlayerChoice);
             }
-        }
-
-        if(Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Escape))
-        {
-            stateMachine.ReturnBackToState(BattleStates.FightMenu);
         }
     }
 

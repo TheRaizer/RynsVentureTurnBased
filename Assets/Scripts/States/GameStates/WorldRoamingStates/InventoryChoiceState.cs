@@ -19,26 +19,40 @@ public class InventoryChoiceState : WorldMenuState
         worldMenusHandler.SetMenuTraversalMaxIndex(inventory.InventoryDic.Count - 1);
         worldMenusHandler.SetMenuTraversalCurrentIndex(indexLeftOffAt);
         worldMenusHandler.PositionPointer();
-
-        for (int i = 0; i < worldMenusHandler.InventoryChoiceOptions.Count; i++)
-        {
-            worldMenusHandler.TextBoxes[i].GetComponent<TextMeshProUGUI>().text = worldMenusHandler.InventoryChoiceOptions[i].OptionName;
-        }
+        InitInventoryChoicesText();
     }
 
     public override void InputUpdate()
     {
         base.InputUpdate();
 
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
+        CheckIfEnterSelected();
+        CheckIfExitSelected();
+    }
+
+    private void InitInventoryChoicesText()
+    {
+        for (int i = 0; i < worldMenusHandler.InventoryChoiceOptions.Count; i++)
         {
-            indexLeftOffAt = worldMenusHandler.MenuTraversalCurrentIndex;
-            worldMenusHandler.InventoryChoiceOptions[worldMenusHandler.MenuTraversalCurrentIndex].OnSelection(stateMachine, inventory);
+            worldMenusHandler.TextBoxes[i].GetComponent<TextMeshProUGUI>().text = worldMenusHandler.InventoryChoiceOptions[i].OptionName;
         }
+    }
+
+    private void CheckIfExitSelected()
+    {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
         {
             indexLeftOffAt = 0;
             stateMachine.ReturnBackToState(WorldRoamingStates.MenuChoiceState);
+        }
+    }
+
+    private void CheckIfEnterSelected()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
+        {
+            indexLeftOffAt = worldMenusHandler.MenuTraversalCurrentIndex;
+            worldMenusHandler.InventoryChoiceOptions[worldMenusHandler.MenuTraversalCurrentIndex].OnSelection(stateMachine, inventory);
         }
     }
 }

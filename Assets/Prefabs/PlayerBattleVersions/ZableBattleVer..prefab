@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2660015376144706077}
   - component: {fileID: 2660015376144706078}
   - component: {fileID: -6904430407976950731}
+  - component: {fileID: -4701875184788483492}
   m_Layer: 5
   m_Name: ZableBattleVer.
   m_TagString: Untagged
@@ -108,3 +109,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6101d46f8267bcf4da0b2f822ea038dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-4701875184788483492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2660015376144706072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d6e1009812b79f46859fb908ca7ff75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <AnimationEnded>k__BackingField: 0

@@ -7,5 +7,5 @@ using UnityEngine;
 public class BattleCommands : MonoBehaviour
 {
     public Directions pointerLocation;
-    public Action<BattleLogic> actionOnPress;
+    public Action<BattleHandler> actionOnPress;
 }

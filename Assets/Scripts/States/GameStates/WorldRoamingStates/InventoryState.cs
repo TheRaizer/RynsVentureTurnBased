@@ -23,6 +23,11 @@ public class InventoryState : WorldMenuState
     {
         base.InputUpdate();
 
+        CheckIfExitSelected();
+    }
+
+    private void CheckIfExitSelected()
+    {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
         {
             stateMachine.ReturnBackToState(WorldRoamingStates.InventoryChoiceState);

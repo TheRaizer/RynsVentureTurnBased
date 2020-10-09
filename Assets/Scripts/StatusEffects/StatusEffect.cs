@@ -39,7 +39,7 @@ public class StatusEffect : MonoBehaviour
             AnimatedVer = g;
         }
     }
-    public virtual void OnTurn(BattleLogic battleLogic, StatsManager currentUser, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler) => DecrementTurns();
+    public virtual void OnTurn(BattleHandler battleLogic, StatsManager infectee, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler) => DecrementTurns();
     public virtual void OnWornOff(StatsManager inhabitor) 
     {
         Destroy(AnimatedVer);

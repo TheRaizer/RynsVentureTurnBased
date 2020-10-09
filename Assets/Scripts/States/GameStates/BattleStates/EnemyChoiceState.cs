@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class EnemyChoiceState : State
 {
-    private readonly BattleLogic battleLogic;
+    private readonly BattleHandler battleHandler;
     private readonly BattleMenusHandler menusHandler;
     public readonly VectorMenuTraversal menuTraversal;
     private readonly BattleTextBoxHandler textBoxHandler;
     private readonly BattleStatusEffectsManager battleStatusManager;
 
-    public EnemyChoiceState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleMenusHandler _menusHandler, BattleTextBoxHandler _textBoxHandler, BattleStatusEffectsManager _battleStatusManager) : base(_stateMachine)
+    public EnemyChoiceState(StateMachine _stateMachine, BattleHandler _battleHandler, BattleMenusHandler _menusHandler, BattleTextBoxHandler _textBoxHandler, BattleStatusEffectsManager _battleStatusManager) : base(_stateMachine)
     {
-        battleLogic = _battleLogic;
+        battleHandler = _battleHandler;
         menusHandler = _menusHandler;
         textBoxHandler = _textBoxHandler;
         battleStatusManager = _battleStatusManager;
 
         menuTraversal = new VectorMenuTraversal(PositionPointerForEnemyChoice)
         {
-            MaxIndex = battleLogic.Enemies.Length - 1
+            MaxIndex = battleHandler.Enemies.Length - 1
         };
     }
 
@@ -27,22 +27,28 @@ public class EnemyChoiceState : State
     {
         base.OnEnterOrReturn();
 
-        while (battleLogic.Enemies[menuTraversal.currentIndex] == null)
-        {
-            menuTraversal.currentIndex++;
-            menuTraversal.CheckIfIndexInRange();
-        }
-        PositionPointerForEnemyChoice();
-        battleLogic.AnimationsHandler.OnAnimationFinished = OnAnimationFinished;
+        SetPointerToValidPosition();
+        battleHandler.AnimationsHandler.OnAnimationFinished = OnAnimationFinished;
     }
 
     public override void OnFullRotationEnter()
     {
         base.OnFullRotationEnter();
 
-        if (battleStatusManager.CheckForReplacementStatusEffect(battleLogic, battleLogic.CurrentPlayer.Stats, true))
+        if (battleStatusManager.CheckForReplacementStatusEffect(battleHandler, battleHandler.CurrentPlayer.Stats, true))
         {
             stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
+        }
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+        if (!battleHandler.AnimationsHandler.RanAnim)
+        {
+            menuTraversal.TraverseWithNulls(battleHandler.Enemies);
+            CheckIfEnterSelected();
+            CheckIfExitSelected();
         }
     }
 
@@ -50,33 +56,45 @@ public class EnemyChoiceState : State
     {
         base.InputUpdate();
 
-        menuTraversal.TraverseWithNulls(battleLogic.Enemies);
-        EnterChoice();
+        battleHandler.AnimationsHandler.CheckIfAnimationFinished();
+    }
+
+    private void SetPointerToValidPosition()
+    {
+        while (battleHandler.Enemies[menuTraversal.currentIndex] == null)
+        {
+            menuTraversal.currentIndex++;
+            menuTraversal.CheckIfIndexInRange();
+        }
+        PositionPointerForEnemyChoice();
+    }
+
+    private void CheckIfExitSelected()
+    {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
         {
             stateMachine.ReturnBackToState(BattleStates.FightMenu);
         }
     }
 
-    private void EnterChoice()
+    private void CheckIfEnterSelected()
     {
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E) && !battleLogic.AnimationsHandler.RanAnim)
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E) && !battleHandler.AnimationsHandler.RanAnim)
         {
-            Enemy enemyToAttack = battleLogic.Enemies[menuTraversal.currentIndex].GetComponent<Enemy>();
-            EntityActionInfo attackInfo = battleLogic.CurrentPlayerAttack.UseAction(enemyToAttack.Stats, battleLogic.CurrentPlayer.Stats.DamageScale, textBoxHandler);
+            Enemy enemyToAttack = battleHandler.Enemies[menuTraversal.currentIndex].GetComponent<Enemy>();
+            EntityActionInfo attackInfo = battleHandler.CurrentPlayerAttack.UseAction(enemyToAttack.Stats, battleHandler.CurrentPlayer.Stats.DamageScale, textBoxHandler);
                 
-            battleLogic.SetActionPopupForEntity(battleLogic.CurrentPlayer.Animator.gameObject, null, enemyToAttack.Animator.gameObject, attackInfo);
-            battleLogic.AnimationsHandler.RunAnim(battleLogic.CurrentPlayer.Stats.user.Animator, battleLogic.CurrentPlayerAttack.AnimToPlay, battleLogic.CurrentPlayerAttack.TriggerName);
+            battleHandler.SetActionPopupForEntity(battleHandler.CurrentPlayer.Animator.gameObject, null, enemyToAttack.Animator.gameObject, attackInfo);
+            battleHandler.AnimationsHandler.RunAnim(battleHandler.CurrentPlayer.Stats.user.Animator, battleHandler.CurrentPlayerAttack.AnimToPlay, battleHandler.CurrentPlayerAttack.TriggerName);
             return;
         }
-        battleLogic.AnimationsHandler.OnLateUpdate();
     }
 
     private void OnAnimationFinished()
     {
-        battleLogic.CheckForEnemiesRemaining();
-        battleLogic.TextMods.ChangeEnemyNameColour();
-        battleLogic.BattleStateMachine.ChangeState(BattleStates.BattleTextBox);
+        battleHandler.CheckForEnemiesRemaining();
+        battleHandler.TextMods.ChangeEnemyNameColour();
+        battleHandler.BattleStateMachine.ChangeState(BattleStates.BattleTextBox);
     }
 
     private void PositionPointerForEnemyChoice()

@@ -8,12 +8,12 @@ public class EnemyGenerator
 {
     public Areas CurrentArea { get; private set; } = Areas.Forest;
     private readonly EnemyStorageForArea enemyStorage;
-    private readonly BattleLogic battleLogic;
+    private readonly BattleHandler battleHandler;
     private readonly char[] letters = new char[] { 'A', 'B', 'C', 'D', 'E' };
-    public EnemyGenerator(EnemyStorageForArea _enemyStorage, BattleLogic _battleLogic)
+    public EnemyGenerator(EnemyStorageForArea _enemyStorage, BattleHandler _battleHandler)
     {
         enemyStorage = _enemyStorage;
-        battleLogic = _battleLogic;
+        battleHandler = _battleHandler;
     }
 
     public void InstantiateEnemies()
@@ -28,9 +28,9 @@ public class EnemyGenerator
             string chosenEnemyId = chosenEnemy.GetComponent<Enemy>().Id;
             chosenEnemy.GetComponent<Enemy>().Id = chosenEnemyId + " " + letters[CheckForDuplicateEnemies(chosenEnemyId)];
 
-            battleLogic.Enemies[i] = chosenEnemy;
-            battleLogic.AttackablesDic[EntityType.Enemy].Add(battleLogic.Enemies[i].GetComponent<Enemy>().Stats);
-            battleLogic.TotalExpFromBattle += battleLogic.Enemies[i].GetComponent<Enemy>().ExpOnDeath;
+            battleHandler.Enemies[i] = chosenEnemy;
+            battleHandler.AttackablesDic[EntityType.Enemy].Add(battleHandler.Enemies[i].GetComponent<Enemy>().Stats);
+            battleHandler.TotalExpFromBattle += battleHandler.Enemies[i].GetComponent<Enemy>().ExpOnDeath;
         }
 
         OrderEnemies();
@@ -38,7 +38,7 @@ public class EnemyGenerator
 
     private void OrderEnemies()
     {
-        List<GameObject> gL = battleLogic.Enemies.ToList();
+        List<GameObject> gL = battleHandler.Enemies.ToList();
         for (int i = gL.Count - 1; i >= 0; i--)//start at the end and move to 0 cuz the count is constantly being reduced
         {
             if (gL[i] == null)
@@ -50,26 +50,26 @@ public class EnemyGenerator
 
         gL = gL.OrderBy(x => x.GetComponent<Enemy>().Id).ToList();//order the list by id
 
-        for (int i = 0; i < battleLogic.Enemies.Length; i++)//copy the list to the array of enemies
+        for (int i = 0; i < battleHandler.Enemies.Length; i++)//copy the list to the array of enemies
         {
             if (i >= gL.Count)
             {
-                battleLogic.Enemies[i] = null;
+                battleHandler.Enemies[i] = null;
             }
             else
             {
-                battleLogic.Enemies[i] = gL[i];
+                battleHandler.Enemies[i] = gL[i];
             }
         }
 
-        List<StatsManager> attackableEnemies = battleLogic.AttackablesDic[EntityType.Enemy].OrderBy(x => x.user.Id).ToList();//order the attackable enemies
-        battleLogic.AttackablesDic[EntityType.Enemy] = attackableEnemies;
+        List<StatsManager> attackableEnemies = battleHandler.AttackablesDic[EntityType.Enemy].OrderBy(x => x.user.Id).ToList();//order the attackable enemies
+        battleHandler.AttackablesDic[EntityType.Enemy] = attackableEnemies;
     }
 
     private int CheckForDuplicateEnemies(string id)
     {
         int duplicateCount = 0;
-        foreach(GameObject g in battleLogic.Enemies)
+        foreach(GameObject g in battleHandler.Enemies)
         {
             if (g == null) continue;
 

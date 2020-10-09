@@ -55,13 +55,14 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Inventory\IStoreable.cs" />
     <Compile Include="Assets\Scripts\Extensions\ArrayExtensions.cs" />
     <Compile Include="Assets\Scripts\GameMaster\GameStateManager.cs" />
     <Compile Include="Assets\Scripts\GeneralEntity\AmountManager.cs" />
     <Compile Include="Assets\Scripts\GeneralEntity\ManaManager.cs" />
-    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\StatusEffectCheckState.cs" />
     <Compile Include="Assets\Scripts\Extensions\RectTransformExtensions.cs" />
     <Compile Include="Assets\Scripts\AttackActions\EntityActionInfo.cs" />
+    <Compile Include="Assets\Scripts\Player\IUser.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\EnemyTurnState.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\RoamMenuChoiceState.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\InventoryChoiceState.cs" />
@@ -80,21 +81,24 @@
     <Compile Include="Assets\Scripts\AttackActions\ReviveAction.cs" />
     <Compile Include="Assets\Scripts\BattlePressables\FightCommand.cs" />
     <Compile Include="Assets\Scripts\MenusHandlers\BattleMenusHandler.cs" />
+    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\AOEState.cs" />
     <Compile Include="Assets\Scripts\Player\ConstantNumbers.cs" />
     <Compile Include="Assets\Scripts\Items\Item.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\InventoryState.cs" />
     <Compile Include="Assets\Scripts\BattleAnimationsHandler.cs" />
     <Compile Include="Assets\Scripts\Items\SmallAllHeal.cs" />
     <Compile Include="Assets\Scripts\Enemy\Areas.cs" />
-    <Compile Include="Assets\Scripts\TestingScript.cs" />
     <Compile Include="Assets\Scripts\Items\SmallHpPotion.cs" />
     <Compile Include="Assets\Scripts\MenuTraversal\VectorMenuTraversal.cs" />
+    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\StatusEffectAnimationState.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimations.cs" />
     <Compile Include="Assets\Scripts\WorldMenuOptions\MoveToInventoryOption.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\BattleState.cs" />
     <Compile Include="Assets\Scripts\BattlePressables\BattleCommands.cs" />
-    <Compile Include="Assets\Scripts\FadeTextUp.cs" />
+    <Compile Include="Assets\Scripts\Player\ILevel.cs" />
+    <Compile Include="Assets\Scripts\Text\FadeTextUp.cs" />
     <Compile Include="Assets\Scripts\MenuTraversal\MatrixMenuTraversal.cs" />
+    <Compile Include="Assets\Scripts\EndAnimationSignal\AnimationEnd.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\WorldRoamingStates\RoamState.cs" />
     <Compile Include="Assets\Scripts\Items\SmallAttackUp.cs" />
     <Compile Include="Assets\Scripts\WorldMenuOptions\MoveToSettingsOption.cs" />
@@ -126,17 +130,15 @@
     <Compile Include="Assets\Scripts\PointerControl\Directions.cs" />
     <Compile Include="Assets\Scripts\Text\BattleTextBoxHandler.cs" />
     <Compile Include="Assets\Scripts\GeneralEntity\StatusEffectsManager.cs" />
-    <Compile Include="Assets\Scripts\ObjectPooler.cs" />
-    <Compile Include="Assets\Scripts\States\StateLogic\BattleLogic.cs" />
+    <Compile Include="Assets\Scripts\GameMaster\ObjectPooler.cs" />
+    <Compile Include="Assets\Scripts\States\StateLogic\BattleHandler.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\MultiTurnTriggeredEffects\Burn.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\MagicChoiceState.cs" />
-    <Compile Include="Assets\Scripts\SpawnActionPopup.cs" />
+    <Compile Include="Assets\Scripts\ActionPopups\SpawnActionPopup.cs" />
     <Compile Include="Assets\Scripts\GeneralEntity\HealthManager.cs" />
     <Compile Include="Assets\Scripts\WorldMenuOptions\InventoryTypeChoiceOption.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\FightMenuState.cs" />
-    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\AOEState.cs" />
-    <Compile Include="Assets\Scripts\States\GameStates\BattleStates\StatusEffectAnimationState.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

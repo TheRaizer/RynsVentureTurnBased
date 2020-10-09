@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class SupportPlayerChoiceState : PlayerChoiceState
 {
-    private readonly BattleLogic battleLogic;
+    private readonly BattleHandler battleHandler;
     private readonly BattleTextBoxHandler textBoxHandler;
 
-    public SupportPlayerChoiceState(StateMachine _stateMachine, BattleMenusHandler _battleMenusHandler, BattleLogic _battleLogic, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine, _battleMenusHandler)
+    public SupportPlayerChoiceState(StateMachine _stateMachine, BattleMenusHandler _battleMenusHandler, BattleHandler _battleHandler, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine, _battleMenusHandler)
     {
-        battleLogic = _battleLogic;
+        battleHandler = _battleHandler;
         textBoxHandler = _textBoxHandler;
     }
 
@@ -27,32 +27,38 @@ public class SupportPlayerChoiceState : PlayerChoiceState
     {
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
-            StatsManager playerToSupport = battleLogic.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats;
-
-            if (battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Revive && !playerToSupport.HealthManager.Dead)
-            {
-                textBoxHandler.AddTextAsNonRevive(battleLogic.CurrentPlayer.Id, playerToSupport.user.Id);
-                textBoxHandler.PreviousState = BattleStates.SupportPlayerChoice;
-                stateMachine.ChangeState(BattleStates.BattleTextBox);
-                return;
-            }
-            else if (!battleLogic.CurrentPlayer.Stats.ManaManager.CanUse(battleLogic.CurrentPlayerAttack.ManaReduction))
-            {
-                textBoxHandler.AddTextAsNotEnoughMana(battleLogic.CurrentPlayer.Id);
-                textBoxHandler.PreviousState = BattleStates.SupportPlayerChoice;
-                stateMachine.ChangeState(BattleStates.BattleTextBox);
-                return;
-            }
-            EntityActionInfo actionInfo = battleLogic.CurrentPlayerAttack.UseAction
+            if (ManageSupportAction()) return;
+            battleHandler.CurrentPlayerAttack.UseAction
                 (
-                    battleLogic.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats, battleLogic.CurrentPlayer.Stats.DamageScale, textBoxHandler
+                    battleHandler.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats, battleHandler.CurrentPlayer.Stats.DamageScale, textBoxHandler
                 );
 
-            battleLogic.CheckForAttackablePlayers();
-            battleLogic.TextMods.PrintPlayerHealth();
-            battleLogic.TextMods.PrintPlayerIds();
+            battleHandler.CheckForAttackablePlayers();
+            battleHandler.TextMods.PrintPlayerHealth();
+            battleHandler.TextMods.PrintPlayerIds();
 
             stateMachine.ChangeState(BattleStates.BattleTextBox);
         }
+    }
+
+    private bool ManageSupportAction()
+    {
+        StatsManager playerToSupport = battleHandler.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats;
+
+        if (battleHandler.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Revive && !playerToSupport.HealthManager.Dead)
+        {
+            textBoxHandler.AddTextAsCannotRevive(battleHandler.CurrentPlayer.Id, playerToSupport.user.Id);
+            textBoxHandler.PreviousState = BattleStates.SupportPlayerChoice;
+            stateMachine.ChangeState(BattleStates.BattleTextBox);
+            return true;
+        }
+        else if (!battleHandler.CurrentPlayer.Stats.ManaManager.CanUse(battleHandler.CurrentPlayerAttack.ManaReduction))
+        {
+            textBoxHandler.AddTextAsNotEnoughMana(battleHandler.CurrentPlayer.Id);
+            textBoxHandler.PreviousState = BattleStates.SupportPlayerChoice;
+            stateMachine.ChangeState(BattleStates.BattleTextBox);
+            return true;
+        }
+        return false;
     }
 }

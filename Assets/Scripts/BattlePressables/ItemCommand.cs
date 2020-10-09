@@ -5,8 +5,8 @@
         actionOnPress = ItemChoice;
     }
 
-    private void ItemChoice(BattleLogic battleLogic)
+    private void ItemChoice(BattleHandler battleHandler)
     {
-        battleLogic.BattleStateMachine.ChangeState(BattleStates.ItemChoice);
+        battleHandler.BattleStateMachine.ChangeState(BattleStates.ItemChoice);
     }
 }

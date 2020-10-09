@@ -5,7 +5,7 @@ public class Poison : StatusEffect
 {
     [SerializeField] private float percentDiminish = 0.07f;
 
-    public override void OnTurn(BattleLogic battleLogic, StatsManager infectee, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
+    public override void OnTurn(BattleHandler battleLogic, StatsManager infectee, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
     {
         base.OnTurn(battleLogic, infectee, battleStateMachine, textBoxHandler);
 

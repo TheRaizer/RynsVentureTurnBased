@@ -173,3 +173,11 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 2.0833333
+    functionName: SetAnimationEnded
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: 7d6e1009812b79f46859fb908ca7ff75,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

@@ -159,4 +159,3 @@ MonoBehaviour:
   critMultiplier: 1.5
   statusEffectPrefab: {fileID: 0}
   statusEffectChance: 0
-  userStats: {fileID: 0}

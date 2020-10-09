@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Stun : StatusEffect
 {
-    public override void OnTurn(BattleLogic battleLogic, StatsManager currentUser, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
+    public override void OnTurn(BattleHandler battleLogic, StatsManager currentUser, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
     {
         base.OnTurn(battleLogic, currentUser, battleStateMachine, textBoxHandler);
         Debug.Log("Skip Turn");

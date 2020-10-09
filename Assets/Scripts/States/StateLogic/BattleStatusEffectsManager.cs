@@ -5,19 +5,17 @@ using UnityEngine;
 public class BattleStatusEffectsManager
 {
     private readonly BattleTextBoxHandler textBoxHandler;
-    private readonly StateMachine battleStatemachine;
     public StatusEffectAnimationState EffectAnimations { get; set; }
 
-    public BattleStatusEffectsManager(BattleTextBoxHandler _textBoxHandler, StateMachine _battleStatemachine)
+    public BattleStatusEffectsManager(BattleTextBoxHandler _textBoxHandler)
     {
         textBoxHandler = _textBoxHandler;
-        battleStatemachine = _battleStatemachine;
     }
 
-    public bool CheckForStatusEffect(BattleLogic battleLogic, StatsManager currentInfectee)
+    public bool CheckForStatusEffect(BattleHandler battleHandler, StatsManager currentInfectee)
     {
-        bool addedMultiText = CheckForMultipleTurnStatusEffects(battleLogic);
-        bool addSingleText = CheckForSingleTurnStatusEffects(battleLogic, currentInfectee);
+        bool addedMultiText = CheckForMultipleTurnStatusEffects(battleHandler);
+        bool addSingleText = CheckForSingleTurnStatusEffects(battleHandler, currentInfectee);
 
         if(addedMultiText || addSingleText)
         {
@@ -29,7 +27,7 @@ public class BattleStatusEffectsManager
         }
     }
 
-    public bool CheckForReplacementStatusEffect(BattleLogic battleLogic, StatsManager currentInfectee, bool isAfterAttackChoice)
+    public bool CheckForReplacementStatusEffect(BattleHandler battleHandler, StatsManager currentInfectee, bool isAfterAttackChoice)
     {
         if (currentInfectee.StatusEffectsManager.GetStatusEffectListCount(EffectType.ReplaceTurn) > 0)
         {
@@ -48,16 +46,10 @@ public class BattleStatusEffectsManager
                 textBoxHandler.PreviousState = null;
                 textBoxHandler.AddTextAsStatusEffect(currentInfectee.user.Id, statusEffect.Name);
                 EffectAnimations.ReplacementEffect = statusEffect;
-                if (currentInfectee.user.EntityType == EntityType.Enemy)
-                {
-                    statusEffect.OnTurn(battleLogic, currentInfectee, battleStatemachine, textBoxHandler);
-                }
-                else
-                {
-                    statusEffect.OnTurn(battleLogic, currentInfectee, battleStatemachine, textBoxHandler);
-                }
+
+                statusEffect.OnTurn(battleHandler, currentInfectee, battleHandler.BattleStateMachine, textBoxHandler);
+                return true;
             }
-            return true;
         }
         else
         {
@@ -68,40 +60,34 @@ public class BattleStatusEffectsManager
 
 
 
-    private bool CheckForMultipleTurnStatusEffects(BattleLogic battleLogic)
+    private bool CheckForMultipleTurnStatusEffects(BattleHandler battleHandler)
     {
         bool addedText = false;
         foreach (EntityType a in Enum.GetValues(typeof(EntityType)))//loop through both players and enemies
         {
-            for (int i = 0; i < battleLogic.AttackablesDic[a].Count; i++)//loop through the list of attackable entities
+            for (int i = 0; i < battleHandler.AttackablesDic[a].Count; i++)//loop through the list of attackable entities
             {
-                if (!battleLogic.AttackablesDic[a][i].StatusEffectsManager.StatusEffectDicContainsKey(EffectType.MultiTurnTrigger)) continue;//skip if there is not effect type on current attackable
-                StatsManager currentInfectee = battleLogic.AttackablesDic[a][i];
-                for (int j = 0; j < battleLogic.AttackablesDic[a][i].StatusEffectsManager.GetStatusEffectListCount(EffectType.MultiTurnTrigger); j++)//loop through all the status effects of the current attackable entity
+                if (!battleHandler.AttackablesDic[a][i].StatusEffectsManager.StatusEffectDicContainsKey(EffectType.MultiTurnTrigger)) continue;//skip if there is not effect type on current attackable
+                StatsManager currentInfectee = battleHandler.AttackablesDic[a][i];
+                for (int j = 0; j < battleHandler.AttackablesDic[a][i].StatusEffectsManager.GetStatusEffectListCount(EffectType.MultiTurnTrigger); j++)//loop through all the status effects of the current attackable entity
                 {
-                    StatusEffect currentStatusEffect = battleLogic.AttackablesDic[a][i].StatusEffectsManager.GetStatusEffectFromList(EffectType.MultiTurnTrigger, j);
+                    StatusEffect currentStatusEffect = battleHandler.AttackablesDic[a][i].StatusEffectsManager.GetStatusEffectFromList(EffectType.MultiTurnTrigger, j);
                     if (currentStatusEffect.HasEnded())
                     {
-                        textBoxHandler.AddTextAsStatusEffectWornOff(battleLogic.AttackablesDic[a][i].user.Id, currentStatusEffect.Name);
+                        textBoxHandler.AddTextAsStatusEffectWornOff(battleHandler.AttackablesDic[a][i].user.Id, currentStatusEffect.Name);
                         currentStatusEffect.OnWornOff(currentInfectee);
-                        battleLogic.AttackablesDic[a][i].StatusEffectsManager.RemoveFromStatusEffectsAtIndex(EffectType.MultiTurnTrigger, j);
+                        battleHandler.AttackablesDic[a][i].StatusEffectsManager.RemoveFromStatusEffectsAtIndex(EffectType.MultiTurnTrigger, j);
                     }
                     else
                     {
                         EffectAnimations.StatusEffectsToAnimate.Add(currentStatusEffect);
                         if (currentStatusEffect.outputTextOnTurns)
                         {
-                            textBoxHandler.AddTextAsStatusEffect(battleLogic.AttackablesDic[a][i].user.Id, currentStatusEffect.Name);
+                            textBoxHandler.AddTextAsStatusEffect(battleHandler.AttackablesDic[a][i].user.Id, currentStatusEffect.Name);
                             addedText = true;
                         }
-                        if (a == EntityType.Player)
-                        {
-                            currentStatusEffect.OnTurn(battleLogic, battleLogic.AttackablesDic[a][i], battleStatemachine, textBoxHandler);
-                        }
-                        else if (a == EntityType.Enemy)
-                        {
-                            currentStatusEffect.OnTurn(battleLogic, battleLogic.AttackablesDic[a][i], battleStatemachine, textBoxHandler);
-                        }
+
+                        currentStatusEffect.OnTurn(battleHandler, battleHandler.AttackablesDic[a][i], battleHandler.BattleStateMachine, textBoxHandler);
                     }
                 }
             }
@@ -109,7 +95,7 @@ public class BattleStatusEffectsManager
         return addedText;
     }
 
-    private bool CheckForSingleTurnStatusEffects(BattleLogic battleLogic, StatsManager currentInfectee)
+    private bool CheckForSingleTurnStatusEffects(BattleHandler battleHandler, StatsManager currentInfectee)
     {
         bool addedText = false;
         for (int i = 0; i < currentInfectee.StatusEffectsManager.GetStatusEffectListCount(EffectType.SingleTurnTrigger); i++)
@@ -120,7 +106,7 @@ public class BattleStatusEffectsManager
             {
                 currentStatusEffect.OnWornOff(currentInfectee);
                 textBoxHandler.AddTextAsStatusEffectWornOff(currentInfectee.user.Id, currentStatusEffect.Name);
-                currentInfectee.StatusEffectsManager.RemoveFromStatusEffectsDic(EffectType.SingleTurnTrigger, currentStatusEffect);
+                currentInfectee.StatusEffectsManager.RemoveFromStatusEffectsDic(EffectType.SingleTurnTrigger, currentStatusEffect, EffectAnimations);
             }
             else
             {
@@ -130,15 +116,7 @@ public class BattleStatusEffectsManager
                     textBoxHandler.AddTextAsStatusEffect(currentInfectee.user.Id, currentStatusEffect.Name);
                     addedText = true;
                 }
-                switch (currentInfectee.user.EntityType)
-                {
-                    case EntityType.Enemy:
-                        currentStatusEffect.OnTurn(battleLogic, currentInfectee, battleStatemachine, textBoxHandler);
-                        break;
-                    default:
-                        currentStatusEffect.OnTurn(battleLogic, currentInfectee, battleStatemachine, textBoxHandler);
-                        break;
-                }
+                currentStatusEffect.OnTurn(battleHandler, currentInfectee, battleHandler.BattleStateMachine, textBoxHandler);
             }
         }
         return addedText;

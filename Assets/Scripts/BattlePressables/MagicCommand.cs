@@ -9,11 +9,11 @@ public class MagicCommand : BattleCommands
         actionOnPress = ChangeToMagicState;
     }
 
-    private void ChangeToMagicState(BattleLogic battleLogic)
+    private void ChangeToMagicState(BattleHandler battleHandler)
     {
-        if (battleLogic.CurrentPlayer.Magic.Count > 0)
+        if (battleHandler.CurrentPlayer.Magic.Count > 0)
         {
-            battleLogic.BattleStateMachine.ChangeState(BattleStates.MagicChoice);
+            battleHandler.BattleStateMachine.ChangeState(BattleStates.MagicChoice);
         }
     }
 }

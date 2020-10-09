@@ -8,7 +8,7 @@ public class BattleTextBoxHandler
     public Enum PreviousState { get; set; } = null;
 
     private readonly BattleMenusHandler menusHandler;
-    private readonly BattleLogic battleLogic;
+    private readonly BattleHandler battleLogic;
     private readonly StateMachine battleStateMachine;
 
     private readonly WaitForSeconds writeTime = new WaitForSeconds(0.08f);
@@ -18,7 +18,7 @@ public class BattleTextBoxHandler
     private bool skip;
     private readonly List<string> textLines = new List<string>();
 
-    public BattleTextBoxHandler(BattleMenusHandler _menusHandler, BattleLogic _battleLogic, StateMachine _battleStateMachine)
+    public BattleTextBoxHandler(BattleMenusHandler _menusHandler, BattleHandler _battleLogic, StateMachine _battleStateMachine)
     {
         menusHandler = _menusHandler;
         battleLogic = _battleLogic;
@@ -136,7 +136,7 @@ public class BattleTextBoxHandler
         AddTextLines(useableName + " has been used on " + id + ".");
     }
 
-    public void AddTextAsNonRevive(string itemName, string userToHealId)
+    public void AddTextAsCannotRevive(string itemName, string userToHealId)
     {
         AddTextLines(itemName + " cannot revive " + userToHealId + ".");
     }

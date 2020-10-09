@@ -2,13 +2,13 @@
 
 public class ItemPlayerChoiceState : PlayerChoiceState
 {
-    private readonly BattleLogic battleLogic;
+    private readonly BattleHandler battleHandler;
     private readonly Inventory inventory;
     private readonly BattleTextBoxHandler textBox;
 
-    public ItemPlayerChoiceState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleMenusHandler _battleMenusHandler, Inventory _inventory, BattleTextBoxHandler _textBox) : base(_stateMachine, _battleMenusHandler)
+    public ItemPlayerChoiceState(StateMachine _stateMachine, BattleHandler _battleHandler, BattleMenusHandler _battleMenusHandler, Inventory _inventory, BattleTextBoxHandler _textBox) : base(_stateMachine, _battleMenusHandler)
     {
-        battleLogic = _battleLogic;
+        battleHandler = _battleHandler;
         inventory = _inventory;
         textBox = _textBox;
     }
@@ -17,17 +17,30 @@ public class ItemPlayerChoiceState : PlayerChoiceState
     {
         base.InputUpdate();
 
+        CheckIfEnterSelected();
+        CheckIfExitSelected();
+    }
 
-        if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
+    private void CheckIfExitSelected()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
         {
-            StatsManager userToHealStats = battleLogic.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats;
-            if (userToHealStats.HealthManager.Dead && !battleLogic.ItemToUse.CanRevive())
+            stateMachine.ReturnBackToState(BattleStates.ItemChoice);
+        }
+    }
+
+    private void CheckIfEnterSelected()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
+        {
+            StatsManager userToHealStats = battleHandler.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats;
+            if (userToHealStats.HealthManager.Dead && !battleHandler.ItemToUse.CanRevive())
             {
                 textBox.PreviousState = BattleStates.ItemPlayerChoice;
-                textBox.AddTextAsNonRevive(battleLogic.ItemToUse.Id, battleLogic.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Id);
+                textBox.AddTextAsCannotRevive(battleHandler.ItemToUse.Id, battleHandler.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Id);
                 stateMachine.ChangeState(BattleStates.BattleTextBox);
             }
-            else if (battleLogic.ItemToUse.OnlyHeal() && userToHealStats.HealthManager.CurrentAmount == userToHealStats.HealthManager.MaxAmount)
+            else if (battleHandler.ItemToUse.OnlyHeal() && userToHealStats.HealthManager.CurrentAmount == userToHealStats.HealthManager.MaxAmount)
             {
                 textBox.PreviousState = BattleStates.ItemPlayerChoice;
                 textBox.AddTextAsAlreadyMaxHealth(userToHealStats.user.Id);
@@ -35,13 +48,8 @@ public class ItemPlayerChoiceState : PlayerChoiceState
             }
             else
             {
-                inventory.UseItemInventoryInBattle(battleLogic.ItemIndex, battleLogic.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats, null, stateMachine, textBox);
+                inventory.UseItemInventoryInBattle(battleHandler.ItemIndex, battleHandler.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats, null, stateMachine, textBox);
             }
-        }
-
-        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
-        {
-            stateMachine.ReturnBackToState(BattleStates.ItemChoice);
         }
     }
 }

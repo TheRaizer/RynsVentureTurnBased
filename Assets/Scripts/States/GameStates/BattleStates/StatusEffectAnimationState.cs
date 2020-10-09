@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class StatusEffectAnimationState : State
 {
-    private readonly BattleLogic battleLogic;
+    private readonly BattleHandler battleHandler;
     private readonly BattleTextBoxHandler textHandler;
 
     public Enum StateToReturnToo { get; set; }
     public List<StatusEffect> StatusEffectsToAnimate { get; set; } = new List<StatusEffect>();
     public StatusEffect ReplacementEffect { get; set; }
     private int index = 0;
-
-    public StatusEffectAnimationState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleTextBoxHandler _textHandler) : base(_stateMachine)
+    public StatusEffectAnimationState(StateMachine _stateMachine, BattleHandler _battleHandler, BattleTextBoxHandler _textHandler) : base(_stateMachine)
     {
-        battleLogic = _battleLogic;
+        battleHandler = _battleHandler;
         textHandler = _textHandler;
     }
 
@@ -22,44 +21,47 @@ public class StatusEffectAnimationState : State
     {
         base.OnEnterOrReturn();
 
-        Debug.Log(StatusEffectsToAnimate.Count);
-        Debug.Log("Index " + index);
-
-        battleLogic.AnimationsHandler.OnAnimationFinished = OnEachAnimationFinished;
-        StatusEffect currentEffect = StatusEffectsToAnimate[index];
-        battleLogic.AnimationsHandler.RunAnim(currentEffect.AnimatedVer.GetComponent<Animator>(), currentEffect.AnimToPlay, currentEffect.TriggerName);
-        index++;
-    }
-
-    public void RunReplacementAnimation()
-    {
-        battleLogic.AnimationsHandler.OnAnimationFinished = OnReplacementAnimationFinished;
-        if (ReplacementEffect != null)
-        {
-            battleLogic.AnimationsHandler.RunAnim(ReplacementEffect.AnimatedVer.GetComponent<Animator>(), ReplacementEffect.AnimToPlay, ReplacementEffect.TriggerName);
-            ReplacementEffect = null;
-        }
-        else
-        {
-            Debug.LogError("supposed to run replacement effect animation, but there is no replacement effect to animate");
-        }
+        Debug.Log("Run Anim");
+        Debug.Log("index" + index);
+        Debug.Log("Status effect list cout: " + StatusEffectsToAnimate.Count);
+        RunAnimation();
     }
 
     public override void InputUpdate()
     {
         base.InputUpdate();
+        Debug.Log("Check if finished");
+        battleHandler.AnimationsHandler.CheckIfAnimationFinished();
+        
+    }
 
-        battleLogic.AnimationsHandler.OnLateUpdate();
+    private void RunAnimation()
+    {
+        battleHandler.CheckForAttackablePlayers();
+        battleHandler.CheckForEnemiesRemaining();
+        battleHandler.TextMods.ChangeEnemyNameColour();
+        battleHandler.TextMods.ChangePlayerTextColour();
+
+        if (CheckIfAnimatedAllEffects()) return;
+
+        battleHandler.AnimationsHandler.OnAnimationFinished = OnEachAnimationFinished;
+        StatusEffect currentEffect = StatusEffectsToAnimate[index];
+        Debug.Log(currentEffect.Name);
+        battleHandler.AnimationsHandler.RunAnim(currentEffect.AnimatedVer.GetComponent<Animator>(), currentEffect.AnimToPlay, currentEffect.TriggerName);
+        index++;
     }
 
     private void OnEachAnimationFinished()
     {
         Debug.Log("Finished");
-        battleLogic.CheckForAttackablePlayers();
-        battleLogic.CheckForEnemiesRemaining();
-        battleLogic.TextMods.ChangeEnemyNameColour();
-        battleLogic.TextMods.ChangePlayerTextColour();
-        if(index >= StatusEffectsToAnimate.Count)
+        if (CheckIfAnimatedAllEffects()) return;
+        textHandler.PreviousState = BattleStates.StatusEffectAnimations;
+        stateMachine.ReturnBackToState(BattleStates.StatusEffectAnimations);
+    }
+
+    private bool CheckIfAnimatedAllEffects()
+    {
+        if (index >= StatusEffectsToAnimate.Count)
         {
             index = 0;
             StatusEffectsToAnimate.Clear();
@@ -75,18 +77,30 @@ public class StatusEffectAnimationState : State
                 Debug.Log("move to text box");
                 stateMachine.ChangeState(BattleStates.BattleTextBox);
             }
-            return;
+            return true;
         }
-        textHandler.PreviousState = BattleStates.StatusEffectAnimations;
-        stateMachine.ReturnBackToState(BattleStates.StatusEffectAnimations);
+        return false;
     }
 
+    public void RunReplacementAnimation()
+    {
+        battleHandler.AnimationsHandler.OnAnimationFinished = OnReplacementAnimationFinished;
+        if (ReplacementEffect != null)
+        {
+            battleHandler.AnimationsHandler.RunAnim(ReplacementEffect.AnimatedVer.GetComponent<Animator>(), ReplacementEffect.AnimToPlay, ReplacementEffect.TriggerName);
+            ReplacementEffect = null;
+        }
+        else
+        {
+            Debug.LogError("supposed to run replacement effect animation, but there is no replacement effect to animate");
+        }
+    }
     private void OnReplacementAnimationFinished()
     {
-        battleLogic.CheckForAttackablePlayers();
-        battleLogic.CheckForEnemiesRemaining();
-        battleLogic.TextMods.ChangeEnemyNameColour();
-        battleLogic.TextMods.ChangePlayerTextColour();
+        battleHandler.CheckForAttackablePlayers();
+        battleHandler.CheckForEnemiesRemaining();
+        battleHandler.TextMods.ChangeEnemyNameColour();
+        battleHandler.TextMods.ChangePlayerTextColour();
         stateMachine.ChangeState(BattleStates.BattleTextBox);
     }
 }

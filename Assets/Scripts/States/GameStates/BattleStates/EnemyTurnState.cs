@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyTurnState : StatusEffectCheckState
+public class EnemyTurnState : State
 {
-    private readonly BattleLogic battleLogic;
+    private readonly BattleHandler battleHandler;
     private readonly BattleStatusEffectsManager battleStatusManager;
     private readonly BattleTextBoxHandler textBoxHandler;
     private bool checkedForStatusEffects = false;
 
-    public EnemyTurnState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleStatusEffectsManager _battleStatusManager, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
+    public EnemyTurnState(StateMachine _stateMachine, BattleHandler _battleHandler, BattleStatusEffectsManager _battleStatusManager, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
-        battleLogic = _battleLogic;
+        battleHandler = _battleHandler;
         battleStatusManager = _battleStatusManager;
         textBoxHandler = _textBoxHandler;
     }
@@ -20,30 +20,10 @@ public class EnemyTurnState : StatusEffectCheckState
     {
         base.OnEnterOrReturn();
 
-        battleLogic.AnimationsHandler.OnAnimationFinished = OnAnimationFinished;
-        Debug.Log(battleLogic.CurrentEnemy.Id + " Turn");
-        StatusEffectAnimationState animState = (StatusEffectAnimationState)stateMachine.states[BattleStates.StatusEffectAnimations];
-        if (!checkedForStatusEffects)
-        {
-            if (CheckForStatusEffects(battleStatusManager, battleLogic, battleLogic.CurrentEnemy.Stats, null))
-            {
-                checkedForStatusEffects = true;
-                animState.StateToReturnToo = BattleStates.EnemyTurn;
-                stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
-                return;
-            }
-        }
-        else
-        {
-            checkedForStatusEffects = false;
-        }
-
-        if (battleStatusManager.CheckForReplacementStatusEffect(battleLogic, battleLogic.CurrentEnemy.Stats, true))
-        {
-            animState.RunReplacementAnimation();
-            return;
-        }
-        battleLogic.CheckForAttackablePlayers();
+        battleHandler.AnimationsHandler.OnAnimationFinished = OnAnimationFinished;
+        Debug.Log(battleHandler.CurrentEnemy.Id + " Turn");
+        if (CheckForStatusEffects()) return;
+        battleHandler.CheckForAttackablePlayers();
 
         ManageAttackToUse();
     }
@@ -52,7 +32,7 @@ public class EnemyTurnState : StatusEffectCheckState
     {
         base.InputUpdate();
 
-        battleLogic.AnimationsHandler.OnLateUpdate();
+        battleHandler.AnimationsHandler.CheckIfAnimationFinished();
     }
 
     private void OnAnimationFinished()
@@ -60,9 +40,35 @@ public class EnemyTurnState : StatusEffectCheckState
         stateMachine.ChangeState(BattleStates.BattleTextBox);
     }
 
+    private bool CheckForStatusEffects()
+    {
+        StatusEffectAnimationState animState = (StatusEffectAnimationState)stateMachine.states[BattleStates.StatusEffectAnimations];
+        if (!checkedForStatusEffects)
+        {
+            if (battleStatusManager.CheckForStatusEffect(battleHandler, battleHandler.CurrentEnemy.Stats))
+            {
+                checkedForStatusEffects = true;
+                animState.StateToReturnToo = BattleStates.EnemyTurn;
+                stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
+                return true;
+            }
+        }
+        else
+        {
+            checkedForStatusEffects = false;
+        }
+
+        if (battleStatusManager.CheckForReplacementStatusEffect(battleHandler, battleHandler.CurrentEnemy.Stats, true))
+        {
+            animState.RunReplacementAnimation();
+            return true;
+        }
+        return false;
+    }
+
     private void ManageAttackToUse()
     {
-        EntityAction attackToUse = battleLogic.CurrentEnemy.Attacks[Random.Range(0, battleLogic.CurrentEnemy.Attacks.Count)];
+        EntityAction attackToUse = battleHandler.CurrentEnemy.Attacks[Random.Range(0, battleHandler.CurrentEnemy.Attacks.Count)];
         if (attackToUse.IsAOE)
         {
             AOEState aoeState = (AOEState)stateMachine.states[BattleStates.AOEState];
@@ -71,20 +77,33 @@ public class EnemyTurnState : StatusEffectCheckState
             stateMachine.ChangeState(BattleStates.AOEState);
             return;
         }
-        if (attackToUse.ActionType == EntityAction.ActionTypes.Support)
-        {
-            int enemyIndexToSupport = Random.Range(0, battleLogic.AttackablesDic[EntityType.Enemy].Count);
-            List<EntityActionInfo> actionInfos = attackToUse.DetermineAction(battleLogic.AttackablesDic[EntityType.Enemy], battleLogic.CurrentEnemy.Stats.DamageScale, textBoxHandler, enemyIndexToSupport);
-        }
         else
         {
-            int playerIndexToAttack = Random.Range(0, battleLogic.AttackablesDic[EntityType.Player].Count);
-            List<EntityActionInfo> actionInfos = attackToUse.DetermineAction(battleLogic.AttackablesDic[EntityType.Player], battleLogic.CurrentEnemy.Stats.DamageScale, textBoxHandler, playerIndexToAttack);
-        }
-        battleLogic.TextMods.PrintPlayerHealth();
-        battleLogic.TextMods.ChangePlayerTextColour();
-        Debug.Log("printing enemy attacks");
+            if (attackToUse.ActionType == EntityAction.ActionTypes.Support || attackToUse.ActionType == EntityAction.ActionTypes.Revive)
+            {
+                int enemyIndexToSupport = Random.Range(0, battleHandler.AttackablesDic[EntityType.Enemy].Count);
+                StatsManager enemyToSupport = battleHandler.AttackablesDic[EntityType.Enemy][enemyIndexToSupport];
 
-        battleLogic.AnimationsHandler.RunAnim(battleLogic.CurrentEnemy.Animator, attackToUse.AnimToPlay, attackToUse.TriggerName);
+                attackToUse.UseAction(enemyToSupport, battleHandler.CurrentEnemy.Stats.DamageScale, textBoxHandler);
+            }
+            else
+            {
+                int playerIndexToAttack = Random.Range(0, battleHandler.AttackablesDic[EntityType.Player].Count);
+                StatsManager playerToAttack = battleHandler.AttackablesDic[EntityType.Player][playerIndexToAttack];
+
+                attackToUse.UseAction(playerToAttack, battleHandler.CurrentEnemy.Stats.DamageScale, textBoxHandler);
+            }
+        }
+
+        CheckForTextMods();
+        Debug.Log("printing enemy attacks");
+        Debug.Log(attackToUse.AnimToPlay);
+        battleHandler.AnimationsHandler.RunAnim(battleHandler.CurrentEnemy.Animator, attackToUse.AnimToPlay, attackToUse.TriggerName);
+    }
+
+    private void CheckForTextMods()
+    {
+        battleHandler.TextMods.PrintPlayerHealth();
+        battleHandler.TextMods.ChangePlayerTextColour();
     }
 }

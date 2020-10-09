@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class StatusEffectsManager
 {
-    private Dictionary<EffectType, List<StatusEffect>> statusEffectsDic { get; set; } = new Dictionary<EffectType, List<StatusEffect>>();
+    private readonly Dictionary<EffectType, List<StatusEffect>> statusEffectsDic = new Dictionary<EffectType, List<StatusEffect>>();
     private readonly StatsManager stats;
 
     public StatusEffectsManager(StatsManager _stats)
@@ -17,15 +17,22 @@ public class StatusEffectsManager
         stats = _stats;
     }
 
-    public void RemoveAllStatusEffects()
+    public void RemoveAllStatusEffects(StatusEffectAnimationState statusEffectAnimations)
     {
         foreach (EffectType e in Enum.GetValues(typeof(EffectType)))
         {
             foreach (StatusEffect s in statusEffectsDic[e])
             {
+                if (statusEffectAnimations.StatusEffectsToAnimate.Contains(s))
+                {
+                    int indexToRemove = statusEffectAnimations.StatusEffectsToAnimate.IndexOf(s);
+                    statusEffectAnimations.StatusEffectsToAnimate.RemoveAt(indexToRemove);
+                    statusEffectAnimations.StatusEffectsToAnimate.TrimExcess();
+                }
                 s.OnWornOff(stats);
             }
             statusEffectsDic[e].Clear();
+            statusEffectsDic[e].TrimExcess();
         }
     }
 
@@ -63,8 +70,13 @@ public class StatusEffectsManager
         PrintAllStatusEffects();
     }
 
-    public void RemoveFromStatusEffectsDic(EffectType effectType, StatusEffect statusObject)
+    public void RemoveFromStatusEffectsDic(EffectType effectType, StatusEffect statusObject, StatusEffectAnimationState effectAnimations)
     {
+        if (effectAnimations.StatusEffectsToAnimate.Contains(statusObject))
+        {
+            int indexToRemove = effectAnimations.StatusEffectsToAnimate.IndexOf(statusObject);
+            effectAnimations.StatusEffectsToAnimate.RemoveAt(indexToRemove);
+        }
         statusEffectsDic[effectType].Remove(statusObject);
     }
 

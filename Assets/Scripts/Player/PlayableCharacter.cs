@@ -44,17 +44,3 @@ public class PlayableCharacter : MonoBehaviour, ILevel, IUser
         Stats.DamageScale += DamageScaleIncreasePerLevel;
     }
 }
-
-public interface ILevel//health exponentially increase while damage scale linearly increases
-{
-    void OnLevelUp();
-    float PercentHealthIncreasePerLevel { get; }
-    float DamageScaleIncreasePerLevel { get; }//since damage scale is multiplied by each attacks damage the scale does not need to exponentially increase
-}
-
-public interface IUser
-{
-    string Id { get; }
-    EntityType EntityType { get; }
-    Animator Animator { get; }
-}

@@ -16,6 +16,8 @@ public class SmallAllHeal : Useable
     }
     public override void OnUseInBattle(StatsManager StatsToHeal, List<StatsManager> friendlyStats, StateMachine battleStateMachine, BattleTextBoxHandler textBoxHandler)
     {
+        base.OnUseInBattle(StatsToHeal, friendlyStats, battleStateMachine, textBoxHandler);
+
         foreach (StatsManager s in friendlyStats)
         {
             if (s.HealthManager.Dead) continue;

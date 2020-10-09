@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class MagicChoiceState : State
 {
-    private readonly BattleLogic battleLogic;
+    private readonly BattleHandler battleHandler;
     private readonly MatrixMenuTraversal matrixMenuTraversal;
     private readonly BattleMenusHandler menusHandler;
     private readonly BattleTextBoxHandler textBoxHandler;
 
     private readonly EntityAction[,] magicAttacks = new EntityAction[3, 4];
 
-    public MagicChoiceState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleMenusHandler _menusHandler, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
+    public MagicChoiceState(StateMachine _stateMachine, BattleHandler _battleHandler, BattleMenusHandler _menusHandler, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
-        battleLogic = _battleLogic;
+        battleHandler = _battleHandler;
         menusHandler = _menusHandler;
         textBoxHandler = _textBoxHandler;
 
@@ -49,20 +49,17 @@ public class MagicChoiceState : State
 
         matrixMenuTraversal.TraverseWithNulls(magicAttacks);
 
-        OnSelection();
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
-        {
-            stateMachine.ReturnBackToState(BattleStates.FightMenu);
-        }
+        OnEnterSelection();
+        OnExitSelection();
     }
 
     private void SingleEntityAttack()
     {
-        if (battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Attack)
+        if (battleHandler.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Attack)
         {
             stateMachine.ChangeState(BattleStates.EnemyChoice);
         }
-        else if (battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Support || battleLogic.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Revive)
+        else if (battleHandler.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Support || battleHandler.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Revive)
         {
             stateMachine.ChangeState(BattleStates.SupportPlayerChoice);
         }
@@ -88,9 +85,9 @@ public class MagicChoiceState : State
         {
             for (int x = 0; x < ConstantNumbers.MAX_MAGIC_X_LENGTH; x++)
             {
-                if (playerMagicIndex < battleLogic.CurrentPlayer.Magic.Count)
+                if (playerMagicIndex < battleHandler.CurrentPlayer.Magic.Count)
                 {
-                    EntityAction magicAction = battleLogic.CurrentPlayer.Magic[playerMagicIndex];
+                    EntityAction magicAction = battleHandler.CurrentPlayer.Magic[playerMagicIndex];
 
                     magicAttacks[x, y] = magicAction;
                     menusHandler.MagicText[playerMagicIndex].text = magicAction.Id;
@@ -104,28 +101,36 @@ public class MagicChoiceState : State
         }
     }
 
-    private void OnSelection()
+    private void OnExitSelection()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
+        {
+            stateMachine.ReturnBackToState(BattleStates.FightMenu);
+        }
+    }
+
+    private void OnEnterSelection()
     {
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
-            battleLogic.CurrentPlayerAttack = magicAttacks[matrixMenuTraversal.currentXIndex, matrixMenuTraversal.currentYIndex];
+            battleHandler.CurrentPlayerAttack = magicAttacks[matrixMenuTraversal.currentXIndex, matrixMenuTraversal.currentYIndex];
 
-            if (!battleLogic.CurrentPlayer.Stats.ManaManager.CanUse(battleLogic.CurrentPlayerAttack.ManaReduction))
+            if (!battleHandler.CurrentPlayer.Stats.ManaManager.CanUse(battleHandler.CurrentPlayerAttack.ManaReduction))
             {
-                textBoxHandler.AddTextAsNotEnoughMana(battleLogic.CurrentPlayer.Id);
+                textBoxHandler.AddTextAsNotEnoughMana(battleHandler.CurrentPlayer.Id);
                 textBoxHandler.PreviousState = BattleStates.MagicChoice;
                 stateMachine.ChangeState(BattleStates.BattleTextBox);
                 return;
             }
 
-            if (!battleLogic.CurrentPlayerAttack.IsAOE)
+            if (!battleHandler.CurrentPlayerAttack.IsAOE)
             {
                 SingleEntityAttack();
             }
             else
             {
                 AOEState aoeState = (AOEState)stateMachine.states[BattleStates.AOEState];
-                aoeState.ActionToUse = battleLogic.CurrentPlayerAttack;
+                aoeState.ActionToUse = battleHandler.CurrentPlayerAttack;
                 aoeState.EntityUsing = EntityType.Player;
                 stateMachine.ChangeState(BattleStates.AOEState);
             }

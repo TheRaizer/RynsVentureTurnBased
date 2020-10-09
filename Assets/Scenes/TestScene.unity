@@ -2672,7 +2672,6 @@ MonoBehaviour:
   critMultiplier: 1.5
   statusEffectPrefab: {fileID: 0}
   statusEffectChance: 0
-  userStats: {fileID: 0}
 --- !u!114 &615585380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2878,7 +2877,6 @@ MonoBehaviour:
   critMultiplier: 1.5
   statusEffectPrefab: {fileID: 0}
   statusEffectChance: 0
-  userStats: {fileID: 0}
   percentHealthAfterRevive: 0.2
 --- !u!114 &615585389
 MonoBehaviour:
@@ -2905,7 +2903,6 @@ MonoBehaviour:
   statusEffectPrefab: {fileID: 999671665069997296, guid: 71967b9dc9c3bd34aac2d99b9e4dc805,
     type: 3}
   statusEffectChance: 100
-  userStats: {fileID: 0}
 --- !u!1 &666992833
 GameObject:
   m_ObjectHideFlags: 0
@@ -3107,7 +3104,6 @@ MonoBehaviour:
   critMultiplier: 1.5
   statusEffectPrefab: {fileID: 0}
   statusEffectChance: 0
-  userStats: {fileID: 0}
 --- !u!114 &740601879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5979,7 +5975,6 @@ MonoBehaviour:
   statusEffectPrefab: {fileID: 999671665069997296, guid: 39a65b6214843e548bf7d1b44b48ca3d,
     type: 3}
   statusEffectChance: 95
-  userStats: {fileID: 0}
 --- !u!114 &1552954259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7453,7 +7448,6 @@ MonoBehaviour:
   critMultiplier: 1.5
   statusEffectPrefab: {fileID: 0}
   statusEffectChance: 0
-  userStats: {fileID: 0}
 --- !u!114 &1843531476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7480,7 +7474,6 @@ MonoBehaviour:
   statusEffectPrefab: {fileID: 6422291583160218353, guid: a8273d23506d89c45b172dbb50f71405,
     type: 3}
   statusEffectChance: 65
-  userStats: {fileID: 0}
 --- !u!114 &1843531477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7507,7 +7500,6 @@ MonoBehaviour:
   statusEffectPrefab: {fileID: 999671665069997296, guid: dc1c2de5101271f4bb518ba70c469b2b,
     type: 3}
   statusEffectChance: 75
-  userStats: {fileID: 0}
 --- !u!114 &1843531478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7534,7 +7526,6 @@ MonoBehaviour:
   statusEffectPrefab: {fileID: 6422291583160218353, guid: a8273d23506d89c45b172dbb50f71405,
     type: 3}
   statusEffectChance: 100
-  userStats: {fileID: 0}
 --- !u!114 &1843531479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7561,7 +7552,6 @@ MonoBehaviour:
   statusEffectPrefab: {fileID: 999671665069997296, guid: dc1c2de5101271f4bb518ba70c469b2b,
     type: 3}
   statusEffectChance: 100
-  userStats: {fileID: 0}
 --- !u!1 &1854956311
 GameObject:
   m_ObjectHideFlags: 0

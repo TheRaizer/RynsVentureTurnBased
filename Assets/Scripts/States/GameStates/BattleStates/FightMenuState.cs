@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 
-public class FightMenuState : StatusEffectCheckState
+public class FightMenuState : State
 {
-    private readonly BattleLogic battleLogic;
+    private readonly BattleHandler battleHandler;
     private readonly BattleMenusHandler menusHandler;
     private readonly BattleStatusEffectsManager statusManager;
     private readonly BattleTextBoxHandler textBoxHandler;
     private readonly VectorMenuTraversal menuTraversal;
 
-    public FightMenuState(StateMachine _stateMachine, BattleLogic _battleLogic, BattleMenusHandler _menusHandler, BattleStatusEffectsManager _ailmentsManager, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
+    public FightMenuState(StateMachine _stateMachine, BattleHandler _battleHandler, BattleMenusHandler _menusHandler, BattleStatusEffectsManager _ailmentsManager, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
-        battleLogic = _battleLogic;
+        battleHandler = _battleHandler;
         menusHandler = _menusHandler;
         statusManager = _ailmentsManager;
         textBoxHandler = _textBoxHandler;
@@ -33,32 +33,17 @@ public class FightMenuState : StatusEffectCheckState
         base.OnFullRotationEnter();
 
         menuTraversal.currentIndex = 0;
-        Debug.Log(battleLogic.CurrentPlayer.Id + " Turn");
-        textBoxHandler.AddTextAsTurn(battleLogic.CurrentPlayer.Id);
-        textBoxHandler.PreviousState = BattleStates.FightMenu;
+        Debug.Log(battleHandler.CurrentPlayer.Id + " Turn");
+        PrepTextBox();
+        MultiSingleStatusCheck();
+        battleHandler.CheckForEnemiesRemaining();
 
-        if(CheckForStatusEffects(statusManager, battleLogic, battleLogic.CurrentPlayer.Stats, BattleStates.FightMenu))
-        {
-            stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
-        }
-        else
-        {
-            stateMachine.ChangeState(BattleStates.BattleTextBox);
-        }
+        CheckIfWon();
+        battleHandler.TextMods.PrintPlayerHealth();
+        battleHandler.TextMods.ChangePlayerTextColour();
+        battleHandler.TextMods.PrintPlayerMana();
 
-        battleLogic.CheckForEnemiesRemaining();
-        if (battleLogic.EnemiesRemaining == 0)
-        {
-            stateMachine.ChangeState(BattleStates.Victory);
-        }
-        battleLogic.TextMods.PrintPlayerHealth();
-        battleLogic.TextMods.ChangePlayerTextColour();
-        battleLogic.TextMods.PrintPlayerMana();
-
-        if(statusManager.CheckForReplacementStatusEffect(battleLogic, battleLogic.CurrentPlayer.Stats, false))
-        {
-            stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
-        }
+        ReplacementStatusCheck();
     }
 
     public override void InputUpdate()
@@ -66,10 +51,48 @@ public class FightMenuState : StatusEffectCheckState
         base.LogicUpdate();
 
         menuTraversal.Traverse();
+        OnEnterSelected();
+    }
 
-        if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
+    private void CheckIfWon()
+    {
+        if (battleHandler.EnemiesRemaining == 0)
         {
-            menusHandler.FightMenuCommands[menuTraversal.currentIndex].actionOnPress?.Invoke(battleLogic);
+            stateMachine.ChangeState(BattleStates.Victory);
+        }
+    }
+
+    private void ReplacementStatusCheck()
+    {
+        if (statusManager.CheckForReplacementStatusEffect(battleHandler, battleHandler.CurrentPlayer.Stats, false))
+        {
+            stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
+        }
+    }
+
+    private void MultiSingleStatusCheck()
+    {
+        if (statusManager.CheckForStatusEffect(battleHandler, battleHandler.CurrentPlayer.Stats))
+        {
+            stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
+        }
+        else
+        {
+            stateMachine.ChangeState(BattleStates.BattleTextBox);
+        }
+    }
+
+    private void PrepTextBox()
+    {
+        textBoxHandler.AddTextAsTurn(battleHandler.CurrentPlayer.Id);
+        textBoxHandler.PreviousState = BattleStates.FightMenu;
+    }
+
+    private void OnEnterSelected()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
+        {
+            menusHandler.FightMenuCommands[menuTraversal.currentIndex].actionOnPress?.Invoke(battleHandler);
         }
     }
 

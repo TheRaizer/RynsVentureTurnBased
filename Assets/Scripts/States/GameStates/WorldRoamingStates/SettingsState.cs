@@ -23,6 +23,11 @@ public class SettingsState : WorldMenuState
     {
         base.InputUpdate();
 
+        CheckIfExitSelected();
+    }
+
+    private void CheckIfExitSelected()
+    {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
         {
             indexLeftOffAt = worldMenusHandler.MenuTraversalCurrentIndex;

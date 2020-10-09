@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,8 +47,17 @@ public class BattleMenusHandler : MonoBehaviour
     public Vector2 PlayerSpritesReferenceVector;
     public Vector2 EnemySpritesReferenceVector;
 
+    public float StartinYPosForSprites { get; private set; }
+
+    public void ResetYOfSpriteReferences()
+    {
+        PlayerSpritesReferenceVector.y = StartinYPosForSprites;
+        EnemySpritesReferenceVector.y = StartinYPosForSprites;
+    }
+
     private void Awake()
     {
+        StartinYPosForSprites = PlayerSpritesReferenceVector.y;
         if (ConstantNumbers.MAX_NUMBER_OF_ENEMIES < EnemyChoicePointerLocations.Length)
             Debug.LogError("The number of enemyChoice pointer locations exceeds the limit");
         if(ConstantNumbers.MAX_NUMBER_OF_ENEMIES < EnemyIdText.Length)
