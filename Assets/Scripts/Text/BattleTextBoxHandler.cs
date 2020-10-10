@@ -46,7 +46,7 @@ public class BattleTextBoxHandler
                 ReturnToPreviousState();
             }
             else
-                battleLogic.CalculateNextTurn();
+                battleLogic.BattleEntitiesManager.CalculateNextTurn();
         }
     }
 

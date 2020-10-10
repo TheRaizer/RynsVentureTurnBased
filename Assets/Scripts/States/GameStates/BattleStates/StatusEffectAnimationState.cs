@@ -6,6 +6,8 @@ public class StatusEffectAnimationState : State
 {
     private readonly BattleHandler battleHandler;
     private readonly BattleTextBoxHandler textHandler;
+    private readonly BattleEntitiesManager battleEntitiesManager;
+    private readonly BattleAnimationsHandler animationsHandler;
 
     public Enum StateToReturnToo { get; set; }
     public List<StatusEffect> StatusEffectsToAnimate { get; set; } = new List<StatusEffect>();
@@ -15,6 +17,8 @@ public class StatusEffectAnimationState : State
     {
         battleHandler = _battleHandler;
         textHandler = _textHandler;
+        battleEntitiesManager = battleHandler.BattleEntitiesManager;
+        animationsHandler = battleHandler.AnimationsHandler;
     }
 
     public override void OnEnterOrReturn()
@@ -31,23 +35,23 @@ public class StatusEffectAnimationState : State
     {
         base.InputUpdate();
         Debug.Log("Check if finished");
-        battleHandler.AnimationsHandler.CheckIfAnimationFinished();
+        animationsHandler.CheckIfAnimationFinished();
         
     }
 
     private void RunAnimation()
     {
-        battleHandler.CheckForAttackablePlayers();
-        battleHandler.CheckForEnemiesRemaining();
+        battleEntitiesManager.CheckForAttackablePlayers();
+        battleEntitiesManager.CheckForEnemiesRemaining();
         battleHandler.TextMods.ChangeEnemyNameColour();
         battleHandler.TextMods.ChangePlayerTextColour();
 
         if (CheckIfAnimatedAllEffects()) return;
 
-        battleHandler.AnimationsHandler.OnAnimationFinished = OnEachAnimationFinished;
+        animationsHandler.OnAnimationFinished = OnEachAnimationFinished;
         StatusEffect currentEffect = StatusEffectsToAnimate[index];
         Debug.Log(currentEffect.Name);
-        battleHandler.AnimationsHandler.RunAnim(currentEffect.AnimatedVer.GetComponent<Animator>(), currentEffect.AnimToPlay, currentEffect.TriggerName);
+        animationsHandler.RunAnim(currentEffect.AnimatedVer.GetComponent<Animator>(), currentEffect.AnimToPlay, currentEffect.TriggerName);
         index++;
     }
 
@@ -84,10 +88,10 @@ public class StatusEffectAnimationState : State
 
     public void RunReplacementAnimation()
     {
-        battleHandler.AnimationsHandler.OnAnimationFinished = OnReplacementAnimationFinished;
+        animationsHandler.OnAnimationFinished = OnReplacementAnimationFinished;
         if (ReplacementEffect != null)
         {
-            battleHandler.AnimationsHandler.RunAnim(ReplacementEffect.AnimatedVer.GetComponent<Animator>(), ReplacementEffect.AnimToPlay, ReplacementEffect.TriggerName);
+            animationsHandler.RunAnim(ReplacementEffect.AnimatedVer.GetComponent<Animator>(), ReplacementEffect.AnimToPlay, ReplacementEffect.TriggerName);
             ReplacementEffect = null;
         }
         else
@@ -97,8 +101,8 @@ public class StatusEffectAnimationState : State
     }
     private void OnReplacementAnimationFinished()
     {
-        battleHandler.CheckForAttackablePlayers();
-        battleHandler.CheckForEnemiesRemaining();
+        battleEntitiesManager.CheckForAttackablePlayers();
+        battleEntitiesManager.CheckForEnemiesRemaining();
         battleHandler.TextMods.ChangeEnemyNameColour();
         battleHandler.TextMods.ChangePlayerTextColour();
         stateMachine.ChangeState(BattleStates.BattleTextBox);

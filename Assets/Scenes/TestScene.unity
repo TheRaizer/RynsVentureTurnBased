@@ -6547,6 +6547,21 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 424382458729539620}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1683673964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683673963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 374a179f9d1307046b772198e61e51de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerSpritesReferenceVector: {x: -70, y: 183.3}
+  EnemySpritesReferenceVector: {x: -550, y: 183.3}
+  <SpritesParentTransform>k__BackingField: {fileID: 1248022659}
 --- !u!114 &1683673970
 MonoBehaviour:
   m_ObjectHideFlags: 0

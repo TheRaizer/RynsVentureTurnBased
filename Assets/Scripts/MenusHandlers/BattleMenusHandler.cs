@@ -39,25 +39,17 @@ public class BattleMenusHandler : MonoBehaviour
 
     [field: Header("Pointer")]
     [field: SerializeField] public Image MenuPointer { get; set; }
-
     public GameObject[] ItemTextBoxes { get; private set; }
     public List<Directions> ItemUsePointerLocations { get; private set; }
 
     public VectorMenuTraversal VectorMenuNoNulls { get; private set; }
-    public Vector2 PlayerSpritesReferenceVector;
-    public Vector2 EnemySpritesReferenceVector;
+    public BattleEntitySpritePositions BattleEntitySpritePositions { get; private set; }
 
-    public float StartinYPosForSprites { get; private set; }
-
-    public void ResetYOfSpriteReferences()
-    {
-        PlayerSpritesReferenceVector.y = StartinYPosForSprites;
-        EnemySpritesReferenceVector.y = StartinYPosForSprites;
-    }
+    
 
     private void Awake()
     {
-        StartinYPosForSprites = PlayerSpritesReferenceVector.y;
+        BattleEntitySpritePositions = GetComponent<BattleEntitySpritePositions>();
         if (ConstantNumbers.MAX_NUMBER_OF_ENEMIES < EnemyChoicePointerLocations.Length)
             Debug.LogError("The number of enemyChoice pointer locations exceeds the limit");
         if(ConstantNumbers.MAX_NUMBER_OF_ENEMIES < EnemyIdText.Length)

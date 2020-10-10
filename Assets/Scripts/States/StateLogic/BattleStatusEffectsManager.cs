@@ -63,31 +63,32 @@ public class BattleStatusEffectsManager
     private bool CheckForMultipleTurnStatusEffects(BattleHandler battleHandler)
     {
         bool addedText = false;
+        BattleEntitiesManager entitiesManager = battleHandler.BattleEntitiesManager;
         foreach (EntityType a in Enum.GetValues(typeof(EntityType)))//loop through both players and enemies
         {
-            for (int i = 0; i < battleHandler.AttackablesDic[a].Count; i++)//loop through the list of attackable entities
+            for (int i = 0; i < entitiesManager.AttackablesDic[a].Count; i++)//loop through the list of attackable entities
             {
-                if (!battleHandler.AttackablesDic[a][i].StatusEffectsManager.StatusEffectDicContainsKey(EffectType.MultiTurnTrigger)) continue;//skip if there is not effect type on current attackable
-                StatsManager currentInfectee = battleHandler.AttackablesDic[a][i];
-                for (int j = 0; j < battleHandler.AttackablesDic[a][i].StatusEffectsManager.GetStatusEffectListCount(EffectType.MultiTurnTrigger); j++)//loop through all the status effects of the current attackable entity
+                if (!entitiesManager.AttackablesDic[a][i].StatusEffectsManager.StatusEffectDicContainsKey(EffectType.MultiTurnTrigger)) continue;//skip if there is not effect type on current attackable
+                StatsManager currentInfectee = entitiesManager.AttackablesDic[a][i];
+                for (int j = 0; j < entitiesManager.AttackablesDic[a][i].StatusEffectsManager.GetStatusEffectListCount(EffectType.MultiTurnTrigger); j++)//loop through all the status effects of the current attackable entity
                 {
-                    StatusEffect currentStatusEffect = battleHandler.AttackablesDic[a][i].StatusEffectsManager.GetStatusEffectFromList(EffectType.MultiTurnTrigger, j);
+                    StatusEffect currentStatusEffect = entitiesManager.AttackablesDic[a][i].StatusEffectsManager.GetStatusEffectFromList(EffectType.MultiTurnTrigger, j);
                     if (currentStatusEffect.HasEnded())
                     {
-                        textBoxHandler.AddTextAsStatusEffectWornOff(battleHandler.AttackablesDic[a][i].user.Id, currentStatusEffect.Name);
+                        textBoxHandler.AddTextAsStatusEffectWornOff(entitiesManager.AttackablesDic[a][i].user.Id, currentStatusEffect.Name);
                         currentStatusEffect.OnWornOff(currentInfectee);
-                        battleHandler.AttackablesDic[a][i].StatusEffectsManager.RemoveFromStatusEffectsAtIndex(EffectType.MultiTurnTrigger, j);
+                        entitiesManager.AttackablesDic[a][i].StatusEffectsManager.RemoveFromStatusEffectsAtIndex(EffectType.MultiTurnTrigger, j);
                     }
                     else
                     {
                         EffectAnimations.StatusEffectsToAnimate.Add(currentStatusEffect);
                         if (currentStatusEffect.outputTextOnTurns)
                         {
-                            textBoxHandler.AddTextAsStatusEffect(battleHandler.AttackablesDic[a][i].user.Id, currentStatusEffect.Name);
+                            textBoxHandler.AddTextAsStatusEffect(entitiesManager.AttackablesDic[a][i].user.Id, currentStatusEffect.Name);
                             addedText = true;
                         }
 
-                        currentStatusEffect.OnTurn(battleHandler, battleHandler.AttackablesDic[a][i], battleHandler.BattleStateMachine, textBoxHandler);
+                        currentStatusEffect.OnTurn(battleHandler, entitiesManager.AttackablesDic[a][i], battleHandler.BattleStateMachine, textBoxHandler);
                     }
                 }
             }

@@ -3,21 +3,21 @@
 public class FightMenuState : State
 {
     private readonly BattleHandler battleHandler;
-    private readonly BattleMenusHandler menusHandler;
     private readonly BattleStatusEffectsManager statusManager;
     private readonly BattleTextBoxHandler textBoxHandler;
     private readonly VectorMenuTraversal menuTraversal;
+    private readonly BattleEntitiesManager battleEntitiesManager;
 
-    public FightMenuState(StateMachine _stateMachine, BattleHandler _battleHandler, BattleMenusHandler _menusHandler, BattleStatusEffectsManager _ailmentsManager, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
+    public FightMenuState(StateMachine _stateMachine, BattleHandler _battleHandler, BattleStatusEffectsManager _ailmentsManager, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
         battleHandler = _battleHandler;
-        menusHandler = _menusHandler;
         statusManager = _ailmentsManager;
         textBoxHandler = _textBoxHandler;
+        battleEntitiesManager = battleHandler.BattleEntitiesManager;
 
         menuTraversal = new VectorMenuTraversal(PositionPointer)
         {
-            MaxIndex = menusHandler.FightMenuCommands.Count - 1
+            MaxIndex = battleHandler.MenusHandler.FightMenuCommands.Count - 1
         };
     }
 
@@ -33,12 +33,16 @@ public class FightMenuState : State
         base.OnFullRotationEnter();
 
         menuTraversal.currentIndex = 0;
-        Debug.Log(battleHandler.CurrentPlayer.Id + " Turn");
+        Debug.Log(battleEntitiesManager.CurrentPlayer.Id + " Turn");
         PrepTextBox();
         MultiSingleStatusCheck();
-        battleHandler.CheckForEnemiesRemaining();
-
+        battleEntitiesManager.CheckForEnemiesRemaining();
         CheckIfWon();
+        if (battleEntitiesManager.CurrentPlayer.Stats.HealthManager.Dead)
+        {
+            battleEntitiesManager.CalculateNextTurn();
+            return;
+        }
         battleHandler.TextMods.PrintPlayerHealth();
         battleHandler.TextMods.ChangePlayerTextColour();
         battleHandler.TextMods.PrintPlayerMana();
@@ -56,7 +60,7 @@ public class FightMenuState : State
 
     private void CheckIfWon()
     {
-        if (battleHandler.EnemiesRemaining == 0)
+        if (battleEntitiesManager.EnemiesRemaining == 0)
         {
             stateMachine.ChangeState(BattleStates.Victory);
         }
@@ -64,7 +68,7 @@ public class FightMenuState : State
 
     private void ReplacementStatusCheck()
     {
-        if (statusManager.CheckForReplacementStatusEffect(battleHandler, battleHandler.CurrentPlayer.Stats, false))
+        if (statusManager.CheckForReplacementStatusEffect(battleHandler, battleEntitiesManager.CurrentPlayer.Stats, false))
         {
             stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
         }
@@ -72,7 +76,7 @@ public class FightMenuState : State
 
     private void MultiSingleStatusCheck()
     {
-        if (statusManager.CheckForStatusEffect(battleHandler, battleHandler.CurrentPlayer.Stats))
+        if (statusManager.CheckForStatusEffect(battleHandler, battleEntitiesManager.CurrentPlayer.Stats))
         {
             stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
         }
@@ -84,7 +88,7 @@ public class FightMenuState : State
 
     private void PrepTextBox()
     {
-        textBoxHandler.AddTextAsTurn(battleHandler.CurrentPlayer.Id);
+        textBoxHandler.AddTextAsTurn(battleEntitiesManager.CurrentPlayer.Id);
         textBoxHandler.PreviousState = BattleStates.FightMenu;
     }
 
@@ -92,17 +96,19 @@ public class FightMenuState : State
     {
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
-            menusHandler.FightMenuCommands[menuTraversal.currentIndex].actionOnPress?.Invoke(battleHandler);
+            battleHandler.MenusHandler.FightMenuCommands[menuTraversal.currentIndex].actionOnPress?.Invoke(battleHandler);
         }
     }
 
     private void PositionPointer()
     {
-        menusHandler.PositionPointer
+        BattleMenusHandler menusHandler = battleHandler.MenusHandler;
+
+        battleHandler.MenusHandler.PositionPointer
             (
-                menusHandler.FightMenuCommands[menuTraversal.currentIndex].pointerLocation.top, 
-                menusHandler.FightMenuCommands[menuTraversal.currentIndex].pointerLocation.bottom, 
-                menusHandler.FightMenuCommands[menuTraversal.currentIndex].pointerLocation.left, 
+                menusHandler.FightMenuCommands[menuTraversal.currentIndex].pointerLocation.top,
+                menusHandler.FightMenuCommands[menuTraversal.currentIndex].pointerLocation.bottom,
+                menusHandler.FightMenuCommands[menuTraversal.currentIndex].pointerLocation.left,
                 menusHandler.FightMenuCommands[menuTraversal.currentIndex].pointerLocation.right
             );
     }

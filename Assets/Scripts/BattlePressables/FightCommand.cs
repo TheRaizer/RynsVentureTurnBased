@@ -8,7 +8,7 @@ public class FightCommand : BattleCommands
 
     private void Fight(BattleHandler battleHandler)
     {
-        battleHandler.CurrentPlayerAttack = battleHandler.CurrentPlayer.FightAttack;
+        battleHandler.BattleEntitiesManager.CurrentPlayerAttack = battleHandler.BattleEntitiesManager.CurrentPlayer.FightAttack;
         battleHandler.BattleStateMachine.ChangeState(BattleStates.EnemyChoice);
     }
 }

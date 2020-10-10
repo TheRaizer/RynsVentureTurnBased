@@ -5,6 +5,8 @@ public class AOEState : State
 {
     private readonly BattleHandler battleHandler;
     private readonly BattleTextBoxHandler textBoxHandler;
+    private readonly BattleEntitiesManager battleEntitiesManager;
+    private readonly BattleAnimationsHandler animationsHandler;
     public EntityType EntityUsing { get; set; }
     public EntityAction ActionToUse { get; set; }
 
@@ -12,6 +14,8 @@ public class AOEState : State
     {
         battleHandler = _battleHandler;
         textBoxHandler = _textBoxHandler;
+        battleEntitiesManager = battleHandler.BattleEntitiesManager;
+        animationsHandler = battleHandler.AnimationsHandler;
     }
 
     public override void OnFullRotationEnter()
@@ -27,28 +31,30 @@ public class AOEState : State
     {
         base.InputUpdate();
 
-        battleHandler.AnimationsHandler.CheckIfAnimationFinished();
+        animationsHandler.CheckIfAnimationFinished();
     }
 
     private void UseActionOnPlayers()
     {
-        ActionToUse.UseAOEAction(battleHandler.AttackablesDic[EntityType.Player], battleHandler.CurrentEnemy.Stats.DamageScale, textBoxHandler);
+        float damageScale = battleEntitiesManager.CurrentEnemy.Stats.DamageScale;
+        ActionToUse.UseAOEAction(battleEntitiesManager.AttackablesDic[EntityType.Player], damageScale, textBoxHandler);
     }
 
     private void UseActionOnEnemies()//popups currently only work on enemies
     {
-        List<EntityActionInfo> actionInfos = ActionToUse.UseAOEAction(battleHandler.AttackablesDic[EntityType.Enemy], battleHandler.CurrentPlayer.Stats.DamageScale, textBoxHandler);
+        float damageScale = battleEntitiesManager.CurrentPlayer.Stats.DamageScale;
+        List<EntityActionInfo> actionInfos = ActionToUse.UseAOEAction(battleEntitiesManager.AttackablesDic[EntityType.Enemy], damageScale, textBoxHandler);
         List<GameObject> enemyBattleVersions = new List<GameObject>();
-        foreach(StatsManager s in battleHandler.AttackablesDic[EntityType.Enemy])
+        foreach(StatsManager s in battleEntitiesManager.AttackablesDic[EntityType.Enemy])
         {
             enemyBattleVersions.Add(s.user.Animator.gameObject);
         }
 
-        battleHandler.SetActionPopupForEntity(battleHandler.CurrentPlayer.Animator.gameObject, enemyBattleVersions, null, null, actionInfos);
+        battleHandler.SetActionPopupForEntity(battleEntitiesManager.CurrentPlayer.Animator.gameObject, enemyBattleVersions, null, null, actionInfos);
     }
     private void OnAnimationFinishedPlayer()
     {
-        battleHandler.CheckForEnemiesRemaining();
+        battleEntitiesManager.CheckForEnemiesRemaining();
         battleHandler.TextMods.ChangeEnemyNameColour();
         battleHandler.BattleStateMachine.ChangeState(BattleStates.BattleTextBox);
     }
@@ -56,7 +62,7 @@ public class AOEState : State
     {
         if (EntityUsing == EntityType.Player)
         {
-            battleHandler.AnimationsHandler.OnAnimationFinished = OnAnimationFinishedPlayer;
+            animationsHandler.OnAnimationFinished = OnAnimationFinishedPlayer;
             if (ActionToUse.ActionType == EntityAction.ActionTypes.Support || ActionToUse.ActionType == EntityAction.ActionTypes.Revive)
             {
                 UseActionOnPlayers();
@@ -65,7 +71,7 @@ public class AOEState : State
             {
                 UseActionOnEnemies();
             }
-            battleHandler.AnimationsHandler.RunAnim(battleHandler.CurrentPlayer.Animator, ActionToUse.AnimToPlay, ActionToUse.TriggerName);
+            animationsHandler.RunAnim(battleEntitiesManager.CurrentPlayer.Animator, ActionToUse.AnimToPlay, ActionToUse.TriggerName);
         }
         else if (EntityUsing == EntityType.Enemy)
         {
@@ -77,7 +83,7 @@ public class AOEState : State
             {
                 UseActionOnPlayers();
             }
-            battleHandler.AnimationsHandler.RunAnim(battleHandler.CurrentEnemy.Animator, ActionToUse.AnimToPlay, ActionToUse.TriggerName);
+            animationsHandler.RunAnim(battleEntitiesManager.CurrentEnemy.Animator, ActionToUse.AnimToPlay, ActionToUse.TriggerName);
         }
     }
 }

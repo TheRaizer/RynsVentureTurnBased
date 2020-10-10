@@ -139,6 +139,9 @@
     <Compile Include="Assets\Scripts\WorldMenuOptions\InventoryTypeChoiceOption.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\States\GameStates\BattleStates\FightMenuState.cs" />
+    <Compile Include="Assets\Scripts\States\StateLogic\BattleEntitiesManager.cs" />
+    <Compile Include="Assets\Scripts\States\StateLogic\BattleEntitySprites.cs" />
+    <Compile Include="Assets\Scripts\States\StateLogic\BattleEntitySpritePositions.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

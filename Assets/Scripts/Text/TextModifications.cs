@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TextModifications
 {
@@ -10,65 +6,66 @@ public class TextModifications
     private const float PERCENT_TILL_RED = 0.25f;
 
     private readonly BattleMenusHandler menusHandler;
-    private readonly BattleHandler battleLogic;
+    private readonly BattleEntitiesManager battleEntitiesManager;
 
-    public TextModifications(BattleMenusHandler _menusHandler, BattleHandler _battleLogic)
+    public TextModifications(BattleMenusHandler _menusHandler, BattleHandler _battleHandler)
     {
         menusHandler = _menusHandler;
-        battleLogic = _battleLogic;
+        battleEntitiesManager = _battleHandler.BattleEntitiesManager;
     }
 
     public void PrintEnemyIds()
     {
-        for (int i = 0; i < battleLogic.Enemies.Length; i++)
+        for (int i = 0; i < battleEntitiesManager.Enemies.Length; i++)
         {
-            if (battleLogic.Enemies[i] != null)
+            if (battleEntitiesManager.Enemies[i] != null)
             {
-                menusHandler.EnemyIdText[i].text = battleLogic.Enemies[i].GetComponent<Enemy>().Id;
+                menusHandler.EnemyIdText[i].text = battleEntitiesManager.Enemies[i].GetComponent<Enemy>().Id;
             }
         }
     }
 
     public void PrintPlayerIds()
     {
-        for (int i = 0; i < battleLogic.ActivePlayableCharacters.Length; i++)
+        for (int i = 0; i < battleEntitiesManager.ActivePlayableCharacters.Length; i++)
         {
-            if (battleLogic.ActivePlayableCharacters[i] != null)
+            if (battleEntitiesManager.ActivePlayableCharacters[i] != null)
             {
-                menusHandler.PlayerNameText[i].text = battleLogic.ActivePlayableCharacters[i].Id;
+                menusHandler.PlayerNameText[i].text = battleEntitiesManager.ActivePlayableCharacters[i].Id;
             }
         }
     }
 
     public void PrintPlayerHealth()
     {
-        for (int i = 0; i < battleLogic.ActivePlayableCharacters.Length; i++)
+        for (int i = 0; i < battleEntitiesManager.ActivePlayableCharacters.Length; i++)
         {
-            if (battleLogic.ActivePlayableCharacters[i] != null)
+            if (battleEntitiesManager.ActivePlayableCharacters[i] != null)
             {
-                menusHandler.PlayerHealthText[i].text = battleLogic.ActivePlayableCharacters[i].Stats.HealthManager.CurrentAmount + " / " + battleLogic.ActivePlayableCharacters[i].Stats.HealthManager.MaxAmount;
+                menusHandler.PlayerHealthText[i].text = battleEntitiesManager.ActivePlayableCharacters[i].Stats.HealthManager.CurrentAmount +
+                                                        " / " + battleEntitiesManager.ActivePlayableCharacters[i].Stats.HealthManager.MaxAmount;
             }
         }
     }
 
     public void PrintPlayerMana()
     {
-        for (int i = 0; i < battleLogic.ActivePlayableCharacters.Length; i++)
+        for (int i = 0; i < battleEntitiesManager.ActivePlayableCharacters.Length; i++)
         {
-            if (battleLogic.ActivePlayableCharacters[i] != null)
+            if (battleEntitiesManager.ActivePlayableCharacters[i] != null)
             {
-                menusHandler.PlayerManaText[i].text = battleLogic.ActivePlayableCharacters[i].Stats.ManaManager.CurrentAmount.ToString();
+                menusHandler.PlayerManaText[i].text = battleEntitiesManager.ActivePlayableCharacters[i].Stats.ManaManager.CurrentAmount.ToString();
             }
         }
     }
 
     public void ChangeEnemyNameColour()
     {
-        for (int i = 0; i < battleLogic.Enemies.Length; i++)
+        for (int i = 0; i < battleEntitiesManager.Enemies.Length; i++)
         {
-            if (battleLogic.Enemies[i] != null)
+            if (battleEntitiesManager.Enemies[i] != null)
             {
-                StatsManager currentEnemy = battleLogic.Enemies[i].GetComponent<StatsManager>();
+                StatsManager currentEnemy = battleEntitiesManager.Enemies[i].GetComponent<StatsManager>();
 
                 float yellowAmt = currentEnemy.HealthManager.MaxAmount * PERCENT_TILL_YELLOW;
                 float redAmt = currentEnemy.HealthManager.MaxAmount * PERCENT_TILL_RED;
@@ -87,13 +84,13 @@ public class TextModifications
 
     public void ChangePlayerTextColour()
     {
-        for (int i = 0; i < battleLogic.ActivePlayableCharacters.Length; i++)
+        for (int i = 0; i < battleEntitiesManager.ActivePlayableCharacters.Length; i++)
         {
-            if (battleLogic.ActivePlayableCharacters[i] != null)
+            if (battleEntitiesManager.ActivePlayableCharacters[i] != null)
             {
-                if (!battleLogic.ActivePlayableCharacters[i].Stats.HealthManager.Dead)
+                if (!battleEntitiesManager.ActivePlayableCharacters[i].Stats.HealthManager.Dead)
                 {
-                    StatsManager currentPlayer = battleLogic.ActivePlayableCharacters[i].Stats;
+                    StatsManager currentPlayer = battleEntitiesManager.ActivePlayableCharacters[i].Stats;
 
                     float yellowAmt = currentPlayer.HealthManager.MaxAmount * PERCENT_TILL_YELLOW;
                     float redAmt = currentPlayer.HealthManager.MaxAmount * PERCENT_TILL_RED;

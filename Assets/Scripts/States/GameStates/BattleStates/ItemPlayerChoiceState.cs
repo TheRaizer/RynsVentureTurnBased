@@ -5,12 +5,14 @@ public class ItemPlayerChoiceState : PlayerChoiceState
     private readonly BattleHandler battleHandler;
     private readonly Inventory inventory;
     private readonly BattleTextBoxHandler textBox;
+    private readonly BattleEntitiesManager battleEntitiesManager;
 
-    public ItemPlayerChoiceState(StateMachine _stateMachine, BattleHandler _battleHandler, BattleMenusHandler _battleMenusHandler, Inventory _inventory, BattleTextBoxHandler _textBox) : base(_stateMachine, _battleMenusHandler)
+    public ItemPlayerChoiceState(StateMachine _stateMachine, BattleHandler _battleHandler, Inventory _inventory, BattleTextBoxHandler _textBox) : base(_stateMachine, _battleHandler.MenusHandler)
     {
         battleHandler = _battleHandler;
         inventory = _inventory;
         textBox = _textBox;
+        battleEntitiesManager = battleHandler.BattleEntitiesManager;
     }
 
     public override void InputUpdate()
@@ -33,11 +35,11 @@ public class ItemPlayerChoiceState : PlayerChoiceState
     {
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
-            StatsManager userToHealStats = battleHandler.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats;
+            StatsManager userToHealStats = battleEntitiesManager.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats;
             if (userToHealStats.HealthManager.Dead && !battleHandler.ItemToUse.CanRevive())
             {
                 textBox.PreviousState = BattleStates.ItemPlayerChoice;
-                textBox.AddTextAsCannotRevive(battleHandler.ItemToUse.Id, battleHandler.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Id);
+                textBox.AddTextAsCannotRevive(battleHandler.ItemToUse.Id, battleEntitiesManager.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Id);
                 stateMachine.ChangeState(BattleStates.BattleTextBox);
             }
             else if (battleHandler.ItemToUse.OnlyHeal() && userToHealStats.HealthManager.CurrentAmount == userToHealStats.HealthManager.MaxAmount)
@@ -48,7 +50,8 @@ public class ItemPlayerChoiceState : PlayerChoiceState
             }
             else
             {
-                inventory.UseItemInventoryInBattle(battleHandler.ItemIndex, battleHandler.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats, null, stateMachine, textBox);
+                StatsManager statsToUseOn = battleEntitiesManager.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats;
+                inventory.UseItemInventoryInBattle(battleHandler.ItemIndex, statsToUseOn, null, stateMachine, textBox);
             }
         }
     }

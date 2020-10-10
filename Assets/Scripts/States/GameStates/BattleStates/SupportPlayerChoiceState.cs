@@ -5,11 +5,13 @@ public class SupportPlayerChoiceState : PlayerChoiceState
 {
     private readonly BattleHandler battleHandler;
     private readonly BattleTextBoxHandler textBoxHandler;
+    private readonly BattleEntitiesManager battleEntitiesManager;
 
-    public SupportPlayerChoiceState(StateMachine _stateMachine, BattleMenusHandler _battleMenusHandler, BattleHandler _battleHandler, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine, _battleMenusHandler)
+    public SupportPlayerChoiceState(StateMachine _stateMachine, BattleHandler _battleHandler, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine, _battleHandler.MenusHandler)
     {
         battleHandler = _battleHandler;
         textBoxHandler = _textBoxHandler;
+        battleEntitiesManager = battleHandler.BattleEntitiesManager;
     }
 
     public override void InputUpdate()
@@ -28,12 +30,13 @@ public class SupportPlayerChoiceState : PlayerChoiceState
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
             if (ManageSupportAction()) return;
-            battleHandler.CurrentPlayerAttack.UseAction
+            float damageScale = battleEntitiesManager.CurrentPlayer.Stats.DamageScale;
+            battleEntitiesManager.CurrentPlayerAttack.UseAction
                 (
-                    battleHandler.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats, battleHandler.CurrentPlayer.Stats.DamageScale, textBoxHandler
+                    battleEntitiesManager.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats, damageScale, textBoxHandler
                 );
 
-            battleHandler.CheckForAttackablePlayers();
+            battleEntitiesManager.CheckForAttackablePlayers();
             battleHandler.TextMods.PrintPlayerHealth();
             battleHandler.TextMods.PrintPlayerIds();
 
@@ -43,18 +46,18 @@ public class SupportPlayerChoiceState : PlayerChoiceState
 
     private bool ManageSupportAction()
     {
-        StatsManager playerToSupport = battleHandler.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats;
+        StatsManager playerToSupport = battleEntitiesManager.ActivePlayableCharacters[vectorMenuTraversal.currentIndex].Stats;
 
-        if (battleHandler.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Revive && !playerToSupport.HealthManager.Dead)
+        if (battleEntitiesManager.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Revive && !playerToSupport.HealthManager.Dead)
         {
-            textBoxHandler.AddTextAsCannotRevive(battleHandler.CurrentPlayer.Id, playerToSupport.user.Id);
+            textBoxHandler.AddTextAsCannotRevive(battleEntitiesManager.CurrentPlayer.Id, playerToSupport.user.Id);
             textBoxHandler.PreviousState = BattleStates.SupportPlayerChoice;
             stateMachine.ChangeState(BattleStates.BattleTextBox);
             return true;
         }
-        else if (!battleHandler.CurrentPlayer.Stats.ManaManager.CanUse(battleHandler.CurrentPlayerAttack.ManaReduction))
+        else if (!battleEntitiesManager.CurrentPlayer.Stats.ManaManager.CanUse(battleEntitiesManager.CurrentPlayerAttack.ManaReduction))
         {
-            textBoxHandler.AddTextAsNotEnoughMana(battleHandler.CurrentPlayer.Id);
+            textBoxHandler.AddTextAsNotEnoughMana(battleEntitiesManager.CurrentPlayer.Id);
             textBoxHandler.PreviousState = BattleStates.SupportPlayerChoice;
             stateMachine.ChangeState(BattleStates.BattleTextBox);
             return true;

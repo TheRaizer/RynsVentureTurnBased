@@ -3,20 +3,20 @@
 public class BattleTextBoxState : State
 {
     private readonly BattleTextBoxHandler textBoxHandler;
-    private readonly BattleMenusHandler menuHandler;
+    private readonly BattleMenusHandler menusHandler;
 
-    public BattleTextBoxState(StateMachine _stateMachine, BattleTextBoxHandler _textBoxHandler, BattleMenusHandler _menuHandler) : base(_stateMachine)
+    public BattleTextBoxState(StateMachine _stateMachine, BattleTextBoxHandler _textBoxHandler, BattleHandler _battleHandler) : base(_stateMachine)
     {
         textBoxHandler = _textBoxHandler;
-        menuHandler = _menuHandler;
+        menusHandler = _battleHandler.MenusHandler;
     }
 
     public override void OnEnterOrReturn()
     {
         base.OnEnterOrReturn();
 
-        menuHandler.OpenTextPanel();
-        menuHandler.StartCoroutine(textBoxHandler.BuildMultiStringTextCo());
+        menusHandler.OpenTextPanel();
+        menusHandler.StartCoroutine(textBoxHandler.BuildMultiStringTextCo());
     }
 
     public override void InputUpdate()
@@ -30,6 +30,6 @@ public class BattleTextBoxState : State
     {
         base.OnExit();
 
-        menuHandler.CloseTextPanel();
+        menusHandler.CloseTextPanel();
     }
 }

@@ -5,16 +5,16 @@ using UnityEngine;
 public class VictoryState : State
 {
     private readonly BattleState battleState;
-    private readonly BattleMenusHandler menusHandler;
     private readonly BattleHandler battleHandler;
     private readonly Inventory inventory;
+    private readonly BattleEntitiesManager battleEntitiesManager;
 
-    public VictoryState(StateMachine _stateMachine, BattleState _battleState, BattleMenusHandler _menusHandler, BattleHandler _battleHandler, Inventory _inventory) : base(_stateMachine)
+    public VictoryState(StateMachine _stateMachine, BattleState _battleState, BattleHandler _battleHandler, Inventory _inventory) : base(_stateMachine)
     {
         battleState = _battleState;
-        menusHandler = _menusHandler;
         battleHandler = _battleHandler;
         inventory = _inventory;
+        battleEntitiesManager = battleHandler.BattleEntitiesManager;
     }
 
     public override void OnFullRotationEnter()
@@ -23,8 +23,8 @@ public class VictoryState : State
 
         RemoveAllPlayerStatusEffects();
         EmptyEnemyTexts();
-        battleHandler.CheckAllPlayerLevels();
-        battleHandler.DestroyPlayerSprites();
+        battleEntitiesManager.CheckAllPlayerLevels();
+        battleHandler.BattleEntitySprites.DestroyPlayerSprites();
         AddItemsWonToInventory();
         Debug.Log("Victory");
     }
@@ -42,23 +42,23 @@ public class VictoryState : State
 
     private void EmptyEnemyTexts()
     {
-        for (int i = 0; i < menusHandler.EnemyIdText.Length; i++)
+        for (int i = 0; i < battleHandler.MenusHandler.EnemyIdText.Length; i++)
         {
-            menusHandler.EnemyIdText[i].text = "";
+            battleHandler.MenusHandler.EnemyIdText[i].text = "";
         }
     }
 
     private void AddItemsWonToInventory()
     {
-        for (int i = 0; i < battleHandler.ItemsToGiveToPlayer.Count; i++)
+        for (int i = 0; i < battleEntitiesManager.ItemsToGiveToPlayer.Count; i++)
         {
-            inventory.AddToInventory(battleHandler.ItemsToGiveToPlayer[i]);
+            inventory.AddToInventory(battleEntitiesManager.ItemsToGiveToPlayer[i]);
         }
     }
 
     private void RemoveAllPlayerStatusEffects()
     {
-        foreach (PlayableCharacter p in battleHandler.PlayableCharacterRoster)
+        foreach (PlayableCharacter p in battleEntitiesManager.PlayableCharacterRoster)
         {
             if (p != null)
             {

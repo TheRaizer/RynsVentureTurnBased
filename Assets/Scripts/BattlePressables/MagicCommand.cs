@@ -11,7 +11,7 @@ public class MagicCommand : BattleCommands
 
     private void ChangeToMagicState(BattleHandler battleHandler)
     {
-        if (battleHandler.CurrentPlayer.Magic.Count > 0)
+        if (battleHandler.BattleEntitiesManager.CurrentPlayer.Magic.Count > 0)
         {
             battleHandler.BattleStateMachine.ChangeState(BattleStates.MagicChoice);
         }

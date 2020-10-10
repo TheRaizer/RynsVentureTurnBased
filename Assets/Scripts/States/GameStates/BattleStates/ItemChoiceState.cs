@@ -1,21 +1,20 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 
 public class ItemChoiceState : State
 {
-    private readonly BattleMenusHandler battleMenuHandler;
     private readonly Inventory inventory;
     private readonly BattleHandler battleHandler;
     private readonly VectorMenuTraversal itemTraversal;
     private readonly BattleTextBoxHandler textBoxHandler;
+    private readonly BattleMenusHandler menusHandler;
 
-    public ItemChoiceState(StateMachine _stateMachine, BattleMenusHandler _battleMenuHandler, Inventory _inventory, BattleHandler _battleHandler, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
+    public ItemChoiceState(StateMachine _stateMachine, Inventory _inventory, BattleHandler _battleHandler, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
-        battleMenuHandler = _battleMenuHandler;
         inventory = _inventory;
         battleHandler = _battleHandler;
         textBoxHandler = _textBoxHandler;
+        menusHandler = battleHandler.MenusHandler;
         itemTraversal = new VectorMenuTraversal(PositionPointerForItemUse);
     }
 
@@ -23,7 +22,7 @@ public class ItemChoiceState : State
     {
         base.OnEnterOrReturn();
 
-        battleMenuHandler.ItemChoicePanel.SetActive(true);
+        menusHandler.ItemChoicePanel.SetActive(true);
         PositionPointerForItemUse();
     }
 
@@ -32,8 +31,8 @@ public class ItemChoiceState : State
         base.OnFullRotationEnter();
 
         inventory.CurrentInventoryOpen = typeof(Useable);
-        battleMenuHandler.EmptyItemTextBoxes();
-        inventory.PrintCurrentInventoryText(battleMenuHandler.ItemTextBoxes);
+        menusHandler.EmptyItemTextBoxes();
+        inventory.PrintCurrentInventoryText(menusHandler.ItemTextBoxes);
         itemTraversal.MaxIndex = inventory.InventoryDic[inventory.CurrentInventoryOpen].Count - 1;
     }
 
@@ -45,6 +44,13 @@ public class ItemChoiceState : State
 
         CheckIfEnterSelected();
         CheckIfExitSelected();
+    }
+
+    public override void OnExit()
+    {
+        base.OnExit();
+
+        menusHandler.ItemChoicePanel.SetActive(false);
     }
 
     private void CheckIfExitSelected()
@@ -66,11 +72,11 @@ public class ItemChoiceState : State
             if (useable.UseOnAll())
             {
                 List<StatsManager> friendlyStats = new List<StatsManager>();
-                foreach (PlayableCharacter p in battleHandler.ActivePlayableCharacters)
+                foreach (PlayableCharacter p in battleHandler.BattleEntitiesManager.ActivePlayableCharacters)
                 {
                     friendlyStats.Add(p.Stats);
                 }
-                useable.OnUseInBattle(battleHandler.CurrentPlayer.Stats, friendlyStats, stateMachine, textBoxHandler);
+                useable.OnUseInBattle(battleHandler.BattleEntitiesManager.CurrentPlayer.Stats, friendlyStats, stateMachine, textBoxHandler);
             }
             else if (!useable.UseOnAll())
             {
@@ -81,19 +87,13 @@ public class ItemChoiceState : State
 
     private void PositionPointerForItemUse()
     {
-        battleMenuHandler.PositionPointer
+        menusHandler.PositionPointer
             (
-            battleMenuHandler.ItemUsePointerLocations[itemTraversal.currentIndex].top,
-            battleMenuHandler.ItemUsePointerLocations[itemTraversal.currentIndex].bottom,
-            battleMenuHandler.ItemUsePointerLocations[itemTraversal.currentIndex].left,
-            battleMenuHandler.ItemUsePointerLocations[itemTraversal.currentIndex].right
+            menusHandler.ItemUsePointerLocations[itemTraversal.currentIndex].top,
+            menusHandler.ItemUsePointerLocations[itemTraversal.currentIndex].bottom,
+            menusHandler.ItemUsePointerLocations[itemTraversal.currentIndex].left,
+            menusHandler.ItemUsePointerLocations[itemTraversal.currentIndex].right
         );
     }
 
-    public override void OnExit()
-    {
-        base.OnExit();
-
-        battleMenuHandler.ItemChoicePanel.SetActive(false);
-    }
 }

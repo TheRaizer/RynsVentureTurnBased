@@ -6,16 +6,16 @@ public class MagicChoiceState : State
 {
     private readonly BattleHandler battleHandler;
     private readonly MatrixMenuTraversal matrixMenuTraversal;
-    private readonly BattleMenusHandler menusHandler;
     private readonly BattleTextBoxHandler textBoxHandler;
+    private readonly BattleEntitiesManager battleEntitiesManager;
 
     private readonly EntityAction[,] magicAttacks = new EntityAction[3, 4];
 
-    public MagicChoiceState(StateMachine _stateMachine, BattleHandler _battleHandler, BattleMenusHandler _menusHandler, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
+    public MagicChoiceState(StateMachine _stateMachine, BattleHandler _battleHandler, BattleTextBoxHandler _textBoxHandler) : base(_stateMachine)
     {
         battleHandler = _battleHandler;
-        menusHandler = _menusHandler;
         textBoxHandler = _textBoxHandler;
+        battleEntitiesManager = battleHandler.BattleEntitiesManager;
 
         matrixMenuTraversal = new MatrixMenuTraversal(PositionPointerForMagic)
         {
@@ -28,16 +28,16 @@ public class MagicChoiceState : State
     {
         base.OnEnterOrReturn();
         matrixMenuTraversal.ResetIndexes();
-        menusHandler.MagicPanel.SetActive(true);
+        battleHandler.MenusHandler.MagicPanel.SetActive(true);
         PositionPointerForMagic();
     }
 
     public override void OnFullRotationEnter()
     {
         base.OnFullRotationEnter();
-        for (int i = 0; i < menusHandler.MagicText.Length; i++)
+        for (int i = 0; i < battleHandler.MenusHandler.MagicText.Length; i++)
         {
-            menusHandler.MagicText[i].text = "";
+            battleHandler.MenusHandler.MagicText[i].text = "";
         }
 
         GenerateMagicText();
@@ -55,11 +55,12 @@ public class MagicChoiceState : State
 
     private void SingleEntityAttack()
     {
-        if (battleHandler.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Attack)
+        EntityAction.ActionTypes actionType = battleEntitiesManager.CurrentPlayerAttack.ActionType;
+        if (actionType == EntityAction.ActionTypes.Attack)
         {
             stateMachine.ChangeState(BattleStates.EnemyChoice);
         }
-        else if (battleHandler.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Support || battleHandler.CurrentPlayerAttack.ActionType == EntityAction.ActionTypes.Revive)
+        else if (actionType == EntityAction.ActionTypes.Support || actionType == EntityAction.ActionTypes.Revive)
         {
             stateMachine.ChangeState(BattleStates.SupportPlayerChoice);
         }
@@ -67,15 +68,18 @@ public class MagicChoiceState : State
 
     private void PositionPointerForMagic()
     {
-        Directions pointerLocation = ArrayExtensions.Get1DElementFrom2DArray(menusHandler.MagicChoicePointerLocations, ConstantNumbers.MAX_MAGIC_X_LENGTH, matrixMenuTraversal.currentYIndex, matrixMenuTraversal.currentXIndex);
-        menusHandler.PositionPointer(pointerLocation.top, pointerLocation.bottom, pointerLocation.left, pointerLocation.right);
+        Directions pointerLocation = ArrayExtensions.Get1DElementFrom2DArray
+            (
+            battleHandler.MenusHandler.MagicChoicePointerLocations, ConstantNumbers.MAX_MAGIC_X_LENGTH, matrixMenuTraversal.currentYIndex, matrixMenuTraversal.currentXIndex
+            );
+        battleHandler.MenusHandler.PositionPointer(pointerLocation.top, pointerLocation.bottom, pointerLocation.left, pointerLocation.right);
     }
 
     public override void OnExit()
     {
         base.OnExit();
 
-        menusHandler.MagicPanel.SetActive(false);
+        battleHandler.MenusHandler.MagicPanel.SetActive(false);
     }
 
     private void GenerateMagicText()
@@ -85,12 +89,12 @@ public class MagicChoiceState : State
         {
             for (int x = 0; x < ConstantNumbers.MAX_MAGIC_X_LENGTH; x++)
             {
-                if (playerMagicIndex < battleHandler.CurrentPlayer.Magic.Count)
+                if (playerMagicIndex < battleEntitiesManager.CurrentPlayer.Magic.Count)
                 {
-                    EntityAction magicAction = battleHandler.CurrentPlayer.Magic[playerMagicIndex];
+                    EntityAction magicAction = battleEntitiesManager.CurrentPlayer.Magic[playerMagicIndex];
 
                     magicAttacks[x, y] = magicAction;
-                    menusHandler.MagicText[playerMagicIndex].text = magicAction.Id;
+                    battleHandler.MenusHandler.MagicText[playerMagicIndex].text = magicAction.Id;
                     playerMagicIndex++;
                 }
                 else
@@ -113,24 +117,24 @@ public class MagicChoiceState : State
     {
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E))
         {
-            battleHandler.CurrentPlayerAttack = magicAttacks[matrixMenuTraversal.currentXIndex, matrixMenuTraversal.currentYIndex];
+            battleEntitiesManager.CurrentPlayerAttack = magicAttacks[matrixMenuTraversal.currentXIndex, matrixMenuTraversal.currentYIndex];
 
-            if (!battleHandler.CurrentPlayer.Stats.ManaManager.CanUse(battleHandler.CurrentPlayerAttack.ManaReduction))
+            if (!battleEntitiesManager.CurrentPlayer.Stats.ManaManager.CanUse(battleEntitiesManager.CurrentPlayerAttack.ManaReduction))
             {
-                textBoxHandler.AddTextAsNotEnoughMana(battleHandler.CurrentPlayer.Id);
+                textBoxHandler.AddTextAsNotEnoughMana(battleEntitiesManager.CurrentPlayer.Id);
                 textBoxHandler.PreviousState = BattleStates.MagicChoice;
                 stateMachine.ChangeState(BattleStates.BattleTextBox);
                 return;
             }
 
-            if (!battleHandler.CurrentPlayerAttack.IsAOE)
+            if (!battleEntitiesManager.CurrentPlayerAttack.IsAOE)
             {
                 SingleEntityAttack();
             }
             else
             {
                 AOEState aoeState = (AOEState)stateMachine.states[BattleStates.AOEState];
-                aoeState.ActionToUse = battleHandler.CurrentPlayerAttack;
+                aoeState.ActionToUse = battleEntitiesManager.CurrentPlayerAttack;
                 aoeState.EntityUsing = EntityType.Player;
                 stateMachine.ChangeState(BattleStates.AOEState);
             }

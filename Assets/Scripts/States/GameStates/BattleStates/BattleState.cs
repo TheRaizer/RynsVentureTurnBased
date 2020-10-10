@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public enum BattleStates
 {
@@ -28,6 +27,7 @@ public class BattleState : State
 
     private readonly BattleStatusEffectsManager statusEffectsManager;
     private readonly BattleTextBoxHandler textBoxHandler;
+    private readonly BattleEntitiesManager battleEntitiesManager;
 
     public BattleState(StateMachine _stateMachine, BattleMenusHandler _menusHandler, Inventory inventory) : base(_stateMachine)
     {
@@ -35,20 +35,21 @@ public class BattleState : State
         BattleStateMachine = new StateMachine();
 
         BattleHandler = new BattleHandler(menusHandler, BattleStateMachine);
+        battleEntitiesManager = BattleHandler.BattleEntitiesManager;
         textBoxHandler = new BattleTextBoxHandler(menusHandler, BattleHandler, BattleStateMachine);
         statusEffectsManager = new BattleStatusEffectsManager(textBoxHandler);
 
         Dictionary<Enum, State> battleStates = new Dictionary<Enum, State>()
         {
             { BattleStates.EnemyTurn, new EnemyTurnState(BattleStateMachine, BattleHandler, statusEffectsManager, textBoxHandler) },
-            { BattleStates.Victory, new VictoryState(BattleStateMachine, this, menusHandler, BattleHandler, inventory) },
-            { BattleStates.FightMenu, new FightMenuState(BattleStateMachine, BattleHandler, menusHandler, statusEffectsManager, textBoxHandler) },
-            { BattleStates.BattleTextBox, new BattleTextBoxState(BattleStateMachine, textBoxHandler, menusHandler) },
-            { BattleStates.MagicChoice, new MagicChoiceState(BattleStateMachine, BattleHandler, menusHandler, textBoxHandler) },
-            { BattleStates.ItemChoice, new ItemChoiceState(BattleStateMachine, menusHandler, inventory, BattleHandler, textBoxHandler) },
-            { BattleStates.ItemPlayerChoice, new ItemPlayerChoiceState(BattleStateMachine, BattleHandler, menusHandler, inventory, textBoxHandler) },
-            { BattleStates.SupportPlayerChoice, new SupportPlayerChoiceState(BattleStateMachine, menusHandler, BattleHandler, textBoxHandler) },
-            { BattleStates.EnemyChoice, new EnemyChoiceState(BattleStateMachine, BattleHandler, menusHandler, textBoxHandler, statusEffectsManager) },
+            { BattleStates.Victory, new VictoryState(BattleStateMachine, this, BattleHandler, inventory) },
+            { BattleStates.FightMenu, new FightMenuState(BattleStateMachine, BattleHandler, statusEffectsManager, textBoxHandler) },
+            { BattleStates.BattleTextBox, new BattleTextBoxState(BattleStateMachine, textBoxHandler, BattleHandler) },
+            { BattleStates.MagicChoice, new MagicChoiceState(BattleStateMachine, BattleHandler, textBoxHandler) },
+            { BattleStates.ItemChoice, new ItemChoiceState(BattleStateMachine, inventory, BattleHandler, textBoxHandler) },
+            { BattleStates.ItemPlayerChoice, new ItemPlayerChoiceState(BattleStateMachine, BattleHandler, inventory, textBoxHandler) },
+            { BattleStates.SupportPlayerChoice, new SupportPlayerChoiceState(BattleStateMachine, BattleHandler, textBoxHandler) },
+            { BattleStates.EnemyChoice, new EnemyChoiceState(BattleStateMachine, BattleHandler, textBoxHandler, statusEffectsManager) },
             { BattleStates.AOEState, new AOEState(BattleStateMachine, BattleHandler, textBoxHandler) },
             { BattleStates.StatusEffectAnimations, new StatusEffectAnimationState(BattleStateMachine, BattleHandler, textBoxHandler) }
         };
@@ -62,10 +63,10 @@ public class BattleState : State
 
         EnemyGenerator.InstantiateEnemies();
 
-        BattleHandler.OutputActivePlayerSprites();
-        BattleHandler.OutputEnemySprites();
+        BattleHandler.BattleEntitySprites.OutputActivePlayerSprites();
+        BattleHandler.BattleEntitySprites.OutputEnemySprites();
 
-        BattleHandler.ResetAllPlayerClockTicks();
+        battleEntitiesManager.ResetAllPlayerClockTicks();
 
         BattleHandler.TextMods.PrintEnemyIds();
         BattleHandler.TextMods.PrintPlayerIds();
@@ -73,9 +74,9 @@ public class BattleState : State
         BattleHandler.TextMods.PrintPlayerMana();
 
         menusHandler.BattleMenus.SetActive(true);
-        BattleHandler.CheckForAttackablePlayers();
-        BattleHandler.CheckForEnemiesRemaining();
-        BattleHandler.CalculateNextTurn();
+        battleEntitiesManager.CheckForAttackablePlayers();
+        battleEntitiesManager.CheckForEnemiesRemaining();
+        battleEntitiesManager.CalculateNextTurn();
     }
 
     public override void LogicUpdate()
