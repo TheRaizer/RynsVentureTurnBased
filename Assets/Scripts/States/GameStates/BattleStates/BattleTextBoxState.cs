@@ -14,7 +14,10 @@ public class BattleTextBoxState : State
     public override void OnEnterOrReturn()
     {
         base.OnEnterOrReturn();
-
+        if (textBoxHandler.NoTextToOutput)
+        {
+            textBoxHandler.ReturnOrCalculateNextState();
+        }
         menusHandler.OpenTextPanel();
         menusHandler.StartCoroutine(textBoxHandler.BuildMultiStringTextCo());
     }

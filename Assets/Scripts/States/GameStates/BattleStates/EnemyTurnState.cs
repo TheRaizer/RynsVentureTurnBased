@@ -27,6 +27,7 @@ public class EnemyTurnState : State
         animationsHandler.OnAnimationFinished = OnAnimationFinished;
         Debug.Log(battleEntitiesManager.CurrentEnemy.Id + " Turn");
         if (CheckForStatusEffects()) return;
+        battleEntitiesManager.CheckForEnemiesRemaining();
         battleEntitiesManager.CheckForAttackablePlayers();
         if (battleEntitiesManager.CurrentEnemy.Stats.HealthManager.Dead)
         {
@@ -57,6 +58,7 @@ public class EnemyTurnState : State
             {
                 checkedForStatusEffects = true;
                 animState.StateToReturnToo = BattleStates.EnemyTurn;
+                Debug.Log("Enter statusAnim from enemy turn state");
                 stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
                 return true;
             }

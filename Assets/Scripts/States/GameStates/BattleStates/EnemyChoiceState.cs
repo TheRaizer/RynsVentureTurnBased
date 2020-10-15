@@ -106,13 +106,8 @@ public class EnemyChoiceState : State
 
     private void PositionPointerForEnemyChoice()
     {
+
         BattleMenusHandler menusHandler = battleHandler.MenusHandler;
-        menusHandler.PositionPointer
-            (
-                menusHandler.EnemyChoicePointerLocations[menuTraversal.currentIndex].top,
-                menusHandler.EnemyChoicePointerLocations[menuTraversal.currentIndex].bottom,
-                menusHandler.EnemyChoicePointerLocations[menuTraversal.currentIndex].left,
-                menusHandler.EnemyChoicePointerLocations[menuTraversal.currentIndex].right
-            );
+        menusHandler.PositionPointer(menusHandler.EnemyChoicePointerLocations[menuTraversal.currentIndex]);
     }
 }

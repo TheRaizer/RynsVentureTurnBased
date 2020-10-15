@@ -87,13 +87,6 @@ public class ItemChoiceState : State
 
     private void PositionPointerForItemUse()
     {
-        menusHandler.PositionPointer
-            (
-            menusHandler.ItemUsePointerLocations[itemTraversal.currentIndex].top,
-            menusHandler.ItemUsePointerLocations[itemTraversal.currentIndex].bottom,
-            menusHandler.ItemUsePointerLocations[itemTraversal.currentIndex].left,
-            menusHandler.ItemUsePointerLocations[itemTraversal.currentIndex].right
-        );
+        menusHandler.PositionPointer(menusHandler.ItemUsePointerLocations[itemTraversal.currentIndex]);
     }
-
 }

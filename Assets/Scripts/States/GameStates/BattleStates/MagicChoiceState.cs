@@ -70,9 +70,9 @@ public class MagicChoiceState : State
     {
         Directions pointerLocation = ArrayExtensions.Get1DElementFrom2DArray
             (
-            battleHandler.MenusHandler.MagicChoicePointerLocations, ConstantNumbers.MAX_MAGIC_X_LENGTH, matrixMenuTraversal.currentYIndex, matrixMenuTraversal.currentXIndex
+                battleHandler.MenusHandler.MagicChoicePointerLocations, ConstantNumbers.MAX_MAGIC_X_LENGTH, matrixMenuTraversal.currentYIndex, matrixMenuTraversal.currentXIndex
             );
-        battleHandler.MenusHandler.PositionPointer(pointerLocation.top, pointerLocation.bottom, pointerLocation.left, pointerLocation.right);
+        battleHandler.MenusHandler.PositionPointer(pointerLocation);
     }
 
     public override void OnExit()

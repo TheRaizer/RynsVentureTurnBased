@@ -77,7 +77,11 @@ public class StatusEffectsManager
             int indexToRemove = effectAnimations.StatusEffectsToAnimate.IndexOf(statusObject);
             effectAnimations.StatusEffectsToAnimate.RemoveAt(indexToRemove);
         }
-        statusEffectsDic[effectType].Remove(statusObject);
+        if (statusEffectsDic[effectType].Contains(statusObject))
+        {
+            int indexToRemove = statusEffectsDic[effectType].IndexOf(statusObject);
+            statusEffectsDic[effectType].RemoveAt(indexToRemove);
+        }
     }
 
     public void AddToReplacementTurn(StatusEffect statusObject)

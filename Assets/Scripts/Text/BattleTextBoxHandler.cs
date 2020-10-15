@@ -17,6 +17,7 @@ public class BattleTextBoxHandler
     private bool running;
     private bool skip;
     private readonly List<string> textLines = new List<string>();
+    public bool NoTextToOutput => currentLine == textLines.Count;
 
     public BattleTextBoxHandler(BattleMenusHandler _menusHandler, BattleHandler _battleLogic, StateMachine _battleStateMachine)
     {
@@ -39,21 +40,28 @@ public class BattleTextBoxHandler
         }
         if (Finished && next)
         {
-            ResetTextBox();
-            Finished = false;
-            if(PreviousState != null)
-            {
-                ReturnToPreviousState();
-            }
-            else
-                battleLogic.BattleEntitiesManager.CalculateNextTurn();
+            ReturnOrCalculateNextState();
         }
+    }
+
+    public void ReturnOrCalculateNextState()
+    {
+        ResetTextBox();
+        Finished = false;
+        if (PreviousState != null)
+        {
+            Debug.Log("return from textbox back to " + PreviousState);
+            ReturnToPreviousState();
+        }
+        else
+            battleLogic.BattleEntitiesManager.CalculateNextTurn();
     }
 
     public IEnumerator BuildMultiStringTextCo()
     {
         if (!running)
         {
+            Debug.Log("current textLine: " + currentLine + "textLines amt: " + textLines.Count);
             running = true;
             Finished = false;
             menusHandler.TextArea.text = "";

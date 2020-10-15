@@ -73,12 +73,11 @@ public class BattleMenusHandler : MonoBehaviour
         ItemTextBoxes = menuInit.InitializeMenuTexts();
     }
 
-    public void PositionPointer(float top, float bottom, float left, float right)
+    public void PositionPointer(Directions directions)
     {
-        RectTransformExtensions.SetTop(MenuPointer.rectTransform, top);
-        RectTransformExtensions.SetBottom(MenuPointer.rectTransform, bottom);
-        RectTransformExtensions.SetLeft(MenuPointer.rectTransform, left);
-        RectTransformExtensions.SetRight(MenuPointer.rectTransform, right);
+        PositionUIObjectEventType positionUIEvent = new PositionUIObjectEventType(directions, MenuPointer.rectTransform);
+        PositionUIObjectPublisher publisher = new PositionUIObjectPublisher();
+        publisher.Publish(positionUIEvent);
     }
 
     public void EmptyItemTextBoxes()
@@ -94,6 +93,14 @@ public class BattleMenusHandler : MonoBehaviour
         foreach (GameObject g in objectsToDisableOnTextOpen)
         {
             g.SetActive(false);
+        }
+    }
+
+    public void OpenPanels()
+    {
+        foreach (GameObject g in objectsToDisableOnTextOpen)
+        {
+            g.SetActive(true);
         }
     }
 

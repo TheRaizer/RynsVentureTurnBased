@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,15 +32,18 @@ public class WorldMenusHandler : MonoBehaviour
             MaxIndex = TextBoxes.Length - 1
         };
 
+    }
+
+    private void Start()
+    {
         PositionPointer();
     }
 
     public void PositionPointer()
     {
-        RectTransformExtensions.SetBottom(Pointer.rectTransform, pointerLocations[currentMenuTraversal.currentIndex].bottom);
-        RectTransformExtensions.SetLeft(Pointer.rectTransform, pointerLocations[currentMenuTraversal.currentIndex].left);
-        RectTransformExtensions.SetRight(Pointer.rectTransform, pointerLocations[currentMenuTraversal.currentIndex].right);
-        RectTransformExtensions.SetTop(Pointer.rectTransform, pointerLocations[currentMenuTraversal.currentIndex].top);
+        PositionUIObjectEventType positionUIObjectEventType = new PositionUIObjectEventType(pointerLocations[currentMenuTraversal.currentIndex], Pointer.rectTransform);
+        PositionUIObjectPublisher publisher = new PositionUIObjectPublisher();
+        publisher.Publish(positionUIObjectEventType);
     }
 
     public void EmptyTextBoxes()

@@ -5,18 +5,18 @@ using UnityEngine;
 public class StatusEffectAnimationState : State
 {
     private readonly BattleHandler battleHandler;
-    private readonly BattleTextBoxHandler textHandler;
     private readonly BattleEntitiesManager battleEntitiesManager;
     private readonly BattleAnimationsHandler animationsHandler;
 
-    public Enum StateToReturnToo { get; set; }
+    public Enum StateToReturnToo { private get; set; }
     public List<StatusEffect> StatusEffectsToAnimate { get; set; } = new List<StatusEffect>();
     public StatusEffect ReplacementEffect { get; set; }
     private int index = 0;
+    public bool CannotAnimateEffects => index == StatusEffectsToAnimate.Count;
+
     public StatusEffectAnimationState(StateMachine _stateMachine, BattleHandler _battleHandler, BattleTextBoxHandler _textHandler) : base(_stateMachine)
     {
         battleHandler = _battleHandler;
-        textHandler = _textHandler;
         battleEntitiesManager = battleHandler.BattleEntitiesManager;
         animationsHandler = battleHandler.AnimationsHandler;
     }
@@ -34,9 +34,15 @@ public class StatusEffectAnimationState : State
     public override void InputUpdate()
     {
         base.InputUpdate();
-        Debug.Log("Check if finished");
         animationsHandler.CheckIfAnimationFinished();
         
+    }
+
+    public override void OnExit()
+    {
+        base.OnExit();
+
+        Debug.Log("Exited animation state");
     }
 
     private void RunAnimation()
@@ -59,7 +65,6 @@ public class StatusEffectAnimationState : State
     {
         Debug.Log("Finished");
         if (CheckIfAnimatedAllEffects()) return;
-        textHandler.PreviousState = BattleStates.StatusEffectAnimations;
         stateMachine.ReturnBackToState(BattleStates.StatusEffectAnimations);
     }
 

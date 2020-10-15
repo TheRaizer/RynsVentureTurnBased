@@ -18,7 +18,7 @@ public class SpawnActionPopup : MonoBehaviour
         objectPooler = FindObjectOfType<ObjectPooler>();
     }
 
-    private void SpawnText()
+    private void SpawnText()//method used during animations
     {
         for (int i = 0; i < LocationsToSpawn.Count; i++)
         {

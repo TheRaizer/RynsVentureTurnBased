@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public enum BattleStates
 {
@@ -84,7 +85,7 @@ public class BattleState : State
         base.LogicUpdate();
 
         BattleStateMachine.CurrentState.LogicUpdate();
-        //Debug.Log(BattleStateMachine.CurrentState);
+        Debug.Log(BattleStateMachine.CurrentState);
     }
 
     public override void PhysicsUpdate()

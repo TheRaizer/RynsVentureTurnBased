@@ -36,12 +36,6 @@
 
     private void PositionPointerForActivePlayers()
     {
-        battleMenusHandler.PositionPointer
-            (
-                battleMenusHandler.ActivePlayerPointerLocation[vectorMenuTraversal.currentIndex].top,
-                battleMenusHandler.ActivePlayerPointerLocation[vectorMenuTraversal.currentIndex].bottom,
-                battleMenusHandler.ActivePlayerPointerLocation[vectorMenuTraversal.currentIndex].left,
-                battleMenusHandler.ActivePlayerPointerLocation[vectorMenuTraversal.currentIndex].right
-            );
+        battleMenusHandler.PositionPointer(battleMenusHandler.ActivePlayerPointerLocation[vectorMenuTraversal.currentIndex]);
     }
 }

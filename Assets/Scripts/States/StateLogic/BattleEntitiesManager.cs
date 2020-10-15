@@ -33,6 +33,7 @@ public class BattleEntitiesManager
     }
     public void CalculateNextTurn()
     {
+        Debug.Log("Calculate next turn");
         while (true)
         {
             for (int i = 0; i < ActivePlayableCharacters.Length; i++)

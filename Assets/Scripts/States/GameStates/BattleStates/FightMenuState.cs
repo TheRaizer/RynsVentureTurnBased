@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class FightMenuState : State
 {
@@ -24,20 +25,20 @@ public class FightMenuState : State
     public override void OnEnterOrReturn()
     {
         base.OnEnterOrReturn();
-
+        battleHandler.MenusHandler.OpenPanels();
         PositionPointer();
     }
 
     public override void OnFullRotationEnter()
     {
         base.OnFullRotationEnter();
-
+        Debug.Log("changed too fightmenu state");
         menuTraversal.currentIndex = 0;
         Debug.Log(battleEntitiesManager.CurrentPlayer.Id + " Turn");
         PrepTextBox();
         MultiSingleStatusCheck();
         battleEntitiesManager.CheckForEnemiesRemaining();
-        CheckIfWon();
+        if(CheckIfWon()) return;
         if (battleEntitiesManager.CurrentPlayer.Stats.HealthManager.Dead)
         {
             battleEntitiesManager.CalculateNextTurn();
@@ -58,16 +59,20 @@ public class FightMenuState : State
         OnEnterSelected();
     }
 
-    private void CheckIfWon()
+    private bool CheckIfWon()
     {
+        Debug.Log("Check if won");
         if (battleEntitiesManager.EnemiesRemaining == 0)
         {
             stateMachine.ChangeState(BattleStates.Victory);
+            return true;
         }
+        return false;
     }
 
     private void ReplacementStatusCheck()
     {
+        Debug.Log("Check for replacement effect");
         if (statusManager.CheckForReplacementStatusEffect(battleHandler, battleEntitiesManager.CurrentPlayer.Stats, false))
         {
             stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
@@ -76,20 +81,26 @@ public class FightMenuState : State
 
     private void MultiSingleStatusCheck()
     {
+        textBoxHandler.PreviousState = BattleStates.FightMenu;
+        Debug.Log("Check for status effect");
         if (statusManager.CheckForStatusEffect(battleHandler, battleEntitiesManager.CurrentPlayer.Stats))
         {
-            stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
+            battleEntitiesManager.CheckForEnemiesRemaining();
+
+            StatusEffectAnimationState animState = (StatusEffectAnimationState)stateMachine.states[BattleStates.StatusEffectAnimations];
+            if (!animState.CannotAnimateEffects)
+            {
+                stateMachine.ChangeState(BattleStates.StatusEffectAnimations);
+                return;
+            }
         }
-        else
-        {
-            stateMachine.ChangeState(BattleStates.BattleTextBox);
-        }
+        stateMachine.ChangeState(BattleStates.BattleTextBox);
     }
 
     private void PrepTextBox()
     {
+        Debug.Log("Prep Textbox");
         textBoxHandler.AddTextAsTurn(battleEntitiesManager.CurrentPlayer.Id);
-        textBoxHandler.PreviousState = BattleStates.FightMenu;
     }
 
     private void OnEnterSelected()
@@ -104,12 +115,6 @@ public class FightMenuState : State
     {
         BattleMenusHandler menusHandler = battleHandler.MenusHandler;
 
-        battleHandler.MenusHandler.PositionPointer
-            (
-                menusHandler.FightMenuCommands[menuTraversal.currentIndex].pointerLocation.top,
-                menusHandler.FightMenuCommands[menuTraversal.currentIndex].pointerLocation.bottom,
-                menusHandler.FightMenuCommands[menuTraversal.currentIndex].pointerLocation.left,
-                menusHandler.FightMenuCommands[menuTraversal.currentIndex].pointerLocation.right
-            );
+        menusHandler.PositionPointer(menusHandler.FightMenuCommands[menuTraversal.currentIndex].pointerLocation);
     }
 }

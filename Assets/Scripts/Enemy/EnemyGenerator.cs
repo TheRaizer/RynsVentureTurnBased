@@ -22,7 +22,7 @@ public class EnemyGenerator
     public void InstantiateEnemies()
     {
         int numOfEnemies = UnityEngine.Random.Range(1, 6);
-
+        numOfEnemies = 5;
         for (int i = 0; i < numOfEnemies; i++)
         {
             int randomAreaEnemy = UnityEngine.Random.Range(0, enemyStorage.EnemiesDic[CurrentArea].Count);
